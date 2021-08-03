@@ -4,8 +4,14 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Index.vue') }
+      { path: '', component: () => import('pages/Index.vue') },
+      { path: 'events', component: () => import('pages/Events.vue') }
     ]
+  },
+  {
+    path: '*',
+    name: 'not-found',
+    component: () => import('pages/Error404.vue')
   }
 ]
 

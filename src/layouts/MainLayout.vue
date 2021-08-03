@@ -11,7 +11,7 @@
           aria-label="Menu"
         />
 
-        <q-toolbar-title shrink class="row items-center no-wrap">
+        <q-toolbar-title shrink class="row items-center no-wrap" >
           <img src="https://cdn.quasar.dev/img/layout-gallery/logo-google.svg">
           <span class="q-ml-sm" v-if="$q.screen.gt.sm">Quasar Element Pro</span>
         </q-toolbar-title>
@@ -55,7 +55,7 @@
     <q-page-container class="MAIN__page">
       <div class="MAIN__page-view-nav">
         <div class="fit column">
-            <q-btn dense flat color="grey-8" no-caps size="26px" class="MAIN__side-btn">
+            <q-btn dense flat color="grey-8" no-caps size="26px" class="MAIN__side-btn" to="/">
               <q-icon size="22px" name="photo" />
               <q-tooltip anchor="center right" self="center left" transition-show="fade">Photo</q-tooltip>
             </q-btn>
@@ -75,7 +75,7 @@
               <q-tooltip anchor="center right" self="center left" transition-show="fade">Group</q-tooltip>
             </q-btn>
 
-            <q-btn dense flat color="grey-8" no-caps size="26px" class="MAIN__side-btn">
+            <q-btn dense flat color="grey-8" no-caps size="26px" class="MAIN__side-btn" to="/events">
               <q-icon size="22px" name="import_contacts" />
               <q-tooltip anchor="center right" self="center left" transition-show="fade">Contacts</q-tooltip>
             </q-btn>

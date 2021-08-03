@@ -48,7 +48,17 @@ module.exports = function (ctx) {
       directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: [
+        'Loading',
+        'LoadingBar',
+        'LocalStorage',
+        'SessionStorage',
+        'Meta',
+        'Notify'
+      ],
+      config: {
+        LoadingBar: { color: 'purple', size: '15px' }
+      }
     },
 
     // https://quasar.dev/quasar-cli/cli-documentation/supporting-ie
