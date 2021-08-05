@@ -54,7 +54,8 @@
     </q-drawer>
     <q-page-container class="MAIN__page">
       <div class="MAIN__page-view-nav">
-        <div class="fit column">
+        <q-scroll-area class="fit">
+          <div class="column">
             <q-btn dense flat color="grey-8" no-caps size="26px" class="MAIN__side-btn" to="/">
               <q-icon size="22px" name="photo" />
               <q-tooltip anchor="center right" self="center left" transition-show="fade">Photo</q-tooltip>
@@ -80,9 +81,12 @@
               <q-tooltip anchor="center right" self="center left" transition-show="fade">Contacts</q-tooltip>
             </q-btn>
           </div>
+        </q-scroll-area>
       </div>
-      <div class="MAIN__page-container">
-        <router-view class="router-view"/>
+      <div class="MAIN__page-content">
+        <div class="MAIN__page-container">
+          <router-view class="router-view"/>
+        </div>
       </div>
     </q-page-container>
   </q-layout>
@@ -169,15 +173,16 @@ export default {
       display: flex;
       flex-direction: column;
       width: 56px;
-    &-container
+    &-content
       flex: auto 1 1;
       width: 0;
       overflow-x: hidden;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
+    &-container
+      height: 100%;
 .router-view
   flex: 1;
   height: 0;
-  overflow: hidden;
 </style>

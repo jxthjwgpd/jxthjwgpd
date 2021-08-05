@@ -57,7 +57,7 @@ module.exports = function (ctx) {
         'Notify'
       ],
       config: {
-        LoadingBar: { color: 'purple', size: '15px' }
+        loadingBar: { color: 'purple', size: '3px' }
       }
     },
 
