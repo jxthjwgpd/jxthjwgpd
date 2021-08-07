@@ -1,5 +1,8 @@
 <template>
-  <div>UserLogin</div>
+  <q-page class="row items-center justify-center">
+    <div>1</div>
+    <div>2</div>
+  </q-page>
 </template>
 
 <script>
