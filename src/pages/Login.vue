@@ -1,34 +1,60 @@
 <template>
   <q-page class="row items-center justify-center">
-      <div class="login-wrapper">
+    <q-card class="login-wrapper" flat bordered>
+      <q-card-section horizontal>
+      <q-img
+          class="col-5"
+          src="https://cdn.quasar.dev/img/parallax1.jpg"
+          v-if="$q.screen.gt.xs"
+        />
+
+      <q-card-section :class="`${$q.screen.gt.xs?'col-7':'col'} q-mt-sm q-pa-xl`">
+        <div class="text-overline text-primary-9">登录</div>
+        <div class="text-h5 q-mt-sm q-mb-xs">欢迎回来，请登录后继续</div>
         <q-form
-      @submit="onSubmit"
-      @reset="onReset"
-      style="min-width: 350px;"
-    >
-      <q-input
-        stack-label :dense="dense"
-        v-model="name"
-        label="Your name"
-        lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Please type something']"
-      />
-      <q-input
-        stack-label :dense="dense"
-        v-model="age"
-        label="Your age"
-        lazy-rules
-        :rules="[
-          val => val !== null && val !== '' || 'Please type your age',
-          val => val > 0 && val < 100 || 'Please type a real age'
-        ]"
-      />
-      <div class="q-mt-md">
-        <q-btn label="Submit" type="submit" color="primary"/>
-        <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
-      </div>
-    </q-form>
-      </div>
+          @submit="onSubmit"
+          @reset="onReset"
+          class="login-form"
+        >
+          <q-input
+            stack-label
+            v-model="name"
+            label="用户账号"
+            lazy-rules
+            :rules="[ val => val && val.length > 0 || '请输入用户账号']"
+          />
+          <q-input
+            stack-label
+            type="password"
+            v-model="age"
+            label="密码"
+            lazy-rules
+            :rules="[ val => val && val.length > 0 || '请输入密码']"
+          />
+          <div class="q-mt-md">
+            <q-btn label="登录" type="submit" color="primary"/>
+            <q-btn label="重置" type="reset" color="primary" flat class="q-ml-sm" />
+          </div>
+        </q-form>
+
+      </q-card-section>
+      </q-card-section>
+      <q-separator />
+
+      <q-card-actions v-if="$q.screen.gt.sm">
+        <q-btn flat>
+          5:30PM
+        </q-btn>
+        <q-btn flat>
+          7:00PM
+        </q-btn>
+        <q-btn flat color="primary">
+          Reserve
+        </q-btn>
+        <q-space/>
+        <q-btn flat round icon="menu" />
+      </q-card-actions>
+    </q-card>
   </q-page>
 </template>
 
@@ -40,7 +66,9 @@ export default {
       name: null,
       age: null,
 
-      accept: false
+      accept: false,
+      expanded: false,
+      lorem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
     }
   },
 
@@ -73,4 +101,6 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+.login-wrapper, login-form
+  width: 680px;
 </style>
