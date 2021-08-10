@@ -2,8 +2,13 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 // import example from './module-example'
+import session from './session'
 
 Vue.use(Vuex)
+
+const modules = {
+  session
+}
 
 /*
  * If not building with SSR mode, you can
@@ -16,14 +21,18 @@ Vue.use(Vuex)
 
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
-    modules: {
-      // example
-    },
-
+    modules,
     // enable strict mode (adds overhead!)
     // for dev mode only
     strict: process.env.DEV
   })
+
+  // Automatically run the `init` action if available for every module.
+  for (const moduleName of Object.keys(modules)) {
+    if (modules[moduleName].actions.init) {
+      Store.dispatch(`${moduleName}/init`)
+    }
+  }
 
   return Store
 }

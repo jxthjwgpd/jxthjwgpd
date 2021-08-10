@@ -8,8 +8,8 @@
           v-if="$q.screen.gt.xs"
         />
 
-      <q-card-section :class="`${$q.screen.gt.xs?'col-7':'col'} q-mt-sm q-pa-xl`">
-        <div class="text-overline text-primary-9">登录</div>
+      <q-card-section :class="`${$q.screen.gt.xs?'col-7':'col'} q-mt-xs q-pa-xl`">
+        <div class="text-overline text-primary">登录</div>
         <div class="text-h5 q-mt-sm q-mb-xs">欢迎回来，请登录后继续</div>
         <q-form
           @submit="onSubmit"
@@ -18,7 +18,7 @@
         >
           <q-input
             stack-label
-            v-model="name"
+            v-model.trim="form.username"
             label="用户账号"
             lazy-rules
             :rules="[ val => val && val.length > 0 || '请输入用户账号']"
@@ -26,13 +26,13 @@
           <q-input
             stack-label
             type="password"
-            v-model="age"
+            v-model.trim="form.password"
             label="密码"
             lazy-rules
             :rules="[ val => val && val.length > 0 || '请输入密码']"
           />
           <div class="q-mt-md">
-            <q-btn label="登录" type="submit" color="primary"/>
+            <q-btn label="登录" type="submit" color="primary" />
             <q-btn label="重置" type="reset" color="primary" flat class="q-ml-sm" />
           </div>
         </q-form>
@@ -54,6 +54,7 @@
         <q-space/>
         <q-btn flat round icon="menu" />
       </q-card-actions>
+      <q-inner-loading :showing="loading" />
     </q-card>
   </q-page>
 </template>
@@ -63,37 +64,40 @@ export default {
   name: 'UserLogin',
   data () {
     return {
-      name: null,
-      age: null,
-
-      accept: false,
-      expanded: false,
-      lorem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+      loading: false,
+      form: {
+        username: 'root',
+        password: 'root'
+      },
+      accept: false
     }
   },
 
   methods: {
     onSubmit () {
-      if (this.accept !== true) {
-        this.$q.notify({
-          color: 'red-5',
-          textColor: 'white',
-          icon: 'warning',
-          message: 'You need to accept the license and terms first'
-        })
-      } else {
+      this.loading = true
+      this.$store.dispatch('session/login', this.form).then(() => {
+        this.loading = false
         this.$q.notify({
           color: 'green-4',
           textColor: 'white',
           icon: 'cloud_done',
           message: 'Submitted'
         })
-      }
+      }).catch(e => {
+        this.loading = false
+        this.$q.notify({
+          color: 'red-5',
+          textColor: 'white',
+          icon: 'warning',
+          message: 'You need to accept the license and terms first'
+        })
+      })
     },
 
     onReset () {
-      this.name = null
-      this.age = null
+      this.form.username = null
+      this.form.password = null
       this.accept = false
     }
   }

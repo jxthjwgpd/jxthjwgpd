@@ -3,7 +3,7 @@
     <q-page-container class="content"><router-view></router-view></q-page-container>
     <q-footer class="flex items-center justify-between footer" v-if="$q.screen.gt.sm">
       <div>
-        <span>© 2019 Quasar v{{$q.version}}.</span>
+        <span>© 2020 Quasar v{{$q.version}}.</span>
         <span class="q-ml-sm">Created by <a href="https://gitee.com/ruyangit/dashboard">RuYang</a></span>
       </div>
       <div class="flex q-gutter-xs q-mt-none text-primary">
