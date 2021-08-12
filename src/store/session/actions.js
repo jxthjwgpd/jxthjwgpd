@@ -1,6 +1,5 @@
 // import axios from 'axios'
 
-// import { LocalStorage } from 'quasar'
 import setHeaderAuthorization from './token'
 
 export function init (state) {

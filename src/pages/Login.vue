@@ -9,7 +9,7 @@
         />
 
       <q-card-section :class="`${$q.screen.gt.xs?'col-7':'col'} q-mt-xs q-pa-xl`">
-        <div class="text-overline text-primary">登录</div>
+        <div class="text-overline text-primary">资产管理系统</div>
         <div class="text-h5 q-mt-sm q-mb-xs">欢迎回来，请登录后继续</div>
         <q-form
           @submit="onSubmit"
@@ -84,6 +84,8 @@ export default {
           icon: 'cloud_done',
           message: 'Submitted'
         })
+        const params = { redirect: this.$route.query.redirect || '/' }
+        this.$router.push({      path: params.redirect })
       }).catch(e => {
         this.loading = false
         this.$q.notify({
