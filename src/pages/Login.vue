@@ -85,7 +85,7 @@ export default {
           message: 'Submitted'
         })
         const params = { redirect: this.$route.query.redirect || '/' }
-        this.$router.push({      path: params.redirect })
+        this.$router.push({ path: params.redirect })
       }).catch(e => {
         this.loading = false
         this.$q.notify({
