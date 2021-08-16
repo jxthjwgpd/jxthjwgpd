@@ -4,31 +4,30 @@
       <div class="row items-center justify-between q-mb-md">
         <div>
           <q-breadcrumbs align="left">
-            <q-breadcrumbs-el label="Home" />
-            <q-breadcrumbs-el label="Components" />
-            <q-breadcrumbs-el label="Breadcrumbs" />
+            <q-breadcrumbs-el label="首页" />
+            <q-breadcrumbs-el label="列表页面" />
           </q-breadcrumbs>
-          <div class="text-h6 q-mt-xs" v-if="$q.screen.gt.sm">Hellowold，Config</div>
+          <div class="text-h6 q-mt-xs" v-if="$q.screen.gt.sm">普通展示，列表页面效果</div>
         </div>
         <div class="q-gutter-sm" v-if="$q.screen.gt.sm">
-          <q-btn color="white" text-color="black" label="Standard" icon="mail"/>
-          <q-btn-dropdown color="primary" label="Dropdown Button">
+          <q-btn color="white" text-color="black" label="申请访问" icon="mail"/>
+          <q-btn-dropdown color="primary" label="更多">
             <q-list>
               <q-item clickable v-close-popup >
                 <q-item-section>
-                  <q-item-label>Photos</q-item-label>
+                  <q-item-label>开通</q-item-label>
                 </q-item-section>
               </q-item>
 
               <q-item clickable v-close-popup >
                 <q-item-section>
-                  <q-item-label>Videos</q-item-label>
+                  <q-item-label>关闭服务</q-item-label>
                 </q-item-section>
               </q-item>
 
               <q-item clickable v-close-popup >
                 <q-item-section>
-                  <q-item-label>Articles</q-item-label>
+                  <q-item-label>服务状态</q-item-label>
                 </q-item-section>
               </q-item>
             </q-list>
@@ -36,10 +35,10 @@
         </div>
       </div>
       <q-banner dense class="bg-grey-3 q-mb-md">
-        Unfortunately, the credit card did not go through, please try again.
+        云服务器ECS主机管理，精简效果上线，邀请你参与问卷调查。
         <template v-slot:action>
-          <q-btn flat label="Dismiss" />
-          <q-btn flat label="Update Credit Card" />
+          <q-btn flat label="不参与" />
+          <q-btn flat label="前往填写" color="red-7"/>
         </template>
       </q-banner>
      <div class="q-mb-lg">
@@ -54,7 +53,7 @@
           @request="onRequest"
           binary-state-sort
           square
-          :card-style="{ boxShadow: 'none' }"
+          :card-style="{ boxShadow: 'none', padding: '10px' }"
           :table-header-style="{ backgroundColor: '#eeeeee'}"
         >
       <template v-slot:top-right>

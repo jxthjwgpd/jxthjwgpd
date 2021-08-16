@@ -1,6 +1,6 @@
 <template>
   <q-layout>
-    <q-page-container class="content"><router-view></router-view></q-page-container>
+    <q-page-container><router-view></router-view></q-page-container>
     <q-footer class="flex items-center justify-between footer" v-if="$q.screen.gt.sm">
       <div>
         <span>© 2020 Quasar v{{$q.version}}.</span>
@@ -22,8 +22,6 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.content
-  background-color: rgba(26, 108, 225, 0.03);
 .footer
   font-size: 10px;
   letter-spacing: .3px;

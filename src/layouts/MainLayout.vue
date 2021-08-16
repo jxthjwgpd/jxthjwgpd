@@ -61,9 +61,9 @@
               <q-tooltip anchor="center right" self="center left" transition-show="fade">Photo</q-tooltip>
             </q-btn>
 
-            <q-btn dense flat color="grey-8" no-caps size="26px" class="MAIN__side-btn">
+            <q-btn dense flat color="grey-8" no-caps size="26px" class="MAIN__side-btn" to="/ecs/dashboard">
               <q-icon size="22px" name="collections_bookmark" />
-              <q-tooltip anchor="center right" self="center left" transition-show="fade">Bookmark</q-tooltip>
+              <q-tooltip anchor="center right" self="center left" transition-show="fade">云服务器ECS</q-tooltip>
             </q-btn>
 
             <q-btn dense flat color="grey-8" no-caps size="26px" class="MAIN__side-btn">
@@ -78,7 +78,7 @@
 
             <q-btn dense flat color="grey-8" no-caps size="26px" class="MAIN__side-btn" to="/events">
               <q-icon size="22px" name="import_contacts" />
-              <q-tooltip anchor="center right" self="center left" transition-show="fade">Contacts</q-tooltip>
+              <q-tooltip anchor="center right" self="center left" transition-show="fade">列表页面</q-tooltip>
             </q-btn>
           </div>
         </q-scroll-area>

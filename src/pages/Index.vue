@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex flex-center">
+  <q-page class="flex flex-center index">
     <img alt="Quasar logo" src="~assets/quasar-logo-full.svg">
   </q-page>
 </template>
@@ -9,3 +9,7 @@ export default {
   name: 'PageIndex'
 }
 </script>
+<style lang="sass" scoped>
+.index
+  background-color: #fff;
+</style>
