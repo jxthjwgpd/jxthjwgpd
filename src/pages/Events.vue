@@ -10,7 +10,7 @@
           <div class="text-h6 q-mt-xs" v-if="$q.screen.gt.sm">普通展示，列表页面效果</div>
         </div>
         <div class="q-gutter-sm" v-if="$q.screen.gt.sm">
-          <q-btn color="white" text-color="black" label="申请访问" icon="mail"/>
+          <q-btn label="申请访问" icon="mail"/>
           <q-btn-dropdown color="primary" label="更多">
             <q-list>
               <q-item clickable v-close-popup >
