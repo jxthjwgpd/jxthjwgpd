@@ -27,7 +27,7 @@ module.exports = [
   {
     name: '总览',
     icon: 'storage',
-    path: 'introduction-to-quasar'
+    path: 'ecs/dashboard'
   },
   {
     name: '弹性云服务器',

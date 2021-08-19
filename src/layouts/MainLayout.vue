@@ -18,22 +18,51 @@
 
         <q-space />
 
-        <div class="q-gutter-sm row items-center no-wrap">
+        <div class="q-gutter-sm row items-center no-wrap q-mr-sm">
           <q-btn round dense flat icon="apps" v-if="$q.screen.gt.sm">
             <q-tooltip>Google Apps</q-tooltip>
           </q-btn>
           <q-btn round dense flat icon="notifications" v-if="$q.screen.gt.sm">
             <q-badge color="red" text-color="white" floating>
-              2
+              8
             </q-badge>
             <q-tooltip>Notifications</q-tooltip>
           </q-btn>
-          <q-btn round flat>
-            <q-avatar size="26px">
-              <img src="https://cdn.quasar.dev/img/boy-avatar.png">
-            </q-avatar>
-            <q-tooltip>Account</q-tooltip>
-          </q-btn>
+        </div>
+        <div class="self-stretch row no-wrap">
+          <q-btn-dropdown flat no-caps stretch auto-close >
+            <template v-slot:label>
+              <q-avatar size="26px">
+                <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+              </q-avatar>
+            </template>
+            <div class="row no-wrap q-pa-md">
+              <div class="column" style="min-width: 200px;">
+                <div class="text-h6 q-mb-md">Settings</div>
+                <q-toggle v-model="mobileData" label="Use Mobile Data" />
+                <q-toggle v-model="bluetooth" label="Bluetooth" />
+              </div>
+
+              <q-separator vertical inset class="q-mx-lg" />
+
+              <div class="column items-center">
+                <q-avatar size="72px">
+                  <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+                </q-avatar>
+
+                <div class="text-subtitle1 q-mt-md q-mb-xs">John Doe</div>
+
+                <q-btn
+                  color="primary"
+                  label="Logout"
+                  push
+                  size="sm"
+                  v-close-popup
+                  @click="logout"
+                />
+              </div>
+            </div>
+          </q-btn-dropdown>
         </div>
       </q-toolbar>
     </q-header>
@@ -107,6 +136,8 @@ export default {
       leftDrawerOpen: false,
       search: '',
       storage: 0.26,
+      mobileData: false,
+      bluetooth: true,
       essentialLinks: [
         {
           title: 'Docs',
@@ -145,6 +176,15 @@ export default {
           link: 'https://facebook.quasar.dev'
         }
       ]
+    }
+  },
+  methods: {
+    logout () {
+      this.$store.dispatch('session/logout').then(() => {
+        // const params = { redirect: this.$route.query.redirect || '/' }
+        // this.$router.push({ path: params.redirect })
+        this.$router.push({ name: 'user-login' })
+      })
     }
   }
 }

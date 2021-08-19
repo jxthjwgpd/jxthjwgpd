@@ -31,7 +31,7 @@ export function validate ({ commit, state }) {
 //     })
 }
 
-export function logout (commit) {
+export function logout ({ commit }) {
   commit('LOGOUT')
 }
 
