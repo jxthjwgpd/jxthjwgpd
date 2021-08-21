@@ -1,19 +1,24 @@
 <template>
-  <q-page class="ecs-dashboard">
+  <q-page class="ccl-dashboard">
       <q-splitter
       v-model="splitterModel"
+      :limits="[splitterModel, Infinity]"
       unit="px"
-      style="height: 100%"
+      class="full-height"
     >
 
-      <template v-slot:before>
-        <div class="view-nav fit">
+      <template v-slot:before v-if="$q.screen.gt.xs">
+        <div class="view-nav-menu fit">
           <div class="text-h6 q-pa-md">云服务控制台</div>
           <q-separator />
-          <q-app-menu />
+          <div class="view-nav-menu-content">
+            <q-scroll-area class="fit">
+            <q-app-menu />
+          </q-scroll-area>
+          </div>
       </div>
       </template>
-        <template v-slot:separator>
+        <template v-slot:separator v-if="$q.screen.gt.sm">
         <q-avatar color="primary" text-color="white" size="20px" icon="drag_indicator" />
       </template>
       <template v-slot:after>
@@ -59,7 +64,7 @@
             </template>
           </q-banner>
           <div class="row">
-            <div class="col-md-8 col-sm-12">
+            <div class="col-md-8 col-12">
               <q-card flat>
                 <q-card-section>
                   <div class="row no-wrap items-center">
@@ -214,7 +219,7 @@
               </q-card>
 
             </div>
-            <div :class="`col-md-4 col-sm-12 ${$q.screen.gt.sm?'q-pl-md':'q-mt-md'}`">
+            <div :class="`col-md-4 col-12 ${$q.screen.gt.sm?'q-pl-md':'q-mt-md'}`">
               <q-card flat>
                 <q-card-section>
                   <div class="row no-wrap items-center">
@@ -310,17 +315,43 @@
 export default {
   data () {
     return {
-      splitterModel: 240,
+      splitterModel: 243,
       expanded: true,
       slide: 'style',
       lorem: 'Lorem ipsum dolor. '
+    }
+  },
+  created () {
+    this.splitterWatch(this.$q.screen.gt.sm)
+  },
+  watch: {
+    '$q.screen.gt.sm' (val) {
+      this.splitterWatch(val)
+    }
+  },
+  methods: {
+    splitterWatch (val) {
+      this.splitterModel = val ? 243 : 0
     }
   }
 }
 </script>
 
 <style lang="sass">
-.ecs-dashboard
+.ccl-dashboard
   & .q-splitter__before
     background-color: #fff;
+  & .view-nav-menu
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    &-content
+      position: absolute;
+      top: 65px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+@media (max-width: $breakpoint-sm-max)
+  .q-splitter--vertical > .q-splitter__separator
+    width: 0px;
 </style>

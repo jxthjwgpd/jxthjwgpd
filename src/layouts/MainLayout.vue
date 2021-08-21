@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="hHh Lpr lFf">
     <q-header elevated>
       <q-toolbar class="MAIN__toolbar">
         <q-btn
@@ -7,7 +7,7 @@
           dense
           round
           @click="leftDrawerOpen = !leftDrawerOpen"
-          icon="menu"
+          :icon="`${!leftDrawerOpen?'menu':'close'}`"
           aria-label="Menu"
         />
 
@@ -70,6 +70,7 @@
     <q-drawer
       v-model="leftDrawerOpen"
       bordered
+      overlay
       content-class="bg-grey-1"
     >
       <q-list>
@@ -82,7 +83,7 @@
       </q-list>
     </q-drawer>
     <q-page-container class="MAIN__page">
-      <div class="MAIN__page-view-nav">
+      <div class="MAIN__page-view-nav" v-if="$q.screen.gt.xs">
         <q-scroll-area class="fit">
           <div class="column">
             <q-btn dense flat color="grey-8" no-caps size="26px" class="MAIN__side-btn" to="/">
