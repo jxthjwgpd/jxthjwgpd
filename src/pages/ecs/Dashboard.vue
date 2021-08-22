@@ -130,8 +130,12 @@
                   <div v-show="expanded">
                     <q-separator />
                     <q-card-section class="text-subitle2">
-                      <div class="q-gutter-md">
-                        <q-btn style="width: 30%;" color="primary"  align="left" :label="`button xs-${n}`" v-for="n in 7" :key="`xs-${n}`" />
+                      <div class="row">
+                        <div class="col-4 q-pl-sm" v-for="n in 7" :key="`xs-${n}`" >
+                            <q-item clickable v-ripple>
+                              <q-item-section>Single line item</q-item-section>
+                            </q-item>
+                        </div>
                       </div>
                     </q-card-section>
                   </div>
