@@ -1,5 +1,5 @@
 <template>
-  <q-page class="ccl-dashboard">
+  <!-- <q-page class="ccl-dashboard">
       <q-splitter
       v-model="splitterModel"
       :limits="[splitterModel, Infinity]"
@@ -21,7 +21,7 @@
         <template v-slot:separator v-if="$q.screen.gt.sm">
         <q-avatar color="primary" text-color="white" size="20px" icon="drag_indicator" />
       </template>
-      <template v-slot:after>
+      <template v-slot:after> -->
         <q-page class="q-pa-lg">
           <div class="row items-center justify-between q-mb-md">
             <div>
@@ -309,10 +309,10 @@
             </div>
           </div>
         </q-page>
-      </template>
+      <!-- </template>
 
     </q-splitter>
-  </q-page>
+  </q-page> -->
 </template>
 
 <script>

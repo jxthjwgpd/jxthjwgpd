@@ -9,7 +9,7 @@ const gettingStarted = [
     children: [
       {
         name: 'Quasar CLI',
-        path: 'quasar-cli'
+        path: 'index'
       },
       {
         name: 'UMD / Standalone',
@@ -21,6 +21,7 @@ const gettingStarted = [
       },
       {
         name: 'Quasar CLI2',
+        badge: '更新',
         path: 'quasar-cli2'
       },
       {
@@ -68,7 +69,7 @@ module.exports = [
   {
     name: '弹性云服务器',
     icon: 'healing',
-    path: 'introduction-to-quasar2'
+    path: 'events'
   },
   {
     name: '专属主机',

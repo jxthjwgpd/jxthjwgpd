@@ -47,7 +47,7 @@ export default {
             h,
             item,
             path + (item.path !== void 0 ? '/' + item.path : ''),
-            level + 1
+            level + 0.65
           ))
         )
       }
@@ -55,7 +55,7 @@ export default {
       const props = {
         to: path,
         dense: level > 0,
-        insetLevel: level > 0.5 ? 0.6 : level
+        insetLevel: level > 0.65 ? 0.8 : level
       }
 
       const attrs = {}
@@ -116,11 +116,11 @@ export default {
 
   .q-item__section--side
     & > .q-icon
-      font-size: 16px
+      font-size: 20px
 
   .q-expansion-item--expanded > div > .q-item > .q-item__section--main
     color: $primary
-    font-weight: 600
+    font-weight: 700
 
   .q-expansion-item__content .q-item
     border-radius: 0 5px 5px 0

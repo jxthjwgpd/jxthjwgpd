@@ -7,7 +7,7 @@
           dense
           round
           @click="leftDrawerOpen = !leftDrawerOpen"
-          :icon="`${!leftDrawerOpen?'menu':'close'}`"
+          :icon="`${leftDrawerOpen?'menu':'close'}`"
           aria-label="Menu"
         />
 
@@ -19,10 +19,10 @@
         <q-space />
 
         <div class="q-gutter-sm row items-center no-wrap q-mr-sm">
-          <q-btn round dense flat icon="apps" v-if="$q.screen.gt.sm">
+          <q-btn round dense flat icon="apps" v-if="$q.screen.gt.xs">
             <q-tooltip>Google Apps</q-tooltip>
           </q-btn>
-          <q-btn round dense flat icon="notifications" v-if="$q.screen.gt.sm">
+          <q-btn round dense flat icon="notifications" v-if="$q.screen.gt.xs">
             <q-badge color="red" text-color="white" floating>
               8
             </q-badge>
@@ -69,21 +69,17 @@
 
     <q-drawer
       v-model="leftDrawerOpen"
+      show-if-above
       bordered
-      overlay
-      content-class="bg-grey-1"
+      width="220"
     >
       <q-list>
         <q-item-label header class="text-grey-8">Essential Links</q-item-label>
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
+        <q-app-menu />
       </q-list>
     </q-drawer>
     <q-page-container class="MAIN__page">
-      <div class="MAIN__page-view-nav" v-if="$q.screen.gt.xs">
+      <!-- <div class="MAIN__page-view-nav" v-if="$q.screen.gt.xs">
         <q-scroll-area class="fit">
           <div class="column">
             <q-btn dense flat color="grey-8" no-caps size="26px" class="MAIN__side-btn" to="/">
@@ -112,7 +108,7 @@
             </q-btn>
           </div>
         </q-scroll-area>
-      </div>
+      </div> -->
       <div class="MAIN__page-content">
         <div class="MAIN__page-container">
           <router-view class="router-view"/>
@@ -123,15 +119,14 @@
 </template>
 
 <script>
-import EssentialLink from 'components/EssentialLink'
+// import EssentialLink from 'components/EssentialLink'
 
 export default {
   name: 'MainLayout',
 
-  components: {
-    EssentialLink
-  },
-
+  // components: {
+  //   EssentialLink
+  // },
   data () {
     return {
       leftDrawerOpen: false,
