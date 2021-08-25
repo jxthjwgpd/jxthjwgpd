@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh Lpr lFf">
+  <q-layout view="lHh LpR lff">
     <q-header elevated>
       <q-toolbar class="MAIN__toolbar">
         <q-btn
@@ -7,14 +7,14 @@
           dense
           round
           @click="leftDrawerOpen = !leftDrawerOpen"
-          :icon="`${leftDrawerOpen?'menu':'close'}`"
+          :icon="`${leftDrawerOpen?'menu':'menu'}`"
           aria-label="Menu"
         />
 
-        <q-toolbar-title shrink class="row items-center no-wrap" >
-          <img src="https://cdn.quasar.dev/img/layout-gallery/logo-google.svg">
-          <span class="q-ml-sm" v-if="$q.screen.gt.sm">Quasar Element Pro</span>
-        </q-toolbar-title>
+        <!-- <q-toolbar-title shrink class="row items-center no-wrap" > -->
+          <!-- <img src="https://cdn.quasar.dev/img/layout-gallery/logo-google.svg"> -->
+          <!-- <span class="q-ml-sm" v-if="$q.screen.gt.sm">Quasar Admin</span> -->
+        <!-- </q-toolbar-title> -->
 
         <q-space />
 
@@ -71,12 +71,31 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
-      width="220"
+      :width="256"
+      content-class="MAIN__left-drawer"
     >
-      <q-list>
-        <q-item-label header class="text-grey-8">Essential Links</q-item-label>
-        <q-app-menu />
-      </q-list>
+      <div class="absolute-top layout-drawer-toolbar bg-primary">
+        <q-toolbar-title shrink class="q-toolbar row no-wrap items-center" >
+          <img class="q-ml-sm" style="width: 38px;" src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">
+          <span class="q-ml-sm text-white text-bold">Quasar Admin UIPro</span>
+        </q-toolbar-title>
+        <div class="layout-drawer-toolbar__shadow absolute-full overflow-hidden no-pointer-events"></div>
+      </div>
+      <q-scroll-area style="height: calc(100% - 50px); margin-top: 50px">
+      <div class="row justify-center q-my-lg">
+        <q-btn
+          type="a"
+          href="https://donate.quasar.dev"
+          target="_blank"
+          rel="noopener"
+          size="13px"
+          color="primary"
+          label="Quasar Admin Gitee"
+        />
+      </div>
+        <q-app-menu/>
+      </q-scroll-area>
+
     </q-drawer>
     <q-page-container class="MAIN__page">
       <!-- <div class="MAIN__page-view-nav" v-if="$q.screen.gt.xs">
@@ -185,7 +204,7 @@ export default {
   }
 }
 </script>
-<style lang="sass" scoped>
+<style lang="sass">
 .MAIN
   &__toolbar
     height: 50px
@@ -196,6 +215,8 @@ export default {
       line-height: 18px
       letter-spacing: .01785714em
       font-weight: 500
+  &__left-drawer
+    overflow: inherit !important;
   &__page
     flex: auto 1 1;
     height: 100%;
@@ -221,4 +242,17 @@ export default {
 .router-view
   flex: 1;
   height: 0;
+.layout-drawer-toolbar
+  height: 50px;
+  margin-right: -1px
+  &__shadow
+    bottom: -10px
+    &:after
+      content: ''
+      position: absolute
+      top: 0
+      right: 0
+      bottom: 10px
+      left: 0
+      box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2), 0 0px 10px rgba(0, 0, 0, 0.24)
 </style>
