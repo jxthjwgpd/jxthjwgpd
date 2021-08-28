@@ -15,7 +15,8 @@ const routes = [
     children: [
       { path: '', component: () => import('pages/Index.vue') },
       { path: 'ecs/dashboard', component: () => import('pages/ecs/Dashboard.vue') },
-      { path: 'events', component: () => import('pages/Events.vue') }
+      { path: 'events', component: () => import('pages/Events.vue') },
+      { path: 'lists', component: () => import('pages/Lists.vue') }
     ]
   }
 ]

@@ -63,7 +63,7 @@ const gettingStarted = [
 module.exports = [
   {
     name: '总览',
-    icon: 'storage',
+    icon: 'view_quilt',
     path: 'ecs/dashboard'
   },
   {
@@ -74,7 +74,8 @@ module.exports = [
   {
     name: '专属主机',
     icon: 'widgets',
-    path: 'introduction-to-quasar1'
+    badge: '更新',
+    path: 'lists'
   },
   {
     name: '分布式存储',

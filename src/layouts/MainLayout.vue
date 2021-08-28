@@ -76,7 +76,7 @@
     >
       <div class="absolute-top layout-drawer-toolbar bg-primary">
         <q-toolbar-title shrink class="q-toolbar row no-wrap items-center" >
-          <img class="q-ml-sm" style="width: 38px;" src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">
+          <img class="q-ml-xs" style="height: 38px;" src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">
           <span class="q-ml-sm text-white text-bold">Quasar Admin UIPro</span>
         </q-toolbar-title>
         <div class="layout-drawer-toolbar__shadow absolute-full overflow-hidden no-pointer-events"></div>
