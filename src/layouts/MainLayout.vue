@@ -67,7 +67,7 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer
+    <!-- <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
       bordered
@@ -96,7 +96,7 @@
         <q-app-menu/>
       </q-scroll-area>
 
-    </q-drawer>
+    </q-drawer> -->
     <q-page-container class="MAIN__page">
       <!-- <div class="MAIN__page-view-nav" v-if="$q.screen.gt.xs">
         <q-scroll-area class="fit">

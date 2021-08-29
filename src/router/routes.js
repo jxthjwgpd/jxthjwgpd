@@ -10,11 +10,11 @@ const routes = [
   },
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
+    component: () => import('layouts/MainLayoutNew.vue'),
     meta: { auth: true },
     children: [
       { path: '', component: () => import('pages/Index.vue') },
-      { path: 'ecs/dashboard', component: () => import('pages/ecs/Dashboard.vue') },
+      { path: 'dashboard', component: () => import('pages/ecs/Dashboard.vue') },
       { path: 'events', component: () => import('pages/Events.vue') },
       { path: 'lists', component: () => import('pages/Lists.vue') }
     ]
