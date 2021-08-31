@@ -152,7 +152,7 @@
 
 <script>
 export default {
-  name: "Settings",
+  name: 'Settings',
   data () {
     return {
       check1: true,
