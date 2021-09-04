@@ -41,7 +41,7 @@
       </q-scroll-area> -->
     <!-- </q-drawer> -->
     <q-page-container class="main-page-container">
-      <div class="main-page-sidebar full-height" :style="`width: ${!$q.screen.gt.xs ? 0 : !$q.screen.gt.sm ? 56 : 256}px`">
+      <div class="main-page-sidebar full-height" :style="`width: ${!$q.screen.gt.xs ? 0 : !$q.screen.gt.sm ? sidebarMinimize : sidebar}px`">
         <div class="sidebar-body">
           <q-scroll-area class="fit" >
             <!-- <q-list padding>
@@ -85,7 +85,7 @@
         </q-toolbar>
       </q-drawer> -->
       <!-- <div class="main-page-body" :style="`left: ${$q.screen.gt.sm ? $q.screen.gt.xs ? 0: 60: 200}px`"> -->
-      <div class="main-page-body" :style="`left: ${!$q.screen.gt.xs ? 0 : !$q.screen.gt.sm ? 56 : 256}px`">
+      <div class="main-page-body" :style="`left: ${!$q.screen.gt.xs ? 0 : !$q.screen.gt.sm ? sidebarMinimize : sidebar}px`">
         <div class="full-height"><router-view /></div>
       </div>
     </q-page-container>
@@ -96,7 +96,9 @@
 export default {
   data () {
     return {
-      left: true
+      left: true,
+      sidebar: 200,
+      sidebarMinimize: 55
     }
   }
 }

@@ -5,7 +5,8 @@ import {
   QItemSection,
   QIcon,
   QBadge,
-  QList
+  QList,
+  QTooltip
 } from 'quasar'
 import Menu from '../assets/menu.js'
 export default {
@@ -83,10 +84,10 @@ export default {
         menu.icon !== void 0
           ? h(QItemSection, {
             props: { avatar: true }
-          }, [ h(QIcon, { props: { name: menu.icon } }) ])
+          }, [ h(QIcon, { props: { name: menu.icon } }, (!this.$q.screen.gt.sm) ? [ h(QTooltip, { props: { anchor: 'center right', self: 'center left', offset: [25, 25] } }, [ menu.name ]) ] : null) ])
           : (!this.$q.screen.gt.sm) ? h(QItemSection, {
             props: { avatar: true }
-          }, [ h(QIcon, { props: { name: 'add', color: 'red' } }) ]) : null,
+          }, [ h(QIcon, { props: { name: 'adjust', color: 'grey-6' } }, [ h(QTooltip, { props: { anchor: 'center right', self: 'center left', offset: [25, 25] } }, [ menu.name ]) ]) ]) : null,
 
         h(QItemSection, [ menu.name ]),
 

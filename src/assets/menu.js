@@ -1,60 +1,39 @@
 const gettingStarted = [
   {
-    name: 'Pick Quasar Flavour',
+    name: '账号管理',
+    path: 'r-flavour'
+  },
+  {
+    name: '权限管理',
     path: 'pick-quasar-flavour'
   },
   {
-    name: 'Quasar Flavours',
-    opened: true,
+    name: '费用中心',
     children: [
       {
-        name: 'Quasar CLI',
+        name: '账户总览',
         path: 'index'
       },
       {
-        name: 'UMD / Standalone',
+        name: '支收明细',
         path: 'umd'
       },
       {
-        name: 'Vue CLI Plugin',
+        name: '订单管理',
         path: 'vue-cli-plugin'
       },
       {
-        name: 'Quasar CLI2',
+        name: '账单',
         badge: '更新',
         path: 'quasar-cli2'
       },
       {
-        name: 'UMD / Standalone2',
-        path: 'umd2'
-      },
-      {
-        name: 'Vue CLI Plugin2',
+        name: '发票',
         path: 'vue-cli-plugin2'
       },
       {
-        name: 'Quasar CLI3',
-        path: 'quasar-cli3'
-      },
-      {
-        name: 'UMD / Standalone3',
-        path: 'umd3'
-      },
-      {
-        name: 'Vue CLI Plugin3',
-        path: 'vue-cli-plugin3'
-      },
-      {
-        name: 'Quasar CLI4',
-        path: 'quasar-cli4'
-      },
-      {
-        name: 'UMD / Standalone4',
-        path: 'umd4'
-      },
-      {
-        name: 'Vue CLI Plugin4',
-        path: 'vue-cli-plugin4'
+        name: '优惠券',
+        path: 'umd2'
       }
     ]
   }
@@ -64,7 +43,7 @@ module.exports = [
   {
     name: '总览',
     icon: 'view_quilt',
-    path: 'ecs/dashboard'
+    path: 'dashboard'
   },
   {
     name: '弹性云服务器',
@@ -78,9 +57,10 @@ module.exports = [
     path: 'lists'
   },
   {
-    name: '分布式存储',
+    name: '权限管理',
     icon: 'style',
     path: 'start',
+    opened: true,
     children: gettingStarted
   }
 ]
