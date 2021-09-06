@@ -10,7 +10,7 @@
           <div class="text-h6 q-mt-xs" v-if="$q.screen.gt.sm">普通展示，列表页面效果</div>
         </div>
       </div>
-     <div class="q-mb-lg">
+     <div class="q-mb-lg my-table">
        <q-table
           title="Treats"
           :data="data"
@@ -210,6 +210,4 @@ export default {
 }
 </script>
 <style lang="sass">
-.q-table__top
-  padding: 12px 0;
 </style>

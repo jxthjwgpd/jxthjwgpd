@@ -41,7 +41,7 @@
           <q-btn flat label="前往填写" color="red-7"/>
         </template>
       </q-banner>
-     <div class="q-mb-lg">
+     <div class="q-mb-lg my-table">
        <q-table
           title="Treats"
           :data="data"
@@ -237,6 +237,4 @@ export default {
 }
 </script>
 <style lang="sass">
-.q-table__top
-  padding: 12px 0;
 </style>
