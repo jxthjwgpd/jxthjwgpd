@@ -87,7 +87,7 @@ export default {
           }, [ h(QIcon, { props: { name: menu.icon } }, (!this.$q.screen.gt.sm) ? [ h(QTooltip, { props: { anchor: 'center right', self: 'center left', offset: [25, 25] } }, [ menu.name ]) ] : null) ])
           : (!this.$q.screen.gt.sm) ? h(QItemSection, {
             props: { avatar: true }
-          }, [ h(QIcon, { props: { name: 'adjust', color: 'grey-6' } }, [ h(QTooltip, { props: { anchor: 'center right', self: 'center left', offset: [25, 25] } }, [ menu.name ]) ]) ]) : null,
+          }, [ h(QIcon, { props: { name: 'select_all', color: 'blue-6' } }, [ h(QTooltip, { props: { anchor: 'center right', self: 'center left', offset: [25, 25] } }, [ menu.name ]) ]) ]) : null,
 
         h(QItemSection, [ menu.name ]),
 

@@ -42,7 +42,7 @@ const gettingStarted = [
 module.exports = [
   {
     name: '总览',
-    icon: 'view_quilt',
+    icon: 'broken_image',
     path: 'dashboard'
   },
   {
