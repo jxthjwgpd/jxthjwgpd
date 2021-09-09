@@ -8,9 +8,15 @@ import {
   QList,
   QTooltip
 } from 'quasar'
-import Menu from '../assets/menu.js'
+// import Menu from '../assets/menu.js'
 export default {
   name: 'AppMenuNew',
+
+  props: {
+    menuData: {
+      default: () => {}, type: Array
+    }
+  },
 
   watch: {
     $route (route) {
@@ -101,9 +107,13 @@ export default {
   },
 
   render (h) {
-    return h(QList, { staticClass: (!this.$q.screen.gt.sm) ? 'app-menu minimize' : 'app-menu' }, Menu.map(
-      item => this.getDrawerMenu(h, item, '/' + item.path, 0)
-    ))
+    if (this.menuData) {
+      return h(QList, { staticClass: (!this.$q.screen.gt.sm) ? 'app-menu minimize' : 'app-menu' }, this.menuData.map(
+        item => this.getDrawerMenu(h, item, '/' + item.path, 0)
+      ))
+    } else {
+      return null
+    }
   },
 
   mounted () {
