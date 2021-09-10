@@ -13,6 +13,7 @@ export default {
   name: 'AppMenuNew',
 
   props: {
+    value: Boolean,
     menuData: {
       default: () => {}, type: Array
     }
@@ -77,7 +78,7 @@ export default {
         attrs.href = menu.path
         attrs.target = '_blank'
       }
-      if (!this.$q.screen.gt.sm) {
+      if (!this.value) {
         props.insetLevel = 0
       }
       return h(QItem, {
@@ -90,8 +91,8 @@ export default {
         menu.icon !== void 0
           ? h(QItemSection, {
             props: { avatar: true }
-          }, [ h(QIcon, { props: { name: menu.icon } }, (!this.$q.screen.gt.sm) ? [ h(QTooltip, { props: { anchor: 'center right', self: 'center left', offset: [25, 25] } }, [ menu.name ]) ] : null) ])
-          : (!this.$q.screen.gt.sm) ? h(QItemSection, {
+          }, [ h(QIcon, { props: { name: menu.icon } }, (!this.value) ? [ h(QTooltip, { props: { anchor: 'center right', self: 'center left', offset: [25, 25] } }, [ menu.name ]) ] : null) ])
+          : (!this.value) ? h(QItemSection, {
             props: { avatar: true }
           }, [ h(QIcon, { props: { name: 'select_all', color: 'blue-6' } }, [ h(QTooltip, { props: { anchor: 'center right', self: 'center left', offset: [25, 25] } }, [ menu.name ]) ]) ]) : null,
 
@@ -108,12 +109,11 @@ export default {
 
   render (h) {
     if (this.menuData) {
-      return h(QList, { staticClass: (!this.$q.screen.gt.sm) ? 'app-menu minimize' : 'app-menu' }, this.menuData.map(
+      return h(QList, { staticClass: this.value ? 'app-menu' : 'app-menu minimize' }, this.menuData.map(
         item => this.getDrawerMenu(h, item, '/' + item.path, 0)
       ))
-    } else {
-      return null
     }
+    return null
   },
 
   mounted () {

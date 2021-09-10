@@ -10,11 +10,7 @@
         </q-avatar>
         <span class="q-ml-sm" v-if="$q.screen.gt.sm">Quasar Admin</span>
     </q-toolbar-title>
-
-    <q-tabs dense narrow-indicator align="left">
-        <q-route-tab :ripple="false" label="总览" to="dashboard"/>
-        <q-route-tab :ripple="false" label="安全设置" to="events"/>
-    </q-tabs>
+    <slot />
     <q-space />
     <div class="q-gutter-sm row items-center no-wrap q-mr-sm">
         <q-btn round dense flat icon="apps" v-if="$q.screen.gt.xs">
