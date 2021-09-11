@@ -22,9 +22,10 @@
               dense
               round
               @click="sidebarLeftOpen = !sidebarLeftOpen"
-              :icon="`${sidebarLeftOpen?'menu':'close'}`"
+              :icon="`${sidebarLeftOpen?'format_indent_decrease':'format_indent_increase'}`"
               aria-label="Menu"
               color="blue-6"
+              size="sm"
             />
         </div>
       </div>
@@ -99,7 +100,7 @@ export default {
      right: 0;
      bottom: 0;
      height: 45px;
-     padding-left: 10px;
+     padding-left: 12.5px;
 .main-page-body
   position: absolute;
   top: 0;

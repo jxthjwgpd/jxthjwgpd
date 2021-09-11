@@ -10,6 +10,22 @@
           <div class="text-h6 q-mt-xs" v-if="$q.screen.gt.sm">普通展示，列表页面效果</div>
         </div>
       </div>
+      <div class="bg-white q-mb-lg q-pa-sm">
+        <q-input color="blue-12" label-color="blue-12" v-model="value1" >
+          <template v-slot:prepend>
+            <q-icon :name="value1" color="blue-12" />
+          </template>
+        </q-input>
+        <q-separator color="blue-12"/>
+        <q-icon-picker
+          v-model="value1"
+          icon-set="material-icons"
+          :pagination.sync="pagination1"
+          style="height: 280px;"
+          class="q-mt-sm"
+          color="blue-6"
+        />
+      </div>
      <div class="q-mb-lg my-table">
        <q-table
           title="Treats"
@@ -47,10 +63,20 @@
 </template>
 
 <script>
+import { Component as QIconPicker } from '@quasar/quasar-ui-qiconpicker'
+import '@quasar/quasar-ui-qiconpicker/dist/index.css'
 export default {
   name: 'PageLists',
+  components: {
+    QIconPicker
+  },
   data () {
     return {
+      value1: '' || 'event_available',
+      pagination1: {
+        itemsPerPage: 100,
+        page: 0
+      },
       filter: '',
       loading: false,
       pagination: {

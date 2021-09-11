@@ -52,7 +52,7 @@ module.exports = [
   },
   {
     name: '专属主机',
-    icon: 'widgets',
+    icon: 'subtitles',
     badge: '更新',
     path: 'lists'
   },

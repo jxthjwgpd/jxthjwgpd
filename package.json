@@ -1,6 +1,6 @@
 {
   "name": "quasar-element-pro",
-  "version": "0.1.30",
+  "version": "0.1.32",
   "description": "A Quasar Framework app",
   "productName": "Quasar Admin Element Pro",
   "cordovaId": "org.cordova.quasar.app",
@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@quasar/app": "^1.0.0",
+    "@quasar/quasar-app-extension-qiconpicker": "^1.1.1",
     "@vue/eslint-config-standard": "^4.0.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.10.0",
