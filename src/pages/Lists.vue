@@ -11,6 +11,23 @@
         </div>
       </div>
       <div class="bg-white q-mb-lg q-pa-sm">
+        <q-markup-table flat bordered>
+          <thead>
+            <tr>
+              <th class="text-left">Property</th>
+              <th class="text-left">Value</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr v-for="(value, prop) in $q.platform.is" :key="prop">
+              <td>{{ prop }}</td>
+              <td>{{ value }}</td>
+            </tr>
+          </tbody>
+        </q-markup-table>
+      </div>
+      <div class="bg-white q-mb-lg q-pa-sm">
         <q-input color="blue-12" label-color="blue-12" v-model="value1" >
           <template v-slot:prepend>
             <q-icon :name="value1" color="blue-12" />

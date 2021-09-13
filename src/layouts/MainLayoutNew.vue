@@ -49,17 +49,12 @@ export default {
     }
   },
   mounted () {
-    this.menuData.map(
-      item => {
-      }
-    )
     if (this.$q.screen.gt.xs) {
       this.sidebarLeftOpen = false
     }
     if (this.$q.screen.gt.sm) {
       this.sidebarLeftOpen = true
     }
-    // this.sidebarLeftOpen = this.$q.screen.gt.sm
   },
   watch: {
     'sidebarLeftOpen' (val) {

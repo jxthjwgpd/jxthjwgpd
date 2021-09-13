@@ -16,12 +16,15 @@
         <q-btn round dense flat icon="emoji_food_beverage" v-if="$q.screen.gt.xs" @click="toolbar=!toolbar">
         <q-tooltip>喝杯茶吧</q-tooltip>
         </q-btn>
-        <q-btn round dense flat icon="notifications" v-if="$q.screen.gt.xs">
+        <q-btn round dense flat icon="notifications" v-if="$q.screen.gt.xs" >
         <q-badge color="red" text-color="white" floating>
             8
         </q-badge>
         <q-tooltip>Notifications</q-tooltip>
         </q-btn>
+        <!-- <q-btn round dense flat :icon="$q.dark.isActive ? 'brightness_4' : 'brightness_5'" v-if="$q.screen.gt.xs" @click="$q.dark.toggle()">
+        <q-tooltip>Notifications</q-tooltip>
+        </q-btn> -->
     </div>
     <div class="self-stretch row no-wrap">
         <q-btn-dropdown flat no-caps stretch auto-close >
