@@ -3,17 +3,15 @@
 
     <q-app-header>
       <q-tabs dense narrow-indicator align="left">
-        <!-- <q-route-tab :ripple="false" label="总览" to="dashboard"/> -->
-        <q-route-tab :ripple="false" v-for="item in menuData" :key="`${item.name}-${item.path}`" :label="item.name" :to="item.path"/>
+        <q-route-tab :ripple="false" v-for="item in menuData" :key="`${item.name}-${item.path}`" :label="`${item.name}`" :to="`${'/'+item.path}`"/>
       </q-tabs>
     </q-app-header>
 
     <q-page-container class="main-page-container">
       <div class="main-page-sidebar full-height" ref="pageSidebar" v-show="sidebarVisibility" :style="`width: ${!$q.screen.gt.xs ? 0 : !sidebarLeftOpen ? sidebarMinimize : sidebar }px`">
-        <div class="sidebar-body" v-if="menuData.length>0">
+        <div class="sidebar-body" v-if="sidebarMenuData.length>0">
           <q-scroll-area class="fit">
-            <q-app-menu-new :menuData="menuData" v-model="sidebarLeftOpen"/>
-            <!-- <q-app-menu-new :menuData="menuData" v-show="false"/> -->
+            <q-app-menu-new :menuData="sidebarMenuData" v-model="sidebarLeftOpen"/>
           </q-scroll-area>
         </div>
         <div class="sidebar-footer row items-center" v-if="$q.screen.gt.xs">
@@ -45,27 +43,45 @@ export default {
       sidebarMinimize: 55,
       sidebarVisibility: true,
       sidebarLeftOpen: true,
+      sidebarMenuData: [],
       menuData: menuData
     }
   },
   mounted () {
-    if (this.$q.screen.gt.xs) {
+    this.SidebarMenuDataMethod(this.$route)
+    if (this.sidebarVisibility && this.$q.screen.gt.xs) {
       this.sidebarLeftOpen = false
     }
-    if (this.$q.screen.gt.sm) {
+    if (this.sidebarVisibility && this.$q.screen.gt.sm) {
       this.sidebarLeftOpen = true
     }
   },
   watch: {
+    $route: 'SidebarMenuDataMethod',
     'sidebarLeftOpen' (val) {
-      this.$refs.pageSidebar.setAttribute('style', 'width: ' + (val ? this.sidebar : this.sidebarMinimize) + 'px')
-      this.$refs.pageBody.setAttribute('style', 'left: ' + (val ? this.sidebar : this.sidebarMinimize) + 'px')
+      if (this.sidebarVisibility) {
+        this.$refs.pageSidebar.setAttribute('style', 'width: ' + (val ? this.sidebar : this.sidebarMinimize) + 'px')
+        this.$refs.pageBody.setAttribute('style', 'left: ' + (val ? this.sidebar : this.sidebarMinimize) + 'px')
+      }
     },
     '$q.screen.gt.sm' (val) {
-      this.sidebarLeftOpen = val
+      if (this.sidebarVisibility) {
+        this.sidebarLeftOpen = val
+      }
     },
     '$q.screen.gt.xs' () {
-      this.sidebarLeftOpen = false
+      if (this.sidebarVisibility) {
+        this.sidebarLeftOpen = false
+      }
+    }
+  },
+  methods: {
+    SidebarMenuDataMethod (route) {
+      this.sidebarVisibility = route.meta.sidebar
+      if (this.sidebarVisibility) {
+        const { path } = route.matched[1]
+        this.sidebarMenuData = this.menuData.filter(item => item.children && ('/' + item.path) === path)
+      }
     }
   }
 }

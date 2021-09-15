@@ -13,10 +13,19 @@ const routes = [
     component: () => import('layouts/MainLayoutNew.vue'),
     meta: { auth: true },
     children: [
-      { path: '', component: () => import('pages/Index.vue') },
+      { path: '', redirect: { path: 'dashboard' } },
       { path: 'dashboard', component: () => import('pages/ecs/Dashboard.vue') },
       { path: 'events', component: () => import('pages/Events.vue') },
-      { path: 'lists', component: () => import('pages/Lists.vue') }
+      { path: 'lists', component: () => import('pages/Lists.vue') },
+      {
+        path: 'system',
+        component: () => import('layouts/BlankLayout.vue'),
+        children: [
+          { path: '', redirect: { path: 'test1' } },
+          { path: 'test1', meta: { sidebar: true }, component: () => import('pages/Index.vue') },
+          { path: 'test2', meta: { sidebar: true }, component: () => import('pages/Index.vue') }
+        ]
+      }
     ]
   }
 ]

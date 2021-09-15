@@ -1,11 +1,11 @@
 const gettingStarted = [
   {
     name: '账号管理',
-    path: 'r-flavour'
+    path: 'test3'
   },
   {
     name: '权限管理',
-    path: 'pick-quasar-flavour'
+    path: 'test2'
   },
   {
     name: '费用中心',
@@ -16,7 +16,7 @@ const gettingStarted = [
       },
       {
         name: '支收明细',
-        path: 'umd'
+        path: 'test1'
       },
       {
         name: '订单管理',
@@ -59,7 +59,7 @@ module.exports = [
   {
     name: '权限管理',
     icon: 'style',
-    path: 'start',
+    path: 'system',
     opened: true,
     children: gettingStarted
   }
