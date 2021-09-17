@@ -4,7 +4,7 @@
       <q-card-section horizontal>
       <q-img
           class="col-5"
-          src="https://cdn.quasar.dev/img/parallax1.jpg"
+          src="statics/th.jpg"
           v-if="$q.screen.gt.xs"
         />
 
@@ -108,5 +108,11 @@ export default {
 
 <style lang="sass" scoped>
 .login-wrapper, login-form
-  width: 680px;
+  width: 640px;
+@media (max-width: 1023px)
+  .login-wrapper, login-form
+    width: 98%;
+@media (max-width: 599px)
+  .q-pa-xl
+    padding: 15px;
 </style>

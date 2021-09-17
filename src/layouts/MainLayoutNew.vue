@@ -1,12 +1,7 @@
 <template>
   <q-layout view="hHh LpR lfr">
 
-    <q-app-header>
-      <q-tabs dense narrow-indicator align="left">
-        <q-route-tab :ripple="false" v-for="item in menuData" :key="`${item.name}-${item.path}`" :label="`${item.name}`" :to="`${'/'+item.path}`"/>
-      </q-tabs>
-    </q-app-header>
-
+    <q-app-header :menuData="menuData" />
     <q-page-container class="main-page-container">
       <div class="main-page-sidebar full-height" ref="pageSidebar" v-show="sidebarVisibility" :style="`width: ${!$q.screen.gt.xs ? 0 : !sidebarLeftOpen ? sidebarMinimize : sidebar }px`">
         <div class="sidebar-body" v-if="sidebarMenuData.length>0">

@@ -46,18 +46,18 @@ module.exports = [
     path: 'dashboard'
   },
   {
-    name: '弹性云服务器',
+    name: '数据表格',
     icon: 'healing',
     path: 'events'
   },
   {
-    name: '专属主机',
+    name: '组件展示',
     icon: 'subtitles',
     badge: '更新',
     path: 'lists'
   },
   {
-    name: '权限管理',
+    name: '模块扩展',
     icon: 'style',
     path: 'system',
     opened: true,

@@ -1,7 +1,7 @@
 <template>
   <q-layout>
     <q-page-container><router-view></router-view></q-page-container>
-    <q-footer class="flex items-center justify-between footer" v-if="$q.screen.gt.sm">
+    <q-footer class="flex items-center justify-between footer" v-if="$q.screen.gt.xs">
       <div>
         <span>© 2020 Quasar v{{$q.version}}.</span>
         <span class="q-ml-sm">Created by <a href="https://gitee.com/ruyangit/dashboard">RuYang</a></span>
