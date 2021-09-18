@@ -56,7 +56,8 @@ module.exports = function (ctx) {
         'LocalStorage',
         'SessionStorage',
         'Meta',
-        'Notify'
+        'Notify',
+        'Dialog'
       ],
       config: {
         loadingBar: { color: 'purple', size: '3px' }

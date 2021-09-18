@@ -52,7 +52,7 @@
           Reserve
         </q-btn>
         <q-space/>
-        <q-btn flat round icon="menu" />
+        <q-btn flat round icon="settings_system_daydream" />
       </q-card-actions>
       <q-inner-loading :showing="loading" />
     </q-card>
