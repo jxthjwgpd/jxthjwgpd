@@ -1,7 +1,7 @@
 const gettingStarted = [
   {
     name: '账号管理',
-    path: 'test3'
+    path: 'demo-form'
   },
   {
     name: '权限管理',
