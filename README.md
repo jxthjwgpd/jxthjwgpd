@@ -2,14 +2,26 @@
 
 A Quasar Framework app
 
-## Install the dependencies
+## Make sure you have Node >=8 and NPM >=5 installed on your machine.
 ```bash
-npm install
+
+# Node.js >= 8.9.0 is required.
+
+$ yarn global add @quasar/cli
+# or
+$ npm install -g @quasar/cli
+
+& npm install
 ```
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
+### Developing
 ```bash
 quasar dev
+```
+
+### Build the app for production
+```bash
+quasar build
 ```
 
 ### Lint the files
@@ -17,9 +29,36 @@ quasar dev
 npm run lint
 ```
 
-### Build the app for production
+### An example config for nginx may look like this
 ```bash
-quasar build
+server {
+    listen 80 http2;
+    server_name quasar.myapp.com;
+
+    root /home/user/quasar.myapp.com/public;
+
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-XSS-Protection "1; mode=block";
+    add_header X-Content-Type-Options "nosniff";
+
+    index index.html;
+
+    charset utf-8;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location = /robots.txt  { access_log off; log_not_found off; }
+
+    access_log off;
+    error_log  /var/log/nginx/quasar.myapp.com-error.log error;
+
+    location ~ /\.(?!well-known).* {
+        deny all;
+    }
+}
 ```
 
 ### Customize the configuration
