@@ -138,8 +138,10 @@ export default {
     font-weight: 700
 
   .q-expansion-item__content .q-item
-    border-radius: 0 5px 5px 0
-    margin-right: 12px
+    border-radius: 0
+    margin-right: 0
+    &--dense
+      min-height: 38px
 
   .q-item.q-router-link--active
     background: scale-color($primary, $lightness: 90%)

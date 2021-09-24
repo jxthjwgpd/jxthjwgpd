@@ -4,11 +4,11 @@
     <q-toolbar>
     <q-btn dense flat round icon="menu"  @click="left = !left"  v-if="!$q.screen.gt.xs"/>
 
-    <q-toolbar-title shrink class="row items-center no-wrap">
+    <q-toolbar-title shrink class="row items-center no-wrap" >
         <q-avatar v-if="$q.screen.gt.xs">
           <img src="statics/icons/favicon-96x96.png" width="96px">
         </q-avatar>
-        <span class="q-ml-sm"><span class="text-weight-bold">Quasar</span> Admin</span>
+        <span class="q-ml-sm" ><span class="text-weight-bold">Quasar</span> Admin</span>
     </q-toolbar-title>
     <q-tabs dense narrow-indicator align="left" v-if="$q.screen.gt.xs">
       <q-route-tab :ripple="false" v-for="item in menuData" :key="`${item.name}-${item.path}`" :label="`${item.name}`" :to="`${'/'+item.path}`"/>
@@ -64,7 +64,7 @@
     </q-toolbar>
 
 </q-header>
-<q-drawer v-model="left" side="left" overlay bordered>
+<q-drawer v-model="left" side="left" overlay bordered :width="240">
     <q-app-menu-new :menuData="menuData" v-model="left"/>
 </q-drawer>
 <q-drawer v-model="right" side="right" overlay bordered>

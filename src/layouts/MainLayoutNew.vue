@@ -34,7 +34,7 @@ import menuData from '../assets/menu.js'
 export default {
   data () {
     return {
-      sidebar: 200,
+      sidebar: 240,
       sidebarMinimize: 55,
       sidebarVisibility: true,
       sidebarLeftOpen: true,
@@ -106,7 +106,7 @@ export default {
      right: 0;
      bottom: 0;
      height: 45px;
-     padding-left: 12.5px;
+     padding-left: 13.5px;
 .main-page-body
   position: absolute;
   top: 0;

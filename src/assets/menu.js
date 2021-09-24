@@ -1,41 +1,50 @@
 const gettingStarted = [
   {
-    name: '账号管理',
+    name: '概览',
     path: 'demo-form'
   },
   {
-    name: '权限管理',
-    path: 'test2'
-  },
-  {
-    name: '费用中心',
+    name: '人员管理',
+    opened: true,
     children: [
       {
-        name: '账户总览',
+        name: '用户组',
         path: 'index'
       },
       {
-        name: '支收明细',
+        name: '用户',
         path: 'test1'
       },
       {
-        name: '订单管理',
+        name: '设置',
         path: 'vue-cli-plugin'
-      },
-      {
-        name: '账单',
-        badge: '更新',
-        path: 'quasar-cli2'
-      },
-      {
-        name: '发票',
-        path: 'vue-cli-plugin2'
-      },
-      {
-        name: '优惠券',
-        path: 'umd2'
       }
     ]
+  },
+  {
+    name: 'SSO管理',
+    path: 'demo-form1'
+  },
+  {
+    name: '权限管理',
+    children: [
+      {
+        name: '授权',
+        path: 'index11'
+      },
+      {
+        name: '授权策略管理',
+        path: 'test1222'
+      }
+    ]
+  },
+  {
+    name: '角色管理',
+    path: 'demo-form2'
+  },
+  {
+    name: '应用管理',
+    path: 'demo-form3'
   }
 ]
 

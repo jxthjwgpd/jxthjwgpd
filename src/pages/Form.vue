@@ -17,7 +17,15 @@
                 @reset="onReset"
                 class="q-gutter-md "
                 >
-                <q-input outlined v-model="form.test1" label="实例名称" :dense="true" />
+                <q-input outlined v-model="form.test1" label="实例名称1" :dense="true" />
+                <div class="row">
+                  <div class="col q-pr-sm">
+                  <q-input outlined v-model="form.test1" label="实例名称2" :dense="true" />
+                  </div>
+                  <div class="col">
+                  <q-input outlined v-model="form.test1" label="实例名称3" :dense="true" />
+                  </div>
+                </div>
                 <!-- <q-option-group
                 :options="options"
                 label="Notifications"
@@ -75,6 +83,55 @@
         sent
       />
             </q-card-section>
+        </q-card>
+    </div>
+    <div class="q-mt-md">
+        <q-card flat>
+            <q-card-section>
+                <q-form
+                @submit="onSubmit"
+                @reset="onReset"
+                class="q-gutter-md "
+                >
+                <q-input outlined v-model="form.test1" label="实例名称1" :dense="true" />
+                <div class="row">
+                  <div class="col q-pr-sm">
+                <q-input outlined v-model="form.test1" label="实例名称2" :dense="true" />
+                  </div>
+                  <div class="col">
+                <q-input outlined v-model="form.test1" label="实例名称3" :dense="true" />
+                  </div>
+                </div>
+                <!-- <q-option-group
+                :options="options"
+                label="Notifications"
+                type="radio"
+                v-model="form.test2"
+                /> -->
+                <q-editor
+                    min-height="5rem"
+                    @paste.native="evt => pasteCapture(evt)"
+                    v-model="form.test3"
+                    :definitions="{
+                        image: {
+                            icon: 'image',
+                            color: 'primary',
+                            handler: onSubmit
+                        },
+                    }"
+                    :toolbar="[
+                        ['image']
+                    ]"
+                />
+                <q-input outlined v-model="form.test4" type="textarea" label="机密信息（选填）" :dense="true" />
+                <q-select outlined v-model="form.test5" :options="options" label="紧急程度" :dense="true" :options-dense="true" />
+                </q-form>
+            </q-card-section>
+            <q-card-actions class="q-pl-md">
+                <q-btn color="primary">
+                保存
+                </q-btn>
+            </q-card-actions>
         </q-card>
     </div>
   </q-page>
