@@ -46,7 +46,7 @@ export default {
               dense: level > 0,
               icon: menu.icon,
               defaultOpened: menu.opened,
-              expandSeparator: true,
+              expandSeparator: false,
               switchToggleSide: level > 0,
               denseToggle: level > 0
             }

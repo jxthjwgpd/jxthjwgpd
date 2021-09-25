@@ -6,7 +6,7 @@ export function init (state) {
   setHeaderAuthorization(state)
 }
 
-const user = { token: 'Abcd1234', username: 'root' }
+const user = { token: 'Abcd1234', username: 'system' }
 
 export function login ({ commit, dispatch, getters }, form) {
   if (getters.isAuthenticated) return dispatch('validate')
@@ -16,7 +16,7 @@ export function login ({ commit, dispatch, getters }, form) {
 
 export function validate ({ commit, state }) {
   if (!state.user) return Promise.resolve(null)
-  commit('LOGIN', user)
+  // commit('LOGIN', user)
   return { user: user }
 //   return axios.get('uaa/users')
 //     .then(response => {

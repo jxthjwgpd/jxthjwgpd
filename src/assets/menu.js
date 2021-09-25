@@ -1,50 +1,47 @@
 const gettingStarted = [
   {
     name: '概览',
-    path: 'demo-form'
+    path: 'overview'
   },
   {
-    name: '人员管理',
+    name: '用户管理',
     opened: true,
     children: [
       {
-        name: '用户组',
-        path: 'index'
-      },
-      {
         name: '用户',
-        path: 'test1'
+        path: 'users'
       },
       {
-        name: '设置',
-        path: 'vue-cli-plugin'
+        name: '用户组',
+        path: 'groups'
+      },
+      {
+        name: '安全设置',
+        path: 'settings'
       }
     ]
   },
   {
-    name: 'SSO管理',
-    path: 'demo-form1'
-  },
-  {
     name: '权限管理',
+    opened: true,
     children: [
       {
         name: '授权',
-        path: 'index11'
+        path: 'permissions'
       },
       {
-        name: '授权策略管理',
-        path: 'test1222'
+        name: '策略管理',
+        path: 'policies'
       }
     ]
   },
   {
     name: '角色管理',
-    path: 'demo-form2'
+    path: 'roles'
   },
   {
     name: '应用管理',
-    path: 'demo-form3'
+    path: 'applications'
   }
 ]
 
@@ -66,7 +63,7 @@ module.exports = [
     path: 'lists'
   },
   {
-    name: '模块扩展',
+    name: '系统管理',
     icon: 'style',
     path: 'system',
     opened: true,
