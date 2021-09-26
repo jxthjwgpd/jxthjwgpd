@@ -5,9 +5,9 @@
         <div>
           <q-breadcrumbs align="left">
             <q-breadcrumbs-el label="系统管理" to="/system"/>
-            <q-breadcrumbs-el label="用户"/>
+            <q-breadcrumbs-el label="用户组"/>
           </q-breadcrumbs>
-          <div class="text-h6 q-mt-xs" v-if="$q.screen.gt.sm">用户</div>
+          <div class="text-h6 q-mt-xs" v-if="$q.screen.gt.sm">用户组</div>
         </div>
         <div class="q-gutter-sm" v-if="$q.screen.gt.sm">
             <q-btn label="刷新" color="primary" outline/>
@@ -28,16 +28,8 @@
           :table-header-style="{ backgroundColor: '#eeeeee'}"
         >
         <template v-slot:top-left>
-          <q-btn label="新增用户" color="primary" />
-          <q-btn-group class="q-ml-sm">
-            <q-btn label="活跃" color="primary"  />
-            <q-btn label="管理员" color="primary" />
-            <q-btn label="外部" color="primary"  />
-            <q-btn label="禁用" color="primary"  />
-            <q-btn label="无策略" color="primary"  />
-          </q-btn-group>
+          <q-btn label="新增用户组" color="primary"/>
         </template>
-
         <template v-slot:top-right>
           <q-input dense debounce="300" v-model="filter" placeholder="查询">
             <template v-slot:append>
@@ -57,11 +49,10 @@
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td key="loginName" :props="props" >{{ props.row.loginName }}</q-td>
-            <q-td key="nickname" :props="props">{{ props.row.nickname }}</q-td>
             <q-td key="remarks" :props="props">{{ props.row.remarks }}</q-td>
             <q-td key="createTime" :props="props">{{ props.row.createTime }}</q-td>
             <q-td key="action" :props="props" class="q-gutter-xs">
-              <q-btn flat dense color="primary" label="添加用户组" />
+              <q-btn flat dense color="primary" label="添加用户" />
               <q-btn flat dense color="primary" label="添加权限" />
               <q-btn flat dense color="negative" label="删除" @click="confirm(props.row)"/>
             </q-td>
@@ -88,8 +79,7 @@ export default {
         rowsNumber: 10
       },
       columns: [
-        { name: 'loginName', label: '用户名称', align: 'left', field: 'loginName', sortable: true },
-        { name: 'nickname', label: '昵称', align: 'left', field: 'nickname', sortable: true },
+        { name: 'loginName', label: '用户组名称', align: 'left', field: 'loginName', sortable: true },
         { name: 'remarks', label: '备注', align: 'left', field: 'remarks' },
         { name: 'createTime', label: '创建时间', align: 'center', field: 'createTime', sortable: true },
         { name: 'action', label: '操作', field: 'action', align: 'center', style: 'width: 100px' }

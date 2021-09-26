@@ -17,6 +17,9 @@
 
 <script>
 export default {
-  name: 'Error404'
+  name: 'Error404',
+  mounted () {
+    // console.log(this.$route)
+  }
 }
 </script>

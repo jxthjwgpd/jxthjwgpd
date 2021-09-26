@@ -3,7 +3,7 @@
     <div class="row items-center justify-between q-mb-md">
       <div>
         <q-breadcrumbs align="left">
-          <q-breadcrumbs-el label="系统管理" />
+          <q-breadcrumbs-el label="系统管理"  to="/system"/>
           <q-breadcrumbs-el label="概览" />
         </q-breadcrumbs>
         <div class="text-h6 q-mt-xs" v-if="$q.screen.gt.sm">系统管理数据状况概览</div>
@@ -27,16 +27,28 @@
 
           <q-card-section class="text-subitle2 row">
             <q-item class="col-3 q-pl-sm">
-              <q-item-section>用户组</q-item-section>
+              <q-chip square>
+                <q-avatar color="red" text-color="white" icon="people_alt"></q-avatar>
+                30
+              </q-chip>
             </q-item>
             <q-item class="col-3 q-pl-sm">
-              <q-item-section>用户</q-item-section>
+              <q-chip square>
+                <q-avatar color="blue" text-color="white" icon="person"></q-avatar>
+                1000
+              </q-chip>
             </q-item>
             <q-item class="col-3 q-pl-sm">
-              <q-item-section>策略数</q-item-section>
+              <q-chip square>
+                <q-avatar color="indigo" text-color="white" icon="star"></q-avatar>
+                1950
+              </q-chip>
             </q-item>
             <q-item class="col-3 q-pl-sm">
-              <q-item-section>应用</q-item-section>
+              <q-chip square>
+                <q-avatar color="green" text-color="white" icon="graphic_eq"></q-avatar>
+                2
+              </q-chip>
             </q-item>
           </q-card-section>
 

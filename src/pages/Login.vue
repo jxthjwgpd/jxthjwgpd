@@ -108,11 +108,11 @@ export default {
 
 <style lang="sass" scoped>
 .login-wrapper, login-form
-  width: 640px;
+  width: 640px
 @media (max-width: 1023px)
   .login-wrapper, login-form
-    width: 98%;
+    width: 98%
 @media (max-width: 599px)
   .q-pa-xl
-    padding: 15px;
+    padding: 15px
 </style>

@@ -16,7 +16,7 @@ const gettingStarted = [
         path: 'groups'
       },
       {
-        name: '安全设置',
+        name: '设置',
         path: 'settings'
       }
     ]
@@ -42,6 +42,10 @@ const gettingStarted = [
   {
     name: '应用管理',
     path: 'applications'
+  },
+  {
+    name: '登录日志',
+    path: 'login-logs'
   }
 ]
 

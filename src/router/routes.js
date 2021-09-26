@@ -23,8 +23,9 @@ const routes = [
         children: [
           { path: '', redirect: { path: 'overview' } },
           { path: 'overview', meta: { sidebar: true }, component: () => import('pages/system/Overview.vue') },
-          { path: 'groups', meta: { sidebar: true }, component: () => import('pages/Form.vue') },
-          { path: 'users', meta: { sidebar: true }, component: () => import('pages/system/UserList.vue') }
+          { path: 'groups', meta: { sidebar: true }, component: () => import('pages/system/GroupList.vue') },
+          { path: 'users', meta: { sidebar: true }, component: () => import('pages/system/UserList.vue') },
+          { path: 'settings', meta: { sidebar: true }, component: () => import('pages/system/Setting.vue') }
         ]
       }
     ]
