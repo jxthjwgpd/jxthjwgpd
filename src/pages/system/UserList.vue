@@ -10,7 +10,7 @@
           <div class="text-h6 q-mt-xs" v-if="$q.screen.gt.sm">用户</div>
         </div>
         <div class="q-gutter-sm" v-if="$q.screen.gt.sm">
-            <q-btn label="刷新" color="primary" outline/>
+            <q-btn icon="loop" color="primary" outline dense/>
         </div>
       </div>
      <div class="q-mb-lg my-table">
@@ -28,7 +28,7 @@
           :table-header-style="{ backgroundColor: '#eeeeee'}"
         >
         <template v-slot:top-left>
-          <q-btn label="新增用户" color="primary" />
+          <q-btn label="新增用户" color="primary" to="/system/users/create"/>
           <q-btn-group class="q-ml-sm">
             <q-btn label="活跃" color="primary"  />
             <q-btn label="管理员" color="primary" />

@@ -25,6 +25,7 @@ const routes = [
           { path: 'overview', meta: { sidebar: true }, component: () => import('pages/system/Overview.vue') },
           { path: 'groups', meta: { sidebar: true }, component: () => import('pages/system/GroupList.vue') },
           { path: 'users', meta: { sidebar: true }, component: () => import('pages/system/UserList.vue') },
+          { path: 'users/create', meta: { sidebar: true }, component: () => import('pages/system/UserCreate.vue') },
           { path: 'settings', meta: { sidebar: true }, component: () => import('pages/system/Setting.vue') }
         ]
       }
