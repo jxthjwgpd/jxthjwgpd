@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pa-lg">
+  <q-page class="q-pa-lg user-create">
     <div class="row items-center justify-between q-mb-md">
       <div>
         <q-breadcrumbs align="left">
@@ -28,13 +28,13 @@
         </div>
       </div>
     </div>
-    <div class="q-mt-md">
+    <div class="q-mb-lg my-card">
       <q-card
         flat
-        class="user-create"
+        class="q-pb-md"
       >
-        <q-card-section class="q-gutter-y-md">
-          <q-item-label>用户账号信息</q-item-label>
+        <q-card-section class="q-gutter-y-md q-mt-none">
+          <q-item-label class="q-mt-none">用户账号信息</q-item-label>
           <div class="row q-gutter-x-md">
             <div class="username">
               <q-input

@@ -1,37 +1,59 @@
 <template>
   <q-page class="q-pa-lg">
-    <!-- <q-scroll-area class="fit"> -->
-      <div class="row items-center justify-between q-mb-md">
-        <div>
-          <q-breadcrumbs align="left">
-            <q-breadcrumbs-el label="系统管理" to="/system"/>
-            <q-breadcrumbs-el label="用户组"/>
-          </q-breadcrumbs>
-          <div class="text-h6 q-mt-xs" v-if="$q.screen.gt.sm">用户组</div>
-        </div>
-        <div class="q-gutter-sm" v-if="$q.screen.gt.sm">
-            <q-btn label="刷新" color="primary" outline/>
-        </div>
+    <div class="row items-center justify-between q-mb-md">
+      <div>
+        <q-breadcrumbs align="left">
+          <q-breadcrumbs-el
+            label="系统管理"
+            to="/system"
+          />
+          <q-breadcrumbs-el label="用户组" />
+        </q-breadcrumbs>
+        <div
+          class="text-h6 q-mt-xs"
+          v-if="$q.screen.gt.sm"
+        >用户组</div>
       </div>
-     <div class="q-mb-lg my-table">
-       <q-table
-          :data="data"
-          :columns="columns"
-          row-key="id"
-          :pagination.sync="pagination"
-          :loading="loading"
-          :filter="filter"
-          @request="onRequest"
-          binary-state-sort
-          square
-          :card-style="{ boxShadow: 'none', padding: '0 10px' }"
-          :table-header-style="{ backgroundColor: '#eeeeee'}"
-        >
+      <div
+        class="q-gutter-sm"
+        v-if="$q.screen.gt.sm"
+      >
+        <q-btn
+          label="刷新"
+          color="primary"
+          outline
+          @click="onRefresh"
+        />
+      </div>
+    </div>
+    <div class="q-mb-lg my-table">
+      <q-table
+        :data="data"
+        :columns="columns"
+        row-key="id"
+        :pagination.sync="pagination"
+        :loading="loading"
+        :filter="filter"
+        @request="onRequest"
+        binary-state-sort
+        square
+        :card-style="{ boxShadow: 'none', padding: '0 10px' }"
+        :table-header-style="{ backgroundColor: '#eeeeee'}"
+      >
         <template v-slot:top-left>
-          <q-btn label="新增用户组" color="primary"/>
+          <q-btn
+            label="新增用户组"
+            color="primary"
+            @click="fixed=!fixed"
+          />
         </template>
         <template v-slot:top-right>
-          <q-input dense debounce="300" v-model="filter" placeholder="查询">
+          <q-input
+            dense
+            debounce="300"
+            v-model="filter"
+            placeholder="查询"
+          >
             <template v-slot:append>
               <q-icon name="search" />
             </template>
@@ -48,19 +70,100 @@
 
         <template v-slot:body="props">
           <q-tr :props="props">
-            <q-td key="loginName" :props="props" >{{ props.row.loginName }}</q-td>
-            <q-td key="remarks" :props="props">{{ props.row.remarks }}</q-td>
-            <q-td key="createTime" :props="props">{{ props.row.createTime }}</q-td>
-            <q-td key="action" :props="props" class="q-gutter-xs">
-              <q-btn flat dense color="primary" label="添加用户" />
-              <q-btn flat dense color="primary" label="添加权限" />
-              <q-btn flat dense color="negative" label="删除" @click="confirm(props.row)"/>
+            <q-td
+              key="loginName"
+              :props="props"
+            >{{ props.row.loginName }}</q-td>
+            <q-td
+              key="remarks"
+              :props="props"
+            >{{ props.row.remarks }}</q-td>
+            <q-td
+              key="createTime"
+              :props="props"
+            >{{ props.row.createTime }}</q-td>
+            <q-td
+              key="action"
+              :props="props"
+              class="q-gutter-xs"
+            >
+              <q-btn
+                flat
+                dense
+                color="primary"
+                label="添加用户"
+                @click="fixed=!fixed"
+              />
+              <q-btn
+                flat
+                dense
+                color="primary"
+                label="添加权限"
+              />
+              <q-btn
+                flat
+                dense
+                color="negative"
+                label="删除"
+                @click="confirm(props.row)"
+              />
             </q-td>
           </q-tr>
         </template>
       </q-table>
-     </div>
-    <!-- </q-scroll-area> -->
+    </div>
+    <q-dialog v-model="fixed">
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">新增用户组</div>
+        </q-card-section>
+
+        <q-separator />
+
+        <q-card-section
+          style="max-height: 50vh; min-width:500px;"
+          class="scroll q-gutter-y-md q-mt-none"
+        >
+          <q-item-label class="q-mt-none">用户组信息</q-item-label>
+          <q-input
+            outlined
+            v-model="form.groupName"
+            label="用户组名称"
+            :dense="true"
+          />
+          <q-input
+            outlined
+            v-model="form.groupCode"
+            label="用户组编码"
+            :dense="true"
+          />
+          <q-item-label>其它</q-item-label>
+          <q-input
+            outlined
+            v-model="form.remarks"
+            type="textarea"
+            label="备注说明"
+            :dense="true"
+          />
+        </q-card-section>
+
+        <q-separator />
+
+        <q-card-actions align="right">
+          <q-btn
+            label="确认"
+            color="primary"
+            v-close-popup
+          />
+          <q-btn
+            flat
+            label="取消"
+            color="primary"
+            v-close-popup
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
@@ -71,6 +174,7 @@ export default {
     return {
       filter: '',
       loading: false,
+      fixed: false,
       pagination: {
         sortBy: 'desc',
         descending: false,
@@ -135,17 +239,25 @@ export default {
           'userType': null
         }
       ],
-      selected: []
+      selected: [],
+      form: {
+        loginName: null,
+        nickname: null,
+        teal: true
+      }
     }
   },
   mounted () {
     // get initial data from server (1st page)
-    this.onRequest({
-      pagination: this.pagination,
-      filter: undefined
-    })
+    this.onRefresh()
   },
   methods: {
+    onRefresh () {
+      this.onRequest({
+        pagination: this.pagination,
+        filter: undefined
+      })
+    },
     onRequest (props) {
       const { page, rowsPerPage, sortBy, descending } = props.pagination
       const filter = props.filter

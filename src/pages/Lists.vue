@@ -1,16 +1,19 @@
 <template>
   <q-page class="q-pa-lg">
     <!-- <q-scroll-area class="fit"> -->
-      <div class="row items-center justify-between q-mb-md">
-        <div>
-          <q-breadcrumbs align="left">
-            <q-breadcrumbs-el label="首页" />
-            <q-breadcrumbs-el label="列表页面" />
-          </q-breadcrumbs>
-          <div class="text-h6 q-mt-xs" v-if="$q.screen.gt.sm">普通展示，列表页面效果</div>
-        </div>
+    <div class="row items-center justify-between q-mb-md">
+      <div>
+        <q-breadcrumbs align="left">
+          <q-breadcrumbs-el label="首页" />
+          <q-breadcrumbs-el label="第三方组件" />
+        </q-breadcrumbs>
+        <div
+          class="text-h6 q-mt-xs"
+          v-if="$q.screen.gt.sm"
+        >普通展示，组件页面效果</div>
       </div>
-      <div class="bg-white q-mb-lg q-pa-sm">
+    </div>
+    <!-- <div class="bg-white q-mb-lg q-pa-sm">
         <q-markup-table flat bordered>
           <thead>
             <tr>
@@ -26,40 +29,60 @@
             </tr>
           </tbody>
         </q-markup-table>
-      </div>
-      <div class="bg-white q-mb-lg q-pa-sm">
-        <q-input color="blue-12" label-color="blue-12" v-model="value1" >
-          <template v-slot:prepend>
-            <q-icon :name="value1" color="blue-12" />
-          </template>
-        </q-input>
-        <q-separator color="blue-12"/>
-        <q-icon-picker
-          v-model="value1"
-          icon-set="material-icons"
-          :pagination.sync="pagination1"
-          style="height: 280px;"
-          class="q-mt-sm"
-          color="blue-6"
-        />
-      </div>
-     <div class="q-mb-lg my-table">
-       <q-table
-          title="Treats"
-          :data="data"
-          :columns="columns"
-          row-key="id"
-          :pagination.sync="pagination"
-          :loading="loading"
-          :filter="filter"
-          @request="onRequest"
-          binary-state-sort
-          square
-          :card-style="{ boxShadow: 'none', padding: '10px' }"
-          :table-header-style="{ backgroundColor: '#eeeeee'}"
-        >
+      </div> -->
+    <div class="q-mb-lg row">
+      <q-card
+        class="col-12"
+        flat
+      >
+        <q-card-section>图表选择组件</q-card-section>
+        <q-card-section>
+          <q-input
+            color="blue-12"
+            label-color="blue-12"
+            v-model="value1"
+          >
+            <template v-slot:prepend>
+              <q-icon
+                :name="value1"
+                color="blue-12"
+              />
+            </template>
+          </q-input>
+          <q-separator color="blue-12" />
+          <q-icon-picker
+            v-model="value1"
+            icon-set="material-icons"
+            :pagination.sync="pagination1"
+            style="height: 280px;"
+            class="q-mt-sm"
+            color="blue-6"
+          />
+        </q-card-section>
+      </q-card>
+    </div>
+    <div class="q-mb-lg my-table">
+      <!-- <q-table
+        title="Treats"
+        :data="data"
+        :columns="columns"
+        row-key="id"
+        :pagination.sync="pagination"
+        :loading="loading"
+        :filter="filter"
+        @request="onRequest"
+        binary-state-sort
+        square
+        :card-style="{ boxShadow: 'none', padding: '10px' }"
+        :table-header-style="{ backgroundColor: '#eeeeee'}"
+      >
         <template v-slot:top-right>
-          <q-input dense debounce="300" v-model="filter" placeholder="查询">
+          <q-input
+            dense
+            debounce="300"
+            v-model="filter"
+            placeholder="查询"
+          >
             <template v-slot:append>
               <q-icon name="search" />
             </template>
@@ -76,22 +99,61 @@
 
         <template v-slot:body="props">
           <q-tr :props="props">
-            <q-td key="desc" :props="props" >{{ props.row.name }}</q-td>
-            <q-td key="calories" :props="props">{{ props.row.calories }}</q-td>
-            <q-td key="fat" :props="props">{{ props.row.fat }}</q-td>
-            <q-td key="carbs" :props="props">{{ props.row.carbs }}</q-td>
-            <q-td key="protein" :props="props">{{ props.row.protein }}</q-td>
-            <q-td key="sodium" :props="props">{{ props.row.sodium }}</q-td>
-            <q-td key="calcium" :props="props">{{ props.row.calcium }}</q-td>
-            <q-td key="iron" :props="props">{{ props.row.iron }}</q-td>
-            <q-td key="action" :props="props" class="q-gutter-xs">
-              <q-btn flat dense color="primary" label="编辑" />
-              <q-btn flat dense color="negative" label="删除" @click="confirm(props.row)"/>
+            <q-td
+              key="desc"
+              :props="props"
+            >{{ props.row.name }}</q-td>
+            <q-td
+              key="calories"
+              :props="props"
+            >{{ props.row.calories }}</q-td>
+            <q-td
+              key="fat"
+              :props="props"
+            >{{ props.row.fat }}</q-td>
+            <q-td
+              key="carbs"
+              :props="props"
+            >{{ props.row.carbs }}</q-td>
+            <q-td
+              key="protein"
+              :props="props"
+            >{{ props.row.protein }}</q-td>
+            <q-td
+              key="sodium"
+              :props="props"
+            >{{ props.row.sodium }}</q-td>
+            <q-td
+              key="calcium"
+              :props="props"
+            >{{ props.row.calcium }}</q-td>
+            <q-td
+              key="iron"
+              :props="props"
+            >{{ props.row.iron }}</q-td>
+            <q-td
+              key="action"
+              :props="props"
+              class="q-gutter-xs"
+            >
+              <q-btn
+                flat
+                dense
+                color="primary"
+                label="编辑"
+              />
+              <q-btn
+                flat
+                dense
+                color="negative"
+                label="删除"
+                @click="confirm(props.row)"
+              />
             </q-td>
           </q-tr>
         </template>
-      </q-table>
-     </div>
+      </q-table> -->
+    </div>
     <!-- </q-scroll-area> -->
   </q-page>
 </template>

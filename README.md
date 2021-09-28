@@ -2,34 +2,42 @@
 
 A Quasar Framework app
 
-## Make sure you have Node >=8 and NPM >=5 installed on your machine.
+### 预览
+<img src='./statics/quasar-admin.jpg' width="100%" />
+
+### 安装
 ```bash
-
 # Node.js >= 8.9.0 is required.
-
-$ yarn global add @quasar/cli
-# or
 $ npm install -g @quasar/cli
 
 & npm install
 ```
 
-### Developing
+### 更新
+```bash
+# 检查可升级的软件包
+$ quasar upgrade
+
+# 做实际的升级
+$ quasar upgrade --install
+```
+
+### 开发环境
 ```bash
 quasar dev
 ```
 
-### Build the app for production
+### 生成环境编译
 ```bash
 quasar build
 ```
 
-### Lint the files
+### 检查
 ```bash
 npm run lint
 ```
 
-### User Settings JSON
+### 开发工具设置（vs code）
 ```json
 setting.json shift+ctrl+p
 
@@ -50,7 +58,7 @@ setting.json shift+ctrl+p
 }
 ```
 
-### An example config for nginx may look like this
+### 一个部署案例（nginx）
 ```bash
 server {
     listen 80 http2;
@@ -82,5 +90,5 @@ server {
 }
 ```
 
-### Customize the configuration
+### 更多自定义配置
 See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).

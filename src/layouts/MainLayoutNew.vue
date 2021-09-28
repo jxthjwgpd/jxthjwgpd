@@ -3,29 +3,79 @@
 
     <q-app-header :menuData="menuData" />
     <q-page-container class="main-page-container">
-      <div class="main-page-sidebar full-height" ref="pageSidebar" v-show="sidebarVisibility" :style="`width: ${!$q.screen.gt.xs ? 0 : !sidebarLeftOpen ? sidebarMinimize : sidebar }px`">
-        <div class="sidebar-body" v-if="sidebarMenuData.length>0">
+      <div
+        class="main-page-sidebar full-height"
+        ref="pageSidebar"
+        v-show="sidebarVisibility"
+        :style="`width: ${!$q.screen.gt.xs ? 0 : !sidebarLeftOpen ? sidebarMinimize : sidebar }px`"
+      >
+        <div
+          class="sidebar-body"
+          v-if="sidebarMenuData.length>0"
+        >
           <q-scroll-area class="fit">
-            <q-app-menu-new :menuData="sidebarMenuData" v-model="sidebarLeftOpen"/>
+            <q-app-menu-new
+              :menuData="sidebarMenuData"
+              v-model="sidebarLeftOpen"
+            />
           </q-scroll-area>
         </div>
-        <div class="sidebar-footer row items-center" v-if="$q.screen.gt.xs">
-            <q-btn
-              flat
-              dense
-              round
-              @click="sidebarLeftOpen = !sidebarLeftOpen"
-              :icon="`${sidebarLeftOpen?'format_indent_decrease':'format_indent_increase'}`"
-              aria-label="Menu"
-              color="blue-6"
-              size="sm"
-            />
+        <div
+          class="sidebar-footer row items-center"
+          v-if="$q.screen.gt.xs"
+        >
+          <q-btn
+            flat
+            dense
+            round
+            @click="sidebarLeftOpen = !sidebarLeftOpen"
+            :icon="`${sidebarLeftOpen?'format_indent_decrease':'format_indent_increase'}`"
+            aria-label="Menu"
+            color="blue-6"
+            size="sm"
+          />
         </div>
       </div>
-      <div class="main-page-body"  ref="pageBody" :style="`left: ${!$q.screen.gt.xs || !sidebarVisibility ? 0 : !sidebarLeftOpen ? sidebarMinimize : sidebar }px`">
-        <div class="full-height scroll"><router-view /></div>
+      <div
+        class="main-page-body"
+        ref="pageBody"
+        :style="`left: ${!$q.screen.gt.xs || !sidebarVisibility ? 0 : !sidebarLeftOpen ? sidebarMinimize : sidebar }px`"
+      >
+        <div class="full-height scroll">
+          <router-view />
+        </div>
       </div>
     </q-page-container>
+    <q-dialog
+      v-model="persistent"
+      persistent
+      transition-show="scale"
+      transition-hide="scale"
+    >
+      <q-card
+        class="bg-blue text-white"
+        style="width: 300px"
+      >
+        <q-card-section>
+          <div class="text-h6">Welcome to Quasar</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          © 2020 Quasar v{{$q.version}}.
+        </q-card-section>
+
+        <q-card-actions
+          align="right"
+          class="bg-white text-blue"
+        >
+          <q-btn
+            flat
+            label="OK"
+            v-close-popup
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-layout>
 </template>
 
@@ -39,7 +89,8 @@ export default {
       sidebarVisibility: true,
       sidebarLeftOpen: true,
       sidebarMenuData: [],
-      menuData: menuData
+      menuData: menuData,
+      persistent: false
     }
   },
   mounted () {
@@ -49,6 +100,11 @@ export default {
     }
     if (this.sidebarVisibility && this.$q.screen.gt.sm) {
       this.sidebarLeftOpen = true
+    }
+    let alertCount = this.$q.sessionStorage.getItem('alert_count')
+    if (!alertCount || alertCount < 3) {
+      this.persistent = !this.persistent
+      this.$q.sessionStorage.set('alert_count', ++alertCount)
     }
   },
   watch: {
