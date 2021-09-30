@@ -3,7 +3,7 @@
 A Quasar Framework app
 
 ### 预览
-<img src='./statics/quasar-admin.jpg' width="100%" />
+<img src='./src/statics/quasar-admin.jpg' width="100%" />
 
 ### 安装
 ```bash
