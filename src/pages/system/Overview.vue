@@ -3,17 +3,34 @@
     <div class="row items-center justify-between q-mb-md">
       <div>
         <q-breadcrumbs align="left">
-          <q-breadcrumbs-el label="系统管理"  to="/system"/>
+          <q-breadcrumbs-el
+            label="系统管理"
+            to="/system"
+          />
           <q-breadcrumbs-el label="概览" />
         </q-breadcrumbs>
-        <div class="text-h6 q-mt-xs" v-if="$q.screen.gt.sm">系统管理数据状况概览</div>
+        <div
+          class="text-h6 q-mt-xs"
+          v-if="$q.screen.gt.sm"
+        >系统管理数据状况概览</div>
       </div>
     </div>
-    <q-banner dense class="bg-grey-3 q-mb-md">
+    <q-banner
+      dense
+      class="bg-grey-3 q-mb-md"
+    >
       喜欢的话，鼓励一下给个star，谢谢！
       <template v-slot:action>
-        <q-btn flat label="不要" />
-        <q-btn flat label="前往星星" color="red-7" href="http://www.baidu.com" />
+        <q-btn
+          flat
+          type="a"
+          color="red-7"
+          href='https://gitee.com/ruyangit/quasar-element-pro/stargazers'
+        >
+          <img
+            src='https://gitee.com/ruyangit/tangdao/badge/star.svg?theme=white'
+            alt='star'
+          /></q-btn>
       </template>
     </q-banner>
     <div class="row">
@@ -28,32 +45,52 @@
           <q-card-section class="text-subitle2 row">
             <q-item class="col-3 q-pl-sm">
               <q-chip square>
-                <q-avatar color="red" text-color="white" icon="people_alt"></q-avatar>
+                <q-avatar
+                  color="red"
+                  text-color="white"
+                  icon="people_alt"
+                ></q-avatar>
                 30
               </q-chip>
             </q-item>
             <q-item class="col-3 q-pl-sm">
               <q-chip square>
-                <q-avatar color="blue" text-color="white" icon="person"></q-avatar>
+                <q-avatar
+                  color="blue"
+                  text-color="white"
+                  icon="person"
+                ></q-avatar>
                 1000
               </q-chip>
             </q-item>
             <q-item class="col-3 q-pl-sm">
               <q-chip square>
-                <q-avatar color="indigo" text-color="white" icon="star"></q-avatar>
+                <q-avatar
+                  color="indigo"
+                  text-color="white"
+                  icon="star"
+                ></q-avatar>
                 1950
               </q-chip>
             </q-item>
             <q-item class="col-3 q-pl-sm">
               <q-chip square>
-                <q-avatar color="green" text-color="white" icon="graphic_eq"></q-avatar>
+                <q-avatar
+                  color="green"
+                  text-color="white"
+                  icon="graphic_eq"
+                ></q-avatar>
                 2
               </q-chip>
             </q-item>
           </q-card-section>
 
           <q-card-actions>
-            <q-btn flat color="dark" label="快捷访问入口" />
+            <q-btn
+              flat
+              color="dark"
+              label="快捷访问入口"
+            />
             <q-space />
             <q-btn
               color="grey"
@@ -70,27 +107,47 @@
               <q-separator />
               <q-card-section class="text-subitle2 row">
                 <div class="col-4">
-                  <q-item clickable v-ripple class="q-pl-sm q-mr-sm">
+                  <q-item
+                    clickable
+                    v-ripple
+                    class="q-pl-sm q-mr-sm"
+                  >
                     <q-item-section>新建用户组</q-item-section>
                   </q-item>
                 </div>
                 <div class="col-4">
-                  <q-item clickable v-ripple class="q-pl-sm q-mr-sm">
+                  <q-item
+                    clickable
+                    v-ripple
+                    class="q-pl-sm q-mr-sm"
+                  >
                     <q-item-section>新建用户</q-item-section>
                   </q-item>
                 </div>
                 <div class="col-4">
-                  <q-item clickable v-ripple class="q-pl-sm q-mr-sm">
+                  <q-item
+                    clickable
+                    v-ripple
+                    class="q-pl-sm q-mr-sm"
+                  >
                     <q-item-section>添加权限</q-item-section>
                   </q-item>
                 </div>
                 <div class="col-4 q-mt-sm">
-                  <q-item clickable v-ripple class="q-pl-sm q-mr-sm">
+                  <q-item
+                    clickable
+                    v-ripple
+                    class="q-pl-sm q-mr-sm"
+                  >
                     <q-item-section>自定义策略</q-item-section>
                   </q-item>
                 </div>
                 <div class="col-4 q-mt-sm">
-                  <q-item clickable v-ripple class="q-pl-sm q-mr-sm">
+                  <q-item
+                    clickable
+                    v-ripple
+                    class="q-pl-sm q-mr-sm"
+                  >
                     <q-item-section>用户安全设置</q-item-section>
                   </q-item>
                 </div>
@@ -110,41 +167,59 @@
 
           <q-card-section class="q-pt-none">
             <q-list>
-              <q-item  class="q-pa-none">
+              <q-item class="q-pa-none">
                 <q-item-section>
                   <q-item-label>Single line item</q-item-label>
-                  <q-item-label caption lines="2">Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
+                  <q-item-label
+                    caption
+                    lines="2"
+                  >Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
                 </q-item-section>
 
-                <q-item-section side top>
+                <q-item-section
+                  side
+                  top
+                >
                   <q-item-label caption>5 min ago</q-item-label>
-                  <q-icon name="star" color="yellow" />
+                  <q-icon
+                    name="star"
+                    color="yellow"
+                  />
                 </q-item-section>
               </q-item>
 
               <q-separator spaced />
 
-              <q-item  class="q-pa-none">
+              <q-item class="q-pa-none">
                 <q-item-section>
                   <q-item-label>Single line item</q-item-label>
                   <q-item-label caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
                 </q-item-section>
 
-                <q-item-section side top>
+                <q-item-section
+                  side
+                  top
+                >
                   <q-item-label caption>Voted!</q-item-label>
                 </q-item-section>
               </q-item>
 
               <q-separator spaced />
 
-              <q-item  class="q-pa-none">
+              <q-item class="q-pa-none">
                 <q-item-section>
                   <q-item-label>Single line item</q-item-label>
                   <q-item-label caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
                 </q-item-section>
 
-                <q-item-section side top>
-                  <q-badge color="teal" label="10k" />
+                <q-item-section
+                  side
+                  top
+                >
+                  <q-badge
+                    color="teal"
+                    label="10k"
+                  />
                 </q-item-section>
               </q-item>
 
