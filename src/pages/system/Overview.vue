@@ -36,53 +36,17 @@
     <div class="row">
       <div class="col-md-8 col-12">
         <q-card flat>
-          <q-card-section>
-            <div class="row no-wrap items-center">
-              <div class="col text-subtitle2 ellipsis">数据资源</div>
-            </div>
-          </q-card-section>
+          <q-card-section class="text-subitle2 row q-pa-none">
+            <q-parallax
+              :height="200"
+              :speed="0.5"
+            >
+              <template v-slot:media>
+                <img src="https://cdn.quasar.dev/img/parallax1.jpg">
+              </template>
 
-          <q-card-section class="text-subitle2 row">
-            <q-item class="col-3 q-pl-sm">
-              <q-chip square>
-                <q-avatar
-                  color="red"
-                  text-color="white"
-                  icon="people_alt"
-                ></q-avatar>
-                30
-              </q-chip>
-            </q-item>
-            <q-item class="col-3 q-pl-sm">
-              <q-chip square>
-                <q-avatar
-                  color="blue"
-                  text-color="white"
-                  icon="person"
-                ></q-avatar>
-                1000
-              </q-chip>
-            </q-item>
-            <q-item class="col-3 q-pl-sm">
-              <q-chip square>
-                <q-avatar
-                  color="indigo"
-                  text-color="white"
-                  icon="star"
-                ></q-avatar>
-                1950
-              </q-chip>
-            </q-item>
-            <q-item class="col-3 q-pl-sm">
-              <q-chip square>
-                <q-avatar
-                  color="green"
-                  text-color="white"
-                  icon="graphic_eq"
-                ></q-avatar>
-                2
-              </q-chip>
-            </q-item>
+              <h1 class="text-white">Docks</h1>
+            </q-parallax>
           </q-card-section>
 
           <q-card-actions>
