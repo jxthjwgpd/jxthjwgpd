@@ -1,43 +1,57 @@
 <template>
   <q-page class="row items-center justify-center">
-    <q-card class="login-wrapper" flat bordered>
+    <q-card
+      class="login-wrapper"
+      flat
+      bordered
+    >
       <q-card-section horizontal>
-      <q-img
+        <q-img
           class="col-5"
           src="statics/th.jpg"
           v-if="$q.screen.gt.xs"
         />
 
-      <q-card-section :class="`${$q.screen.gt.xs?'col-7':'col'} q-mt-xs q-pa-xl`">
-        <div class="text-overline text-primary">资产管理系统</div>
-        <div class="text-h5 q-mt-sm q-mb-xs">欢迎回来，请登录后继续</div>
-        <q-form
-          @submit="onSubmit"
-          @reset="onReset"
-          class="login-form"
-        >
-          <q-input
-            stack-label
-            v-model.trim="form.username"
-            label="用户账号"
-            lazy-rules
-            :rules="[ val => val && val.length > 0 || '请输入用户账号']"
-          />
-          <q-input
-            stack-label
-            type="password"
-            v-model.trim="form.password"
-            label="密码"
-            lazy-rules
-            :rules="[ val => val && val.length > 0 || '请输入密码']"
-          />
-          <div class="q-mt-md">
-            <q-btn label="登录" type="submit" color="primary" />
-            <q-btn label="重置" type="reset" color="primary" flat class="q-ml-sm" />
-          </div>
-        </q-form>
+        <q-card-section :class="`${$q.screen.gt.xs?'col-7':'col'} q-mt-xs q-pa-xl`">
+          <div class="text-overline text-primary">资产管理系统</div>
+          <div class="text-h5 q-mt-sm q-mb-xs">欢迎回来，请登录后继续</div>
+          <q-form
+            @submit="onSubmit"
+            @reset="onReset"
+            class="login-form"
+          >
+            <q-input
+              stack-label
+              v-model.trim="form.username"
+              label="用户账号"
+              lazy-rules
+              :rules="[ val => val && val.length > 0 || '请输入用户账号']"
+            />
+            <q-input
+              stack-label
+              type="password"
+              v-model.trim="form.password"
+              label="密码"
+              lazy-rules
+              :rules="[ val => val && val.length > 0 || '请输入密码']"
+            />
+            <div class="q-mt-md">
+              <q-btn
+                label="登录"
+                type="submit"
+                color="primary"
+              />
+              <q-btn
+                label="重置"
+                type="reset"
+                color="primary"
+                flat
+                class="q-ml-sm"
+              />
+            </div>
+          </q-form>
 
-      </q-card-section>
+        </q-card-section>
       </q-card-section>
       <q-separator />
 
@@ -48,11 +62,18 @@
         <q-btn flat>
           7:00PM
         </q-btn>
-        <q-btn flat color="primary">
+        <q-btn
+          flat
+          color="primary"
+        >
           Reserve
         </q-btn>
-        <q-space/>
-        <q-btn flat round icon="settings_system_daydream" />
+        <q-space />
+        <q-btn
+          flat
+          round
+          icon="settings_system_daydream"
+        />
       </q-card-actions>
       <q-inner-loading :showing="loading" />
     </q-card>
