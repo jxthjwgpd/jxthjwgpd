@@ -69,6 +69,13 @@ module.exports = function (ctx) {
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
+      env: ctx.dev
+        ? { // so on dev we'll have
+          API_HOST: JSON.stringify(process.env.API_HOST || 'http://127.0.0.1:4000/tangdao-upms-service')
+        }
+        : { // and on build (production):
+          API_HOST: JSON.stringify('https://prod.api.com')
+        },
       scopeHoisting: true,
       vueRouterMode: 'hash', // available values: 'hash', 'history'
       showProgress: true,
@@ -94,16 +101,19 @@ module.exports = function (ctx) {
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
     devServer: {
-      https: false,
-      port: 8080,
+      // https: false,
+      // port: 8080,
       open: true, // opens browser window automatically
       proxy: {
         '/tangdao-upms-service': {
-          target: 'http://localhost:4000',
-          pathRewrite: { '^/tangdao-upms-service': '' },
-          changeOrigin: true
+          target: process.env.API_HOST,
+          changeOrigin: true,
+          pathRewrite: {
+            '^/tangdao-upms-service': 'tangdao-upms-service'
+          }
         }
       }
+
     },
 
     // animations: 'all', // --- includes all animations

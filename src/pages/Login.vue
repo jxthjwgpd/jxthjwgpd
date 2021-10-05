@@ -22,7 +22,7 @@
           >
             <q-input
               stack-label
-              v-model.trim="form.username"
+              v-model.trim="form.loginName"
               label="用户账号"
               lazy-rules
               :rules="[ val => val && val.length > 0 || '请输入用户账号']"
@@ -87,8 +87,8 @@ export default {
     return {
       loading: false,
       form: {
-        username: 'root',
-        password: 'root'
+        loginName: 'system',
+        password: '123456'
       },
       accept: false
     }

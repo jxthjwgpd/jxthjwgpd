@@ -1,16 +1,16 @@
 import axios from 'axios'
 
-import setHeaderAuthorization from './token'
+import setAxiosHeaders from './token'
 
 export function init (state) {
-  setHeaderAuthorization(state)
+  setAxiosHeaders(state)
 }
 
-// const user = { token: 'Abcd1234', username: 'system' }
 export function login ({ commit, dispatch, getters }, form) {
-  console.log(form)
-  if (getters.isAuthenticated) return dispatch('validate')
-
+  if (getters.isAuthenticated) { return dispatch('validate') }
+  // return axios.post('/login/token', JSON.stringify(form), { headers: { 'Content-Type': 'application/json' } }).then(response => {
+  axios.defaults.headers.post['Content-Type'] = 'application/json'
+  console.log(axios.defaults.headers)
   return axios.post('/login/token', form).then(response => {
     console.info(response)
     // commit('LOGIN', user)
@@ -18,8 +18,6 @@ export function login ({ commit, dispatch, getters }, form) {
     console.error(error)
     return null
   })
-
-  // return { user: user }
 }
 
 export function validate ({ commit, state }) {
