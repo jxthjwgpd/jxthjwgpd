@@ -103,16 +103,16 @@ module.exports = function (ctx) {
     devServer: {
       // https: false,
       // port: 8080,
-      open: true, // opens browser window automatically
-      proxy: {
-        '/tangdao-upms-service': {
-          target: process.env.API_HOST,
-          changeOrigin: true,
-          pathRewrite: {
-            '^/tangdao-upms-service': 'tangdao-upms-service'
-          }
-        }
-      }
+      open: true // opens browser window automatically
+      // proxy: {
+      //   '/tangdao-upms-service': {
+      //     target: process.env.API_HOST,
+      //     changeOrigin: true,
+      //     pathRewrite: {
+      //       '^/tangdao-upms-service': 'tangdao-upms-service'
+      //     }
+      //   }
+      // }
 
     },
 
