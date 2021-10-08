@@ -1,7 +1,9 @@
 import axios from 'axios'
+import { Cookies } from 'quasar'
 
 export default function setAxiosHeaders (state) {
-  if (state.user) {
-    axios.defaults.headers.common.Authorization = 'Bearer ' + state.user.token
+  let token = state.token || Cookies.get('access_token')
+  if (token) {
+    axios.defaults.headers.common.Authorization = 'Bearer ' + token
   }
 }

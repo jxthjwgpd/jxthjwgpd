@@ -55,6 +55,7 @@ module.exports = function (ctx) {
         'LoadingBar',
         'LocalStorage',
         'SessionStorage',
+        'Cookies',
         'Meta',
         'Notify',
         'Dialog'

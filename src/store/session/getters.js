@@ -3,8 +3,5 @@ export const isAuthenticated = (state) => {
 }
 
 export const token = (state) => {
-  return state.user.token
-}
-
-export function someGetter (/* state */) {
+  return state.token
 }

@@ -8,15 +8,12 @@ export function init (state) {
 
 export function login ({ commit, dispatch, getters }, form) {
   if (getters.isAuthenticated) { return dispatch('validate') }
-  // return axios.post('/login/token', JSON.stringify(form), { headers: { 'Content-Type': 'application/json' } }).then(response => {
-  axios.defaults.headers.post['Content-Type'] = 'application/json'
-  console.log(axios.defaults.headers)
   return axios.post('/login/token', form).then(response => {
-    console.info(response)
-    // commit('LOGIN', user)
-  }).catch(error => {
-    console.error(error)
-    return null
+    const user = response.data.user
+    commit('LOGIN', user)
+    // Add token to cookie
+    commit('TOKEN', response.data.access_token, (response.data.expires_in / 3600) + 'h')
+    return user
   })
 }
 
@@ -28,7 +25,7 @@ export function validate ({ commit, state }) {
       commit('LOGIN', user)
       return user
     }).catch(error => {
-      if (error.response.status === 401) {
+      if (error.response && error.response.status === 401) {
         commit('LOGOUT')
       }
       return null
@@ -37,8 +34,4 @@ export function validate ({ commit, state }) {
 
 export function logout ({ commit }) {
   commit('LOGOUT')
-}
-
-export function someAction (/* context */) {
-
 }

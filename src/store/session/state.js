@@ -1,8 +1,8 @@
-// import { LocalStorage } from 'quasar'
+import { SessionStorage, Cookies } from 'quasar'
 
 export default function () {
   return {
-    // user: LocalStorage.get.item('user')
-    user: {}
+    user: SessionStorage.getItem('user'),
+    token: Cookies.get('access_token')
   }
 }
