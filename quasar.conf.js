@@ -61,7 +61,7 @@ module.exports = function (ctx) {
         'Dialog'
       ],
       config: {
-        loadingBar: { color: 'blue-3', size: '3px' }
+        loadingBar: { color: 'teal-3', size: '3px' }
       }
     },
 

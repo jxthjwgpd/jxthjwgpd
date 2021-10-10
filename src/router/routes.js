@@ -11,10 +11,10 @@ const routes = [
   {
     path: '/',
     component: () => import('layouts/MainLayoutNew.vue'),
-    meta: { auth: true },
+    // meta: { auth: true },
     children: [
       { path: '', redirect: { path: 'dashboard' } },
-      { path: 'dashboard', component: () => import('pages/Dashboard.vue') },
+      { path: 'dashboard', meta: { auth: true }, component: () => import('pages/Dashboard.vue') },
       { path: 'events', component: () => import('pages/Events.vue') },
       { path: 'lists', component: () => import('pages/Lists.vue') },
       {
@@ -22,10 +22,10 @@ const routes = [
         component: () => import('layouts/BlankLayout.vue'),
         children: [
           { path: '', redirect: { path: 'overview' } },
-          { path: 'overview', meta: { sidebar: true }, component: () => import('pages/system/Overview.vue') },
-          { path: 'groups', meta: { sidebar: true }, component: () => import('pages/system/GroupList.vue') },
-          { path: 'users', meta: { sidebar: true }, component: () => import('pages/system/UserList.vue') },
-          { path: 'users/create', meta: { sidebar: true }, component: () => import('pages/system/UserCreate.vue') },
+          { path: 'overview', meta: { sidebar: true, auth: true }, component: () => import('pages/system/Overview.vue') },
+          { path: 'groups', meta: { sidebar: true, auth: true }, component: () => import('pages/system/GroupList.vue') },
+          { path: 'users', meta: { sidebar: true, auth: true }, component: () => import('pages/system/UserList.vue') },
+          { path: 'users/create', meta: { sidebar: true, auth: true }, component: () => import('pages/system/UserCreate.vue') },
           { path: 'settings', meta: { sidebar: true }, component: () => import('pages/system/Setting.vue') }
         ]
       }

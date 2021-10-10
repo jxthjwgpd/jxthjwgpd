@@ -99,12 +99,6 @@ export default {
       this.loading = true
       this.$store.dispatch('session/login', this.form).then(() => {
         this.loading = false
-        this.$q.notify({
-          color: 'green-4',
-          textColor: 'white',
-          icon: 'cloud_done',
-          message: 'Submitted'
-        })
         const params = { redirect: this.$route.query.redirect || '/' }
         this.$router.push({ path: params.redirect })
       }).catch(e => {
@@ -113,8 +107,9 @@ export default {
           color: 'red-5',
           textColor: 'white',
           icon: 'warning',
-          message: 'You need to accept the license and terms first'
+          message: '登录失败，请稍后重试。'
         })
+        console.error(e)
       })
     },
 
