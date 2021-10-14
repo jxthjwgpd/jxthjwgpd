@@ -21,3 +21,10 @@ export function getUserList ({ commit, state }, config) {
     return data
   })
 }
+
+export function saveUser ({ dispatch, state }, config) {
+  return axios.post('/v1/users', { ...config }).then(response => {
+    // dispatch('system/getUserList')
+    return response.data
+  })
+}
