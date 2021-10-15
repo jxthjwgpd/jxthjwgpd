@@ -120,10 +120,8 @@ export default {
       this.loading = true
       this.$store.dispatch('system/saveUser', this.form).then(data => {
         this.loading = false
-        console.log(data)
       }).catch(e => {
         this.loading = false
-        console.error(e)
       })
     }
   }
