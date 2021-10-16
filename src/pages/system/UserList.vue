@@ -193,6 +193,7 @@ export default {
       await this.$store.dispatch('system/getUserList', { current: page, size: rowsPerPage }).then(data => {
         this.pagination.page = data.current
         this.pagination.rowsNumber = data.total
+        this.pagination.rowsPerPage = data.size
 
         this.pagination.sortBy = sortBy
         this.pagination.descending = descending

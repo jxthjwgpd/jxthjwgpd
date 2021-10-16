@@ -49,6 +49,7 @@
             @click="fixed=!fixed"
           />
         </template>
+
         <template v-slot:top-right>
           <q-input
             dense
@@ -73,9 +74,13 @@
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td
-              key="loginName"
+              key="groupName"
               :props="props"
-            >{{ props.row.loginName }}</q-td>
+            >{{ props.row.groupName }}</q-td>
+            <q-td
+              key="groupId"
+              :props="props"
+            >{{ props.row.groupId }}</q-td>
             <q-td
               key="remarks"
               :props="props"
@@ -94,7 +99,6 @@
                 dense
                 color="primary"
                 label="添加用户"
-                @click="fixed=!fixed"
               />
               <q-btn
                 flat
@@ -114,69 +118,24 @@
         </template>
       </q-table>
     </div>
-    <q-dialog v-model="fixed">
-      <q-card>
-        <q-card-section>
-          <div class="text-h6">新增用户组</div>
-        </q-card-section>
-
-        <q-separator />
-
-        <q-card-section
-          style="max-height: 50vh; min-width:500px;"
-          class="scroll q-gutter-y-md q-mt-none"
-        >
-          <q-item-label class="q-mt-none">用户组信息</q-item-label>
-          <q-input
-            outlined
-            v-model="form.groupName"
-            label="用户组名称"
-            :dense="true"
-          />
-          <q-input
-            outlined
-            v-model="form.groupCode"
-            label="用户组编码"
-            :dense="true"
-          />
-          <q-item-label>其它</q-item-label>
-          <q-input
-            outlined
-            v-model="form.remarks"
-            type="textarea"
-            label="备注说明"
-            :dense="true"
-          />
-        </q-card-section>
-
-        <q-separator />
-
-        <q-card-actions align="right">
-          <q-btn
-            label="确认"
-            color="primary"
-            v-close-popup
-          />
-          <q-btn
-            flat
-            label="取消"
-            color="primary"
-            v-close-popup
-          />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
+    <group-form
+      v-model="fixed"
+      v-on:refresh="onRefresh"
+    />
   </q-page>
 </template>
 
 <script>
+import GroupForm from './GroupForm.vue'
 export default {
   name: 'UserList',
+  components: {
+    GroupForm
+  },
   data () {
     return {
       filter: '',
       loading: false,
-      fixed: false,
       pagination: {
         sortBy: 'desc',
         descending: false,
@@ -185,898 +144,51 @@ export default {
         rowsNumber: 10
       },
       columns: [
-        { name: 'loginName', label: '用户组名称', align: 'left', field: 'loginName', sortable: true },
+        { name: 'groupName', label: '用户组名称', align: 'left', field: 'groupName', sortable: true },
+        { name: 'groupId', label: '用户组编码', align: 'left', field: 'groupId', sortable: true },
         { name: 'remarks', label: '备注', align: 'left', field: 'remarks' },
         { name: 'createTime', label: '创建时间', align: 'center', field: 'createTime', sortable: true },
         { name: 'action', label: '操作', field: 'action', align: 'center', style: 'width: 100px' }
       ],
       data: [],
-      original: [
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2020-01-20 01:11:50',
-          'status': '0',
-          'remarks': '开发者使用的最高级别管理员，主要用于开发和调试。',
-          'userId': '100000001000000001',
-          'loginName': 'system',
-          'nickname': '超级管理员',
-          'email': 'admin@aliyeye.com',
-          'mobile': '13800000000',
-          'phone': '',
-          'sex': '2',
-          'avatar': null,
-          'sign': '',
-          'lastLoginIp': '192.168.113.1',
-          'lastLoginDate': '2020-01-20T01:11:50.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        },
-        {
-          'createBy': '100000001000000001',
-          'createTime': '2018-09-26 09:49:23',
-          'updateBy': '100000001000000001',
-          'updateTime': '2019-12-23 05:51:03',
-          'status': '0',
-          'remarks': '客户方使用的系统管理员，用于一些常用的基础数据配置。',
-          'userId': '100000001000010000',
-          'loginName': 'admin',
-          'nickname': '系统管理员',
-          'email': 'ruyangit@163.com',
-          'mobile': '15888888888',
-          'phone': '',
-          'sex': null,
-          'avatar': '/images/default.jpg',
-          'sign': null,
-          'lastLoginIp': '172.28.220.60',
-          'lastLoginDate': '2019-05-29T09:56:23.000+0000',
-          'freezeDate': null,
-          'freezeCause': null,
-          'mgrType': null,
-          'domainId': '',
-          'userType': null
-        }
-      ],
       selected: [],
-      form: {
-        loginName: null,
-        nickname: null,
-        teal: true
-      }
+      fixed: false
     }
   },
   mounted () {
     // get initial data from server (1st page)
-    this.onRefresh()
+    this.onRequest({
+      pagination: this.pagination,
+      filter: undefined
+    })
   },
   methods: {
     onRefresh () {
+      this.pagination.page = 0
       this.onRequest({
         pagination: this.pagination,
         filter: undefined
       })
     },
-    onRequest (props) {
+    async onRequest (props) {
       const { page, rowsPerPage, sortBy, descending } = props.pagination
       const filter = props.filter
-
+      console.log('filter:' + filter)
       this.loading = true
+      await this.$store.dispatch('system/getGroupList', { current: page, size: rowsPerPage }).then(data => {
+        this.pagination.page = data.current
+        this.pagination.rowsNumber = data.total
+        this.pagination.rowsPerPage = data.size
 
-      // emulate server
-      setTimeout(() => {
-        // update rowsCount with appropriate value
-        this.pagination.rowsNumber = this.getRowsNumberCount(filter)
-
-        // get all rows if "All" (0) is selected
-        const fetchCount = rowsPerPage === 0 ? this.pagination.rowsNumber : rowsPerPage
-
-        // calculate starting row of data
-        const startRow = (page - 1) * rowsPerPage
-
-        // fetch data from "server"
-        const returnedData = this.fetchFromServer(startRow, fetchCount, filter, sortBy, descending)
-
-        // clear out existing data and add new
-        this.data.splice(0, this.data.length, ...returnedData)
-
-        // don't forget to update local pagination object
-        this.pagination.page = page
-        this.pagination.rowsPerPage = rowsPerPage
         this.pagination.sortBy = sortBy
         this.pagination.descending = descending
-
-        // ...and turn of loading indicator
-        this.loading = false
-      }, 1500)
-    },
-
-    // emulate ajax call
-    // SELECT * FROM ... WHERE...LIMIT...
-    fetchFromServer (startRow, count, filter, sortBy, descending) {
-      const data = filter
-        ? this.original.filter(row => row.loginName.includes(filter))
-        : this.original.slice()
-
-      // handle sortBy
-      if (sortBy) {
-        const sortFn = sortBy === 'desc'
-          ? (descending
-            ? (a, b) => (a.loginName > b.loginName ? -1 : a.loginName < b.loginName ? 1 : 0)
-            : (a, b) => (a.loginName > b.loginName ? 1 : a.loginName < b.loginName ? -1 : 0)
-          )
-          : (descending
-            ? (a, b) => (parseFloat(b[sortBy]) - parseFloat(a[sortBy]))
-            : (a, b) => (parseFloat(a[sortBy]) - parseFloat(b[sortBy]))
-          )
-        data.sort(sortFn)
-      }
-
-      return data.slice(startRow, startRow + count)
-    },
-
-    // emulate 'SELECT count(*) FROM ...WHERE...'
-    getRowsNumberCount (filter) {
-      if (!filter) {
-        return this.original.length
-      }
-      let count = 0
-      this.original.forEach((treat) => {
-        if (treat.loginName.includes(filter)) {
-          ++count
-        }
+        this.data = data.records
+      }).catch(error => {
+        console.error(error)
       })
-      return count
-    },
-    getSelectedString () {
-      return this.selected.length === 0 ? '' : `${this.selected.length} record${this.selected.length > 1 ? 's' : ''} selected of ${this.data.length}`
+      setTimeout(() => {
+        this.loading = false
+      }, 1000)
     },
     confirm (item) {
       this.$q.dialog({
@@ -1099,5 +211,3 @@ export default {
   }
 }
 </script>
-<style lang="sass">
-</style>

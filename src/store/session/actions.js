@@ -8,6 +8,7 @@ export function init (state) {
 
 export function login ({ commit, dispatch, getters }, form) {
   if (getters.isAuthenticated) { return dispatch('validate') }
+  delete axios.defaults.headers.common.Authorization
   return axios.post('/login/token', form).then(response => {
     const user = response.data.user
     commit('LOGIN', user)
