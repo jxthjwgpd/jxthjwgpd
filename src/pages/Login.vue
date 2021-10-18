@@ -40,6 +40,7 @@
                 label="登录"
                 type="submit"
                 color="primary"
+                class="wd-80"
               />
               <q-btn
                 label="重置"
