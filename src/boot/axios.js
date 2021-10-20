@@ -13,6 +13,7 @@ export default ({ app, router, Vue }) => {
                 icon: 'highlight_off',
                 message: 'Error: Network Error！'
             })
+            return null
         }
         // console.info(router.mode)
         return Promise.reject(error)

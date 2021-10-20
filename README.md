@@ -5,6 +5,10 @@ A Quasar Framework app
 ### 预览
 <img src='./src/statics/quasar-admin.jpg' width="100%" />
 
+**[前端预览](http://121.37.180.48/#/dashboard)**
+
+**[后端项目](https://gitee.com/ruyangit/tangdao)**
+
 ### 安装
 ```bash
 # Node.js >= 8.9.0 is required.
