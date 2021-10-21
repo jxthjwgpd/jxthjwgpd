@@ -26,7 +26,9 @@ const routes = [
           { path: 'groups', meta: { sidebar: true, auth: true }, component: () => import('pages/system/GroupList.vue') },
           { path: 'users', meta: { sidebar: true, auth: true }, component: () => import('pages/system/UserList.vue') },
           { path: 'users/create', meta: { sidebar: true, auth: true }, component: () => import('pages/system/UserCreate.vue') },
-          { path: 'settings', meta: { sidebar: true }, component: () => import('pages/system/Setting.vue') }
+          { path: 'settings', meta: { sidebar: true }, component: () => import('pages/system/Setting.vue') },
+          { path: 'roles', meta: { sidebar: true, auth: true }, component: () => import('pages/system/RoleList.vue') },
+          { path: 'policies', meta: { sidebar: true, auth: true }, component: () => import('pages/system/PolicyList.vue') }
         ]
       }
     ]

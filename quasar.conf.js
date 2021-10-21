@@ -72,7 +72,7 @@ module.exports = function (ctx) {
     build: {
       env: ctx.dev
         ? { // so on dev we'll have
-          API_HOST: JSON.stringify(process.env.API_HOST || 'http://127.0.0.1:4000/tangdao-opencloud-v1')
+          API_HOST: JSON.stringify(process.env.API_HOST || 'http://127.0.0.1:4000/tangdao-opencloud-service')
         }
         : { // and on build (production):
           API_HOST: JSON.stringify('http://121.37.180.48:4000/tangdao-opencloud-v1')

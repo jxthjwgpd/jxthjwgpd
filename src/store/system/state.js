@@ -25,9 +25,41 @@ const group = {
   }
 }
 
+const role = {
+  lists: {
+    records: [],
+    current: 1,
+    total: 0,
+    pages: 0,
+    path: ''
+  }
+}
+
+const policy = {
+  lists: {
+    records: [],
+    current: 1,
+    total: 0,
+    pages: 0,
+    path: ''
+  }
+}
+const application = {
+  lists: {
+    records: [],
+    current: 1,
+    total: 0,
+    pages: 0,
+    path: ''
+  }
+}
+
 export default function () {
   return {
     user,
-    group
+    group,
+    role,
+    policy,
+    application
   }
 }

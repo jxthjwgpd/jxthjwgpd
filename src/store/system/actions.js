@@ -43,3 +43,54 @@ export function saveGroup ({ dispatch, state }, config) {
     return response.data
   })
 }
+
+export function getRoleList ({ commit, state }, config) {
+  return axios.get('/v1/roles', { params: { ...config } }).then(response => {
+    const { data, status } = response
+    if (data && status === 200) {
+      commit('receiveRoleList', {
+        ...data,
+        ...config
+      })
+    }
+    return data
+  })
+}
+
+export function saveRole ({ dispatch, state }, config) {
+  return axios.post('/v1/roles', { ...config }).then(response => {
+    return response.data
+  })
+}
+
+export function getPolicyList ({ commit, state }, config) {
+  return axios.get('/v1/policies', { params: { ...config } }).then(response => {
+    const { data, status } = response
+    if (data && status === 200) {
+      commit('receivePolicyList', {
+        ...data,
+        ...config
+      })
+    }
+    return data
+  })
+}
+
+export function savePolicy ({ dispatch, state }, config) {
+  return axios.post('/v1/policies', { ...config }).then(response => {
+    return response.data
+  })
+}
+
+export function getApplicationList ({ commit, state }, config) {
+  return axios.get('/v1/applications', { params: { ...config } }).then(response => {
+    const { data, status } = response
+    if (data && status === 200) {
+      commit('receiveApplicationList', {
+        ...data,
+        ...config
+      })
+    }
+    return data
+  })
+}
