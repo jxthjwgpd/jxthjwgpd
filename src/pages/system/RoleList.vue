@@ -78,7 +78,7 @@
               :props="props"
             >{{ props.row.roleName }}</q-td>
             <q-td
-              style="max-width: 300px;"
+              class="text-line2-f"
               key="remarks"
               :props="props"
             >{{ props.row.remarks }}</q-td>
