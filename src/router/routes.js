@@ -28,7 +28,8 @@ const routes = [
           { path: 'users/create', meta: { sidebar: true, auth: true }, component: () => import('pages/system/UserCreate.vue') },
           { path: 'settings', meta: { sidebar: true }, component: () => import('pages/system/Setting.vue') },
           { path: 'roles', meta: { sidebar: true, auth: true }, component: () => import('pages/system/RoleList.vue') },
-          { path: 'policies', meta: { sidebar: true, auth: true }, component: () => import('pages/system/PolicyList.vue') }
+          { path: 'policies', meta: { sidebar: true, auth: true }, component: () => import('pages/system/PolicyList.vue') },
+          { path: 'policies/create', meta: { sidebar: true, auth: true }, component: () => import('pages/system/PolicyCreate.vue') }
         ]
       }
     ]

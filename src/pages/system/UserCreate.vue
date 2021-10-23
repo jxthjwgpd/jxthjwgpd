@@ -57,57 +57,67 @@
                 />
               </div>
             </div>
-            <q-item-label>访问平台</q-item-label>
+            <q-item-label>访问平台 <span class="text-negative">*</span></q-item-label>
             <div class="column q-gutter-y-md q-mt-none">
               <q-checkbox
-                v-model="form.webPass"
+                v-model="form.cbPassWeb"
                 label="控制台账号"
                 dense
               />
               <q-checkbox
-                v-model="form.apiPass"
+                v-model="form.cbPassApi"
                 label="接口访问"
                 dense
               />
             </div>
-            <q-item-label class="q-mt-lg">控制台账号密码 <span class="text-negative">*</span></q-item-label>
-            <div class="column q-gutter-y-md q-mt-none">
-              <q-radio
-                v-model="form.webPass"
-                label="引用主体安全密码"
-                dense
-              />
-              <q-radio
-                v-model="form.webPass"
-                label="自定义账号密码"
-                dense
-              />
-            </div>
-            <div class="wd-200">
-              <q-input
-                class="q-pb-md"
-                stack-label
-                v-model="form.password"
-                label="账号密码"
-                :dense="true"
-                lazy-rules
-                :rules="[ val => val && val.length > 0 || '请输入账号密码']"
-              />
-            </div>
-            <q-item-label class="q-mt-lg">是否重置密码</q-item-label>
-            <div class="column q-gutter-y-md q-mt-none">
-              <q-radio
-                v-model="form.webPass"
-                label="强制登录后重置密码"
-                dense
-              />
-              <q-radio
-                v-model="form.webPass"
-                label="无需重置"
-                dense
-              />
-            </div>
+            <template v-if="form.cbPassWeb">
+              <q-item-label class="q-mt-lg">控制台账号密码 <span class="text-negative">*</span></q-item-label>
+              <div class="column q-gutter-y-md q-mt-none">
+                <q-radio
+                  v-model="form.setPassType"
+                  val="1"
+                  label="引用主体安全密码"
+                  dense
+                />
+                <q-radio
+                  v-model="form.setPassType"
+                  val="0"
+                  label="自定义账号密码"
+                  dense
+                />
+              </div>
+              <div
+                class="wd-200"
+                v-if="form.setPassType==='0'"
+              >
+                <q-input
+                  class="q-pb-md"
+                  stack-label
+                  v-model="form.password"
+                  label="账号密码"
+                  :dense="true"
+                  lazy-rules
+                  :rules="[ val => val && val.length > 0 || '请输入账号密码']"
+                />
+              </div>
+              <q-item-label class="q-mt-md">是否重置密码</q-item-label>
+              <div class="column q-gutter-y-md q-mt-none">
+                <q-radio
+                  v-model="form.laSetPass"
+                  val="1"
+                  label="强制登录后重置密码"
+                  dense
+                />
+                <q-radio
+                  v-model="form.laSetPass"
+                  val="0"
+                  label="无需重置"
+                  dense
+                />
+              </div>
+            </template>
           </q-card-section>
+
           <q-card-actions class="q-pl-md">
             <q-btn
               label="保存"
@@ -138,8 +148,10 @@ export default {
         loginName: null,
         password: null,
         nickname: null,
-        webPass: true,
-        apiPass: false
+        cbPassWeb: false,
+        cbPassApi: false,
+        setPassType: '1',
+        laSetPass: '0'
       }
     }
   },

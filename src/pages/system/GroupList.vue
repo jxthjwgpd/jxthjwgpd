@@ -78,10 +78,7 @@
               :props="props"
             >{{ props.row.groupName }}</q-td>
             <q-td
-              key="groupId"
-              :props="props"
-            >{{ props.row.groupId }}</q-td>
-            <q-td
+              class="text-line2-f"
               key="remarks"
               :props="props"
             >{{ props.row.remarks }}</q-td>
@@ -145,7 +142,6 @@ export default {
       },
       columns: [
         { name: 'groupName', label: '用户组名称', align: 'left', field: 'groupName', sortable: true },
-        { name: 'groupId', label: '用户组编码', align: 'left', field: 'groupId', sortable: true },
         { name: 'remarks', label: '备注', align: 'left', field: 'remarks' },
         { name: 'createTime', label: '创建时间', align: 'center', field: 'createTime', sortable: true },
         { name: 'action', label: '操作', field: 'action', align: 'center', style: 'width: 100px' }

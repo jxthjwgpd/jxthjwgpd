@@ -7,12 +7,12 @@
             label="系统管理"
             to="/system"
           />
-          <q-breadcrumbs-el label="用户组" />
+          <q-breadcrumbs-el label="策略管理" />
         </q-breadcrumbs>
         <div
           class="text-h6 q-mt-xs"
           v-if="$q.screen.gt.sm"
-        >用户组</div>
+        >策略管理</div>
       </div>
       <div
         class="q-gutter-sm"
@@ -44,9 +44,9 @@
       >
         <template v-slot:top-left>
           <q-btn
-            label="新增用户组"
+            label="新增策略"
             color="primary"
-            @click="fixed=!fixed"
+            to="/system/policies/create"
           />
         </template>
 
@@ -74,21 +74,18 @@
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td
-              key="groupName"
+              key="policyName"
               :props="props"
-            >{{ props.row.groupName }}</q-td>
+            >{{ props.row.policyName }}</q-td>
             <q-td
-              key="groupId"
-              :props="props"
-            >{{ props.row.groupId }}</q-td>
-            <q-td
+              class="text-line2-f"
               key="remarks"
               :props="props"
             >{{ props.row.remarks }}</q-td>
             <q-td
-              key="createTime"
+              key="policyType"
               :props="props"
-            >{{ props.row.createTime }}</q-td>
+            >{{ props.row.policyType }}</q-td>
             <q-td
               key="action"
               :props="props"
@@ -98,7 +95,7 @@
                 flat
                 dense
                 color="primary"
-                label="添加用户"
+                label="添加策略"
               />
               <q-btn
                 flat
@@ -118,20 +115,12 @@
         </template>
       </q-table>
     </div>
-    <group-form
-      v-model="fixed"
-      v-on:refresh="onRefresh"
-    />
   </q-page>
 </template>
 
 <script>
-import GroupForm from './GroupForm.vue'
 export default {
-  name: 'UserList',
-  components: {
-    GroupForm
-  },
+  name: 'PolicyList',
   data () {
     return {
       filter: '',
@@ -144,10 +133,9 @@ export default {
         rowsNumber: 10
       },
       columns: [
-        { name: 'groupName', label: '用户组名称', align: 'left', field: 'groupName', sortable: true },
-        { name: 'groupId', label: '用户组编码', align: 'left', field: 'groupId', sortable: true },
+        { name: 'policyName', label: '策略名称', align: 'left', field: 'policyName', sortable: true },
         { name: 'remarks', label: '备注', align: 'left', field: 'remarks' },
-        { name: 'createTime', label: '创建时间', align: 'center', field: 'createTime', sortable: true },
+        { name: 'policyType', label: '策略类型', align: 'left', field: 'policyType', sortable: true },
         { name: 'action', label: '操作', field: 'action', align: 'center', style: 'width: 100px' }
       ],
       data: [],
@@ -175,7 +163,7 @@ export default {
       const filter = props.filter
       console.log('filter:' + filter)
       this.loading = true
-      await this.$store.dispatch('system/getGroupList', { current: page, size: rowsPerPage }).then(data => {
+      await this.$store.dispatch('system/getPolicyList', { current: page, size: rowsPerPage }).then(data => {
         this.pagination.page = data.current
         this.pagination.rowsNumber = data.total
         this.pagination.rowsPerPage = data.size

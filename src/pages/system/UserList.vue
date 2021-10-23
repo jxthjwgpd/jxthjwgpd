@@ -49,7 +49,10 @@
             color="primary"
             to="/system/users/create"
           />
-          <q-btn-group class="q-ml-sm">
+          <q-btn-group
+            class="q-ml-sm"
+            v-if="$q.screen.gt.sm"
+          >
             <q-btn
               label="活跃"
               color="primary"
@@ -105,6 +108,7 @@
               :props="props"
             >{{ props.row.nickname }}</q-td>
             <q-td
+              class="text-line2-f"
               key="remarks"
               :props="props"
             >{{ props.row.remarks }}</q-td>
