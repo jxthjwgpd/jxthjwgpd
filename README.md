@@ -1,4 +1,4 @@
-# Quasar Admin Element Pro (quasar-element-pro)
+# Tangdao Admin Element Pro (quasar-element-pro)
 
 A Quasar Framework app
 
