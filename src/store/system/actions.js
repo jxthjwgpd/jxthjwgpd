@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { restfulUrl } from '../utils'
 
 import setAxiosHeaders from '../session/token'
 
@@ -16,6 +17,14 @@ export function getUserList ({ commit, state }, config) {
       })
     }
     return data
+  })
+}
+
+export function getUser ({ dispatch, state }, config) {
+  let url = restfulUrl('/v1/users/{userId}', config)
+  return axios.get(url).then(response => {
+    console.log(response)
+    // return response.data
   })
 }
 

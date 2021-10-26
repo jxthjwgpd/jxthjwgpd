@@ -102,7 +102,12 @@
             <q-td
               key="loginName"
               :props="props"
-            >{{ props.row.loginName }}</q-td>
+            >
+              <router-link
+                :to="`/system/users/${props.row.userId}/${props.row.loginName}`"
+                class="text-primary"
+              >{{ props.row.loginName }}</router-link>
+            </q-td>
             <q-td
               key="nickname"
               :props="props"

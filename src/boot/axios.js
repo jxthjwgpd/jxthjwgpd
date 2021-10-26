@@ -2,7 +2,8 @@ import axios from 'axios'
 import { Notify } from 'quasar'
 export default ({ app, router, Vue }) => {
     axios.defaults.baseURL = process.env.API_HOST
-    axios.defaults.timeout = 5000
+    axios.defaults.timeout = 15000
+    // axios.defaults.withCredentials = false
     axios.interceptors.response.use(function (response) {
         return response
     }, function (error) {
