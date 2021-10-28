@@ -76,7 +76,12 @@
           icon="settings_system_daydream"
         />
       </q-card-actions>
-      <q-inner-loading :showing="loading" />
+      <q-inner-loading :showing="loading">
+        <q-spinner-hourglass
+          size="sm"
+          color="primary"
+        />
+      </q-inner-loading>
     </q-card>
   </q-page>
 </template>

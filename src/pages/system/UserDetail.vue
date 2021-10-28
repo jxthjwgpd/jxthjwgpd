@@ -33,30 +33,26 @@
         flat
         class="q-pb-md"
       >
-        <q-form @submit="onSubmit">
-          <q-card-section class="q-gutter-y-md q-mt-none">
-            <q-item-label class="q-mt-none">用户账号基本信息</q-item-label>
-            <div class="row q-gutter-x-md">
+        <q-card-section class="q-gutter-y-md q-mt-none">
+          <q-item-label class="q-mt-none">用户账号基本信息</q-item-label>
+          <div class="row q-gutter-x-md">
 
-            </div>
-            <q-item-label>联系方式</q-item-label>
-          </q-card-section>
+          </div>
+          <q-item-label>联系方式</q-item-label>
+        </q-card-section>
 
-          <q-card-actions class="q-pl-md">
-            <q-btn
-              label="保存"
-              color="primary"
-              type="submit"
-              class="wd-80"
-              :loading="loading"
-            />
-            <q-btn
-              label="返回"
-              class="wd-60"
-              to="/system/users"
-            />
-          </q-card-actions>
-        </q-form>
+        <q-inner-loading :showing="loading">
+          <q-spinner-hourglass
+            size="sm"
+            color="primary"
+          />
+        </q-inner-loading>
+      </q-card>
+      <q-card
+        flat
+        class="q-mt-md q-pb-md"
+      >
+
       </q-card>
     </div>
   </q-page>
