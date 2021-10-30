@@ -23,8 +23,14 @@ export function getUserList ({ commit, state }, config) {
 export function getUser ({ dispatch, state }, config) {
   let url = restfulUrl('/v1/users/{userId}', config)
   return axios.get(url).then(response => {
-    console.log(response)
-    // return response.data
+    return response.data
+  })
+}
+
+export function getGroupsForUser ({ dispatch, state }, config) {
+  let url = restfulUrl('/v1/users/{userId}/groups', config)
+  return axios.get(url).then(response => {
+    return response.data
   })
 }
 
