@@ -61,7 +61,7 @@ module.exports = function (ctx) {
         'Dialog'
       ],
       config: {
-        loadingBar: { color: 'teal-3', size: '3px' }
+        loadingBar: { color: 'blue-3', size: '3px' }
       }
     },
 
@@ -72,7 +72,7 @@ module.exports = function (ctx) {
     build: {
       env: ctx.dev
         ? { // so on dev we'll have
-          API_HOST: JSON.stringify(process.env.API_HOST || 'http://127.0.0.1:4000/tangdao-opencloud-service')
+          API_HOST: JSON.stringify(process.env.API_HOST || 'http://127.0.0.1:4000')
         }
         : { // and on build (production):
           API_HOST: JSON.stringify('http://121.37.180.48:4000/tangdao-opencloud-v1')
@@ -106,11 +106,11 @@ module.exports = function (ctx) {
       // port: 8080,
       open: true // opens browser window automatically
       // proxy: {
-      //   '/tangdao-upms-service': {
-      //     target: process.env.API_HOST,
+      //   '/tangdao-opencloud-service': {
+      //     target: 'http://127.0.0.1:5000',
       //     changeOrigin: true,
       //     pathRewrite: {
-      //       '^/tangdao-upms-service': 'tangdao-upms-service'
+      //       '^/tangdao-opencloud-service': ''
       //     }
       //   }
       // }

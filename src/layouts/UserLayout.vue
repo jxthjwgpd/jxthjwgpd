@@ -1,7 +1,12 @@
 <template>
   <q-layout class="layout-user-container">
-    <q-page-container><router-view /></q-page-container>
-    <q-footer class="flex items-center justify-between footer" v-if="$q.screen.gt.xs">
+    <q-page-container>
+      <router-view />
+    </q-page-container>
+    <q-footer
+      class="flex items-center justify-between footer"
+      v-if="$q.screen.gt.xs"
+    >
       <div>
         <span>© 2020 Quasar v{{$q.version}}.</span>
         <span class="q-ml-sm">Created by <a href="https://gitee.com/ruyangit/dashboard">ruyangit</a></span>
@@ -23,9 +28,9 @@ export default {
 
 <style lang="sass" scoped>
 .layout-user-container
-  background-image: url("../statics/th.svg");
+  background-image: url("../statics/index.svg");
   background-repeat: no-repeat;
-  background-position: center 110px;
+  background-position: center 0px;
   background-size: 100%;
 .footer
   font-size: 10px;

@@ -5,65 +5,66 @@
       bordered
     >
       <q-card-section horizontal>
-        <q-img
-          class="col-6"
-          src="statics/index.jpg"
-          v-if="$q.screen.gt.xs"
-        >
-          <div class="absolute-bottom-left text-subtitle2 text-center">
-            {{$q.version}}
-          </div>
-        </q-img>
 
-        <q-card-section :class="`${$q.screen.gt.xs?'col-6':'col'} q-mt-xs q-pa-xl`">
-          <div class="text-h5 text-primary q-mb-xs">登录</div>
-          <div class="text-h6 q-mt-sm q-mb-xs">欢迎回来，请登录后继续</div>
+        <q-card-section class="col q-mt-xs q-pa-xl">
+          <div class="text-h5 text-primary q-mb-xs">注册</div>
+          <div class="text-h6 q-mt-sm q-mb-xs">创建我的账号</div>
           <q-form
             @submit="onSubmit"
             @reset="onReset"
-            class="login-form "
+            class="login-form my-form q-mt-lg"
           >
             <q-input
-              stack-label
+              outlined
+              dense
+              no-error-icon
               v-model.trim="form.loginName"
-              label="用户账号"
-              lazy-rules
-              :rules="[ val => val && val.length > 0 || '请输入用户账号']"
+              placeholder="账号"
+              :rules="[ val => val && val.length > 0 || '请设置用户账号']"
             />
             <q-input
-              stack-label
+              outlined
+              dense
+              no-error-icon
               type="password"
               v-model.trim="form.password"
-              label="密码"
-              lazy-rules
-              :rules="[ val => val && val.length > 0 || '请输入密码']"
+              placeholder="密码"
+              :rules="[ val => val && val.length > 0 || '请设置登录密码']"
             />
-            <div class="column q-gutter-y-md q-mt-none">
-              <q-checkbox
-                v-model="form.cbPassWeb"
-                label="记住账号"
-                dense
-              />
-            </div>
-            <div class="q-mt-md column items-center">
+            <q-input
+              outlined
+              dense
+              no-error-icon
+              type="password"
+              v-model.trim="form.cpassword"
+              placeholder="确认密码"
+              :rules="[ val => val && val.length > 0 || '请再次输入你的密码', val => val && val === form.password || '两次密码输入不一致' ]"
+            />
+            <q-input
+              outlined
+              dense
+              no-error-icon
+              type="mobile"
+              v-model.trim="form.mobile"
+              placeholder="手机号码"
+              :rules="[ val => val && val.length > 0 || '请输入你的手机号码']"
+            >
+              <template v-slot:prepend>
+                +86
+              </template>
+            </q-input>
+            <div class="column items-center">
               <q-btn
-                label="登录"
+                label="注册"
                 type="submit"
                 color="primary"
                 class="full-width"
               />
-              <div class="q-mt-md">如果还没有账号？<router-link
-                  to="/user/signup"
+              <div class="q-mt-md">登录已有账号？<router-link
+                  to="/user/login"
                   class="text-blue"
-                >点击注册</router-link>
+                >点击登录</router-link>
               </div>
-              <!-- <q-btn
-                label="重置"
-                type="reset"
-                color="primary"
-                flat
-                class="q-ml-sm"
-              /> -->
             </div>
           </q-form>
 
@@ -84,7 +85,6 @@
           flat
           round
           icon="settings_system_daydream"
-          @click="alert = true"
         />
       </q-card-actions>
       <q-inner-loading :showing="loading">
@@ -94,40 +94,20 @@
         />
       </q-inner-loading>
     </q-card>
-    <q-dialog v-model="alert">
-      <q-card>
-        <q-card-section>
-          <div class="text-h6">About</div>
-        </q-card-section>
-
-        <q-card-section class="q-pt-none">
-          花非花、梦非梦、花如梦、梦似花、梦里有花、花开如梦，心非心、镜非镜、心如镜、镜似心、镜中有心、心如明镜。
-        </q-card-section>
-
-        <q-card-actions align="right">
-          <q-btn
-            flat
-            label="OK"
-            color="primary"
-            v-close-popup
-          />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
   </q-page>
 </template>
 
 <script>
 export default {
-  name: 'UserLogin',
+  name: 'UserSignup',
   data () {
     return {
       loading: false,
-      alert: false,
       form: {
-        loginName: 'system',
-        password: '123456',
-        cbPassWeb: false
+        loginName: '',
+        password: '',
+        cpassword: '',
+        mobile: ''
       },
       accept: false
     }
@@ -163,7 +143,7 @@ export default {
 
 <style lang="sass" scoped>
 .login-wrapper, login-form
-  width: 840px
+  width: 450px
 @media (max-width: 1023px)
   .login-wrapper, login-form
     width: 98%
