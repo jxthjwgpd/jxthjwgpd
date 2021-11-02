@@ -50,7 +50,7 @@
               :rules="[ val => val && val.length > 0 || '请输入你的手机号码']"
             >
               <template v-slot:prepend>
-                +86
+                <span class="text-md">+86</span>
               </template>
             </q-input>
             <div class="column items-center">
@@ -150,4 +150,6 @@ export default {
 @media (max-width: 599px)
   .q-pa-xl
     padding: 15px
+.text-md
+  font-size: 14px
 </style>

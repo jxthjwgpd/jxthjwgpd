@@ -21,22 +21,24 @@
           <q-form
             @submit="onSubmit"
             @reset="onReset"
-            class="login-form "
+            class="login-form my-form q-mt-lg"
           >
             <q-input
-              stack-label
+              outlined
+              dense
+              no-error-icon
               v-model.trim="form.loginName"
-              label="用户账号"
-              lazy-rules
+              placeholder="账号"
               :rules="[ val => val && val.length > 0 || '请输入用户账号']"
             />
             <q-input
-              stack-label
+              outlined
+              dense
+              no-error-icon
               type="password"
               v-model.trim="form.password"
-              label="密码"
-              lazy-rules
-              :rules="[ val => val && val.length > 0 || '请输入密码']"
+              placeholder="密码"
+              :rules="[ val => val && val.length > 0 || '请输入登录密码']"
             />
             <div class="column q-gutter-y-md q-mt-none">
               <q-checkbox
@@ -57,13 +59,6 @@
                   class="text-blue"
                 >点击注册</router-link>
               </div>
-              <!-- <q-btn
-                label="重置"
-                type="reset"
-                color="primary"
-                flat
-                class="q-ml-sm"
-              /> -->
             </div>
           </q-form>
 
@@ -125,8 +120,8 @@ export default {
       loading: false,
       alert: false,
       form: {
-        loginName: 'system',
-        password: '123456',
+        loginName: '',
+        password: '',
         cbPassWeb: false
       },
       accept: false
