@@ -101,11 +101,11 @@ export default {
     if (this.sidebarVisibility && this.$q.screen.gt.sm) {
       this.sidebarLeftOpen = true
     }
-    let alertCount = this.$q.sessionStorage.getItem('alert_count')
-    if (!alertCount || alertCount < 3) {
-      this.persistent = !this.persistent
-      this.$q.sessionStorage.set('alert_count', ++alertCount)
-    }
+    // let alertCount = this.$q.sessionStorage.getItem('alert_count')
+    // if (!alertCount || alertCount < 3) {
+    //   this.persistent = !this.persistent
+    //   this.$q.sessionStorage.set('alert_count', ++alertCount)
+    // }
   },
   watch: {
     $route: 'SidebarMenuDataMethod',

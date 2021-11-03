@@ -20,17 +20,18 @@ export function login ({ commit, dispatch, getters }, form) {
 
 export function validate ({ commit, state }) {
   if (!state.user) return Promise.resolve(null)
-  return axios.get('/v1/user')
-    .then(response => {
-      const user = response.data.user
-      commit('LOGIN', user)
-      return user
-    }).catch(error => {
-      if (error.response && error.response.status === 401) {
-        commit('LOGOUT')
-      }
-      return null
-    })
+  return state.user
+  // return axios.get('/v1/user')
+  //   .then(response => {
+  //     const user = response.data.user
+  //     commit('LOGIN', user)
+  //     return user
+  //   }).catch(error => {
+  //     if (error.response && error.response.status === 401) {
+  //       commit('LOGOUT')
+  //     }
+  //     return null
+  //   })
 }
 
 export function logout ({ commit }) {
