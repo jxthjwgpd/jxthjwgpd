@@ -17,7 +17,6 @@ const routes = [
       { path: '', redirect: { path: 'dashboard' } },
       { path: 'dashboard', meta: { auth: true }, component: () => import('pages/Dashboard.vue') },
       { path: 'events', component: () => import('pages/Events.vue') },
-      { path: 'lists', component: () => import('pages/Lists.vue') },
       {
         path: 'system',
         component: () => import('layouts/BlankLayout.vue'),
@@ -31,7 +30,24 @@ const routes = [
           { path: 'settings', meta: { sidebar: true }, component: () => import('pages/system/Setting.vue') },
           { path: 'roles', meta: { sidebar: true, auth: true }, component: () => import('pages/system/RoleList.vue') },
           { path: 'policies', meta: { sidebar: true, auth: true }, component: () => import('pages/system/PolicyList.vue') },
-          { path: 'policies/create', meta: { sidebar: true, auth: true }, component: () => import('pages/system/PolicyCreate.vue') }
+          { path: 'policies/create', meta: { sidebar: true, auth: true }, component: () => import('pages/system/PolicyCreate.vue') },
+          {
+            path: 'form',
+            component: () => import('layouts/BlankLayout.vue'),
+            children: [
+              { path: '', redirect: { path: 'basic-form' } },
+              { path: 'basic-form', meta: { sidebar: true, auth: true }, component: () => import('pages/form/BasicForm.vue') }
+            ]
+          },
+          {
+            path: 'list',
+            component: () => import('layouts/BlankLayout.vue'),
+            children: [
+              { path: '', redirect: { path: 'basic-list' } },
+              { path: 'table-list', meta: { sidebar: true, auth: true }, component: () => import('pages/list/TableList.vue') },
+              { path: 'basic-list', meta: { sidebar: true, auth: true }, component: () => import('pages/list/BasicList.vue') }
+            ]
+          }
         ]
       }
     ]

@@ -15,6 +15,13 @@ body.body--light
   opacity: 0.35
   border-radius: 5px
 
+.my-page
+  background: #f0f2f5
+  &-header
+    width: 100%
+    background: #fff
+    padding-bottom: 10px
+
 .my-table
   & .q-table__top
     padding: 12px 0
@@ -25,6 +32,23 @@ body.body--light
     word-break: break-all !important
 
 .my-form
+  & .q-label
+    display: inline-block
+    flex-grow: 0
+    overflow: hidden
+    white-space: nowrap
+    text-align: right
+    vertical-align: middle
+    & > label
+      position: relative
+      display: inline-flex
+      align-items: center
+      height: 40px
+    &::after
+      content: ":"
+      position: relative
+      top: -.5px
+      margin: 0 8px 0 2px
   & .q-field
     &__bottom--animated
       left: -5px

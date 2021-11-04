@@ -1,7 +1,121 @@
 const gettingStarted = [
   {
-    name: '用户列表',
-    path: 'users'
+    name: '仪表盘',
+    path: 'dashboard',
+    children: [
+      {
+        name: '分析页',
+        path: '1'
+      },
+      {
+        name: '监控页',
+        path: '2'
+      },
+      {
+        name: '工作台',
+        path: '3'
+      }
+    ]
+  },
+  {
+    name: '表单页',
+    path: 'form',
+    children: [
+      {
+        name: '基础表单',
+        path: 'basic-form'
+      },
+      {
+        name: '分步表单',
+        path: '5'
+      },
+      {
+        name: '高级表单',
+        path: '6'
+      }
+    ]
+  },
+  {
+    name: '列表页',
+    path: 'list',
+    children: [
+      {
+        name: '搜索列表',
+        path: '7'
+      },
+      {
+        name: '查询表格',
+        path: 'table-list'
+      },
+      {
+        name: '标准列表',
+        path: 'basic-list'
+      },
+      {
+        name: '卡片列表',
+        path: '10'
+      }
+    ]
+  },
+  {
+    name: '详情页',
+    path: 'profile',
+    children: [
+      {
+        name: '基础详情',
+        path: '11'
+      },
+      {
+        name: '高级详情',
+        path: '12'
+      }
+    ]
+  },
+  {
+    name: '结果页',
+    path: 'result',
+    children: [
+      {
+        name: '成功页',
+        path: '13'
+      },
+      {
+        name: '失败页',
+        path: '14'
+      }
+    ]
+  },
+  {
+    name: '异常页',
+    path: 'exception',
+    children: [
+      {
+        name: '403',
+        path: '15'
+      },
+      {
+        name: '404',
+        path: '16'
+      },
+      {
+        name: '500',
+        path: '17'
+      }
+    ]
+  },
+  {
+    name: '个人页',
+    path: 'account',
+    children: [
+      {
+        name: '个人中心',
+        path: '18'
+      },
+      {
+        name: '个人设置',
+        path: '19'
+      }
+    ]
   }
   // {
   //   name: '用户管理',
@@ -67,7 +181,7 @@ module.exports = [
   //   path: 'lists'
   // },
   {
-    name: '系统管理',
+    name: '系统组件',
     icon: 'style',
     path: 'system',
     opened: true,
