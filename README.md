@@ -3,9 +3,12 @@
 A Quasar Framework app
 
 ### 预览
-<img src='./src/statics/quasar-admin.jpg' width="100%" />
+<img src='http://121.37.180.48:12001/statics/1.png' width="100%" />
+<img src='http://121.37.180.48:12001/statics/2.png' width="100%" />
+<img src='http://121.37.180.48:12001/statics/3.png' width="100%" />
+<img src='http://121.37.180.48:12001/statics/4.png' width="100%" />
 
-**[前端预览](http://121.37.180.48/#/dashboard)**
+**[前端预览](http://121.37.180.48:12001/#/dashboard)**
 
 **[后端项目](https://gitee.com/ruyangit/tangdao)**
 
