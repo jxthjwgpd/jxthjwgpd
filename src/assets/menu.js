@@ -27,7 +27,7 @@ const gettingStarted = [
       },
       {
         name: '分步表单',
-        path: 'step-form'
+        path: '5'
       },
       {
         name: '高级表单',
