@@ -72,10 +72,10 @@ module.exports = function (ctx) {
     build: {
       env: ctx.dev
         ? { // so on dev we'll have
-          API_HOST: JSON.stringify(process.env.API_HOST || 'http://127.0.0.1:4001')
+          API_HOST: JSON.stringify(process.env.API_HOST || 'http://huawei.s01:12002')
         }
         : { // and on build (production):
-          API_HOST: JSON.stringify('http://121.37.180.48:4000/tangdao-opencloud-v1')
+          API_HOST: JSON.stringify('http://huawei.s01:12002')
         },
       scopeHoisting: true,
       vueRouterMode: 'hash', // available values: 'hash', 'history'

@@ -1,7 +1,7 @@
 <template>
-  <q-page class="q-pa-lg">
-    <div class="row items-center justify-between q-mb-md">
-      <div>
+  <q-page class="my-page">
+    <div class="row items-center justify-between">
+      <div class="my-page-header q-pa-lg">
         <q-breadcrumbs align="left">
           <q-breadcrumbs-el
             label="系统管理"
@@ -9,10 +9,7 @@
           />
           <q-breadcrumbs-el label="概览" />
         </q-breadcrumbs>
-        <div
-          class="text-h6 q-mt-xs"
-          v-if="$q.screen.gt.sm"
-        >系统管理数据状况概览</div>
+        <div class="q-mt-md q-mb-sm text-h6">系统管理数据状况概览</div>
       </div>
     </div>
     <q-banner

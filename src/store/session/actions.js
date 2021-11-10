@@ -21,7 +21,7 @@ export function login ({ commit, dispatch, getters }, form) {
 export function validate ({ commit, state }) {
   if (!state.user) return Promise.resolve(null)
   return state.user
-  // return axios.get('/v1/user')
+  // return axios.get('/admin/login')
   //   .then(response => {
   //     const user = response.data.user
   //     commit('LOGIN', user)
