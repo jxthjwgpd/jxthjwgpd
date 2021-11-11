@@ -1,4 +1,4 @@
-const gettingStarted = [
+const gettingComponent = [
   {
     name: '仪表盘',
     path: 'dashboard',
@@ -163,6 +163,13 @@ const gettingStarted = [
   // }
 ]
 
+const gettingSystem = [
+  {
+    name: '管理员',
+    path: 'admin'
+  }
+]
+
 module.exports = [
   {
     name: '总览',
@@ -181,10 +188,17 @@ module.exports = [
   //   path: 'lists'
   // },
   {
-    name: '系统组件',
+    name: '组件',
     icon: 'style',
+    path: 'component',
+    opened: true,
+    children: gettingComponent
+  },
+  {
+    name: '系统设置',
+    icon: 'healing',
     path: 'system',
     opened: true,
-    children: gettingStarted
+    children: gettingSystem
   }
 ]

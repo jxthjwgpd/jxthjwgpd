@@ -1,7 +1,7 @@
 <template>
   <q-page class="my-page ">
     <div class="row items-center justify-between">
-      <div class="q-pa-lg my-page-header">
+      <div class="my-page-header">
         <q-breadcrumbs align="left">
           <q-breadcrumbs-el
             label="首页"
@@ -13,48 +13,45 @@
           />
           <q-breadcrumbs-el label="查询表格" />
         </q-breadcrumbs>
-        <div class="q-mt-md q-mb-sm text-h6">查询表格</div>
       </div>
     </div>
-    <div class="my-card">
-      <div class="q-ma-lg">
-        <div class="q-mb-lg my-table">
-          <q-table
-            title="Treats"
-            :data="data"
-            :columns="columns"
-            row-key="id"
-            :pagination.sync="pagination"
-            :loading="loading"
-            :filter="filter"
-            @request="onRequest"
-            binary-state-sort
-            square
-            :card-style="{ boxShadow: 'none', padding: '10px' }"
-            :table-header-style="{ backgroundColor: '#eeeeee'}"
-          >
-            <template v-slot:top-right>
-              <q-input
-                dense
-                debounce="300"
-                v-model="filter"
-                placeholder="查询"
-              >
-                <template v-slot:append>
-                  <q-icon name="search" />
-                </template>
-              </q-input>
-            </template>
+    <div class="my-page-body">
+      <div class="q-mb-lg my-table">
+        <q-table
+          title="Treats"
+          :data="data"
+          :columns="columns"
+          row-key="id"
+          :pagination.sync="pagination"
+          :loading="loading"
+          :filter="filter"
+          @request="onRequest"
+          binary-state-sort
+          square
+          :card-style="{ boxShadow: 'none', padding: '10px' }"
+          :table-header-style="{ backgroundColor: '#eeeeee'}"
+        >
+          <template v-slot:top-right>
+            <q-input
+              dense
+              debounce="300"
+              v-model="filter"
+              placeholder="查询"
+            >
+              <template v-slot:append>
+                <q-icon name="search" />
+              </template>
+            </q-input>
+          </template>
 
-            <template v-slot:no-data="{ message }">
-              <div class="full-width row flex-center text-grey q-gutter-sm q-pa-lg">
-                <span>
-                  Well this is sad... {{ message }}
-                </span>
-              </div>
-            </template>
-          </q-table>
-        </div>
+          <template v-slot:no-data="{ message }">
+            <div class="full-width row flex-center text-grey q-gutter-sm q-pa-lg">
+              <span>
+                Well this is sad... {{ message }}
+              </span>
+            </div>
+          </template>
+        </q-table>
       </div>
     </div>
     <!-- </q-scroll-area> -->

@@ -1,7 +1,7 @@
 <template>
   <q-page class="my-page basic-form">
     <div class="row items-center justify-between">
-      <div class="my-page-header q-pa-lg">
+      <div class="my-page-header">
         <q-breadcrumbs align="left">
           <q-breadcrumbs-el
             label="首页"
@@ -13,67 +13,65 @@
           />
           <q-breadcrumbs-el label="基础表单" />
         </q-breadcrumbs>
-        <div class="q-mt-md q-mb-sm text-h6">基础表单</div>
-        <div>表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景。</div>
+        <div class="my-page-header-subtitle">基础表单</div>
+        <div class="q-mt-sm">表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景。</div>
       </div>
     </div>
-    <div class="my-card">
-      <div class="q-ma-lg">
-        <q-card
-          flat
-          class="q-pa-xl"
-        >
-          <q-form class="my-form">
-            <div class="row">
-              <div class="col-4 q-label">
-                <label for="username">
-                  账号
-                  <em>（必填项）</em>
-                </label>
-              </div>
-              <div class="col-5">
-                <q-input
-                  outlined
-                  dense
-                  no-error-icon
-                  v-model.trim="form.loginName"
-                  placeholder="请输入账号"
-                  :rules="[ val => val && val.length > 0 || '请设置用户账号']"
-                />
-              </div>
+    <div class="my-page-body">
+      <q-card
+        flat
+        class="q-pa-xl"
+      >
+        <q-form class="my-form">
+          <div class="row">
+            <div class="col-4 q-label">
+              <label for="username">
+                账号
+                <em>（必填项）</em>
+              </label>
             </div>
-            <div class="row">
-              <div class="col-4 q-label">
-                <label for="price">
-                  金额
-                  <em>（选填）</em>
-                </label>
-              </div>
-              <div class="wd-150">
-                <q-input
-                  outlined
-                  dense
-                  no-error-icon
-                  v-model.trim="form.price"
-                  mask="#.##"
-                  fill-mask="0"
-                  reverse-fill-mask
-                  input-class="text-right"
-                />
-              </div>
+            <div class="col-5">
+              <q-input
+                outlined
+                dense
+                no-error-icon
+                v-model.trim="form.loginName"
+                placeholder="请输入账号"
+                :rules="[ val => val && val.length > 0 || '请设置用户账号']"
+              />
             </div>
-            <div class="row q-mt-lg">
-              <div class="col offset-4">
-                <q-btn color="primary q-mr-sm">提交</q-btn>
-                <q-btn
-                  color="white"
-                  text-color="black"
-                >保存</q-btn>
-              </div>
+          </div>
+          <div class="row">
+            <div class="col-4 q-label">
+              <label for="price">
+                金额
+                <em>（选填）</em>
+              </label>
             </div>
-          </q-form>
-        </q-card>
-      </div>
+            <div class="wd-150">
+              <q-input
+                outlined
+                dense
+                no-error-icon
+                v-model.trim="form.price"
+                mask="#.##"
+                fill-mask="0"
+                reverse-fill-mask
+                input-class="text-right"
+              />
+            </div>
+          </div>
+          <div class="row q-mt-lg">
+            <div class="col offset-4">
+              <q-btn color="primary q-mr-sm">提交</q-btn>
+              <q-btn
+                color="white"
+                text-color="black"
+              >保存</q-btn>
+            </div>
+          </div>
+        </q-form>
+      </q-card>
     </div>
   </q-page>
 </template>

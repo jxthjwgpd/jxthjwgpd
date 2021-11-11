@@ -16,9 +16,8 @@ const routes = [
     children: [
       { path: '', redirect: { path: 'dashboard' } },
       { path: 'dashboard', meta: { auth: true }, component: () => import('pages/Dashboard.vue') },
-      { path: 'events', component: () => import('pages/Events.vue') },
       {
-        path: 'system',
+        path: 'component',
         component: () => import('layouts/BlankLayout.vue'),
         children: [
           { path: '', redirect: { path: 'overview' } },
@@ -49,6 +48,15 @@ const routes = [
               { path: 'basic-list', meta: { sidebar: true, auth: true }, component: () => import('pages/list/BasicList.vue') }
             ]
           }
+        ]
+      },
+      {
+        path: 'system',
+        component: () => import('layouts/BlankLayout.vue'),
+        children: [
+          { path: '', redirect: { path: 'overview' } },
+          { path: 'overview', meta: { sidebar: true, auth: true }, component: () => import('pages/system/Overview.vue') },
+          { path: 'admin', meta: { sidebar: true, auth: true }, component: () => import('pages/system/UserList.vue') }
         ]
       }
     ]

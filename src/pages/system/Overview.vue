@@ -1,15 +1,19 @@
 <template>
   <q-page class="my-page">
     <div class="row items-center justify-between">
-      <div class="my-page-header q-pa-lg">
+      <div class="my-page-header">
         <q-breadcrumbs align="left">
           <q-breadcrumbs-el
-            label="系统管理"
-            to="/system"
+            label="首页"
+            to=""
+          />
+          <q-breadcrumbs-el
+            label="仪表盘"
+            to=""
           />
           <q-breadcrumbs-el label="概览" />
         </q-breadcrumbs>
-        <div class="q-mt-md q-mb-sm text-h6">系统管理数据状况概览</div>
+        <div class="my-page-header-subtitle">中枢分析数据概览</div>
       </div>
     </div>
     <q-banner
@@ -30,7 +34,7 @@
           /></q-btn>
       </template>
     </q-banner>
-    <div class="row">
+    <div class="my-page-body row">
       <div class="col-md-8 col-12">
         <q-card flat>
           <q-card-section class="text-subitle2 row q-pa-none">

@@ -1,35 +1,23 @@
 <template>
-  <q-page class="q-pa-lg">
-    <!-- <q-scroll-area class="fit"> -->
-    <div class="row items-center justify-between q-mb-md">
-      <div>
+  <q-page class="my-page">
+    <div class="row items-center justify-between">
+      <div class="my-page-header">
         <q-breadcrumbs align="left">
           <q-breadcrumbs-el
-            label="系统管理"
-            to="/system"
+            label="首页"
+            to=""
           />
-          <q-breadcrumbs-el label="用户" />
+          <q-breadcrumbs-el
+            label="系统设置"
+            to=""
+          />
+          <q-breadcrumbs-el label="管理员" />
         </q-breadcrumbs>
-        <div
-          class="text-h6 q-mt-xs"
-          v-if="$q.screen.gt.sm"
-        >用户</div>
-      </div>
-      <div
-        class="q-gutter-sm"
-        v-if="$q.screen.gt.sm"
-      >
-        <q-btn
-          icon="loop"
-          color="primary"
-          outline
-          dense
-          :loading="loading"
-          @click="onRefresh"
-        />
+        <div class="my-page-header-subtitle">基础表单</div>
+        <div>12345</div>
       </div>
     </div>
-    <div class="q-mb-lg my-table">
+    <div class="my-page-body my-table">
       <q-table
         :data="data"
         :columns="columns"
