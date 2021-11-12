@@ -54,8 +54,7 @@ const routes = [
         path: 'system',
         component: () => import('layouts/BlankLayout.vue'),
         children: [
-          { path: '', redirect: { path: 'overview' } },
-          { path: 'overview', meta: { sidebar: true, auth: true }, component: () => import('pages/system/Overview.vue') },
+          { path: '', redirect: { path: 'admin' } },
           { path: 'admin', meta: { sidebar: true, auth: true }, component: () => import('pages/system/UserList.vue') }
         ]
       }
