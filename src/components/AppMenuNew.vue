@@ -15,7 +15,7 @@ export default {
   props: {
     value: Boolean,
     menuData: {
-      default: () => {}, type: Array
+      default: () => { }, type: Array
     }
   },
 
@@ -55,7 +55,7 @@ export default {
             h,
             item,
             path + (item.path !== void 0 ? '/' + item.path : ''),
-            level + 0.65
+            level + 0.45
           ))
         )
       }
@@ -63,7 +63,8 @@ export default {
       const props = {
         to: path,
         dense: level > 0,
-        insetLevel: level > 0.65 ? 0.8 : level
+        // insetLevel: level > 0.65 ? 0.8 : level
+        insetLevel: level > 0.45 ? 0.6 : level
       }
 
       const attrs = {}
@@ -91,26 +92,27 @@ export default {
         menu.icon !== void 0
           ? h(QItemSection, {
             props: { avatar: true }
-          }, [ h(QIcon, { props: { name: menu.icon } }, (!this.value) ? [ h(QTooltip, { props: { anchor: 'center right', self: 'center left', offset: [25, 25] } }, [ menu.name ]) ] : null) ])
+          }, [h(QIcon, { props: { name: menu.icon } }, (!this.value) ? [h(QTooltip, { props: { anchor: 'center right', self: 'center left', offset: [25, 25] } }, [menu.name])] : null)])
           : (!this.value) ? h(QItemSection, {
             props: { avatar: true }
-          }, [ h(QIcon, { props: { name: 'select_all', color: 'blue-6' } }, [ h(QTooltip, { props: { anchor: 'center right', self: 'center left', offset: [25, 25] } }, [ menu.name ]) ]) ]) : null,
+          }, [h(QIcon, { props: { name: 'select_all', color: 'blue-6' } }, [h(QTooltip, { props: { anchor: 'center right', self: 'center left', offset: [25, 25] } }, [menu.name])])]) : null,
 
-        h(QItemSection, [ menu.name ]),
+        h(QItemSection, [menu.name]),
 
         menu.badge !== void 0
           ? h(QItemSection, {
             props: { side: true }
-          }, [ h(QBadge, [ menu.badge ]) ])
+          }, [h(QBadge, [menu.badge])])
           : null
       ])
     }
   },
 
   render (h) {
-    if (this.menuData) {
-      return h(QList, { staticClass: this.value ? 'app-menu' : 'app-menu minimize' }, this.menuData.map(
-        item => this.getDrawerMenu(h, item, '/' + item.path, 0)
+    if (this.menuData && this.menuData[0].children) {
+      // return h(QList, { staticClass: this.value ? 'app-menu' : 'app-menu minimize' }, this.getDrawerMenu(h, this.menuData[0].children, '/' + item.path, 0))
+      return h(QList, { staticClass: this.value ? 'app-menu' : 'app-menu minimize' }, this.menuData[0].children.map(
+        item => this.getDrawerMenu(h, item, '/' + this.menuData[0].path + '/' + item.path, 0)
       ))
     }
     return null
@@ -130,6 +132,7 @@ export default {
     min-width: 2px
 
   .q-item__section--side
+    padding-right: 10px
     & > .q-icon
       font-size: 20px
 
@@ -148,10 +151,10 @@ export default {
 
   &.minimize
     & .q-item__section--main,.q-item__section--side
-        display: none
+      display: none
     & .q-item__section--avatar
-        display: inherit
+      display: inherit
     .q-expansion-item__content .q-item
-       border-radius: 0
-       margin: 0
+      border-radius: 0
+      margin: 0
 </style>

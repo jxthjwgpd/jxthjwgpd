@@ -1,10 +1,13 @@
 const gettingComponent = [
   {
     name: '仪表盘',
+    icon: 'broken_image',
     path: 'dashboard',
+    opened: true,
     children: [
       {
         name: '分析页',
+        icon: 'broken_image',
         path: '1'
       },
       {
@@ -19,6 +22,7 @@ const gettingComponent = [
   },
   {
     name: '表单页',
+    icon: 'broken_image',
     path: 'form',
     children: [
       {
@@ -37,6 +41,7 @@ const gettingComponent = [
   },
   {
     name: '列表页',
+    icon: 'broken_image',
     path: 'list',
     children: [
       {
@@ -59,6 +64,7 @@ const gettingComponent = [
   },
   {
     name: '详情页',
+    icon: 'broken_image',
     path: 'profile',
     children: [
       {
@@ -73,6 +79,7 @@ const gettingComponent = [
   },
   {
     name: '结果页',
+    icon: 'broken_image',
     path: 'result',
     children: [
       {
@@ -87,6 +94,7 @@ const gettingComponent = [
   },
   {
     name: '异常页',
+    icon: 'broken_image',
     path: 'exception',
     children: [
       {
@@ -105,6 +113,7 @@ const gettingComponent = [
   },
   {
     name: '个人页',
+    icon: 'broken_image',
     path: 'account',
     children: [
       {
@@ -117,55 +126,12 @@ const gettingComponent = [
       }
     ]
   }
-  // {
-  //   name: '用户管理',
-  //   opened: true,
-  //   children: [
-  //     {
-  //       name: '用户',
-  //       path: 'users'
-  //     }
-  // {
-  //   name: '用户组',
-  //   path: 'groups'
-  // },
-  // {
-  //   name: '设置',
-  //   path: 'settings'
-  // }
-  // ]
-  // }
-  // {
-  //   name: '权限管理',
-  //   opened: true,
-  //   children: [
-  //     {
-  //       name: '授权',
-  //       path: 'permissions'
-  //     },
-  //     {
-  //       name: '策略管理',
-  //       path: 'policies'
-  //     }
-  //   ]
-  // },
-  // {
-  //   name: '角色管理',
-  //   path: 'roles'
-  // },
-  // {
-  //   name: '应用管理',
-  //   path: 'applications'
-  // },
-  // {
-  //   name: '登录日志',
-  //   path: 'login-logs'
-  // }
 ]
 
 const gettingSystem = [
   {
     name: '管理员',
+    icon: 'broken_image',
     path: 'admin'
   }
 ]
@@ -196,7 +162,7 @@ module.exports = [
   },
   {
     name: '系统设置',
-    icon: 'healing',
+    icon: 'broken_image',
     path: 'system',
     opened: true,
     children: gettingSystem

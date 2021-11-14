@@ -9,17 +9,14 @@
     <p class="text-faded">Sorry, nothing here...<strong>(404)</strong></p>
     <q-btn
       style="width:200px;"
-      to="/"
       label="Go back"
+      @click="$router.go(-1)"
     />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Error404',
-  mounted () {
-    // console.log(this.$route)
-  }
+  name: 'Error404'
 }
 </script>

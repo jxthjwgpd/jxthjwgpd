@@ -9,7 +9,7 @@ export function init (state) {
 export function login ({ commit, dispatch, getters }, form) {
   if (getters.isAuthenticated) { return dispatch('validate') }
   delete axios.defaults.headers.common.Authorization
-  return axios.post('/v1/auth/login', form).then(response => {
+  return axios.post('/admin/login', form).then(response => {
     const username = response.data.username
     commit('LOGIN', username)
     // Add token to cookie

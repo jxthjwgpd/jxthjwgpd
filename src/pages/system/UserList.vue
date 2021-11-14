@@ -1,7 +1,7 @@
 <template>
   <q-page class="my-page">
     <div class="row items-center justify-between">
-      <div class="my-page-header">
+      <div class="my-page-header q-pb-none">
         <q-breadcrumbs align="left">
           <q-breadcrumbs-el
             label="首页"
@@ -14,7 +14,22 @@
           <q-breadcrumbs-el label="管理员" />
         </q-breadcrumbs>
         <div class="my-page-header-subtitle">基础表单</div>
-        <div>12345</div>
+        <div class="q-mt-sm">
+          <q-tabs
+            v-model="tab"
+            dense
+            align="left"
+          >
+            <q-tab
+              name="mails"
+              icon="mail"
+            />
+            <q-tab
+              name="alarms"
+              icon="alarm"
+            />
+          </q-tabs>
+        </div>
       </div>
     </div>
     <div class="my-page-body my-table">
@@ -149,6 +164,7 @@ export default {
     return {
       filter: '',
       loading: false,
+      tab: 'mails',
       pagination: {
         sortBy: 'desc',
         descending: false,
