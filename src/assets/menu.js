@@ -7,22 +7,31 @@ const gettingComponent = [
     children: [
       {
         name: '分析页',
-        icon: 'broken_image',
+        icon: 'timelapse',
         path: '1'
       },
       {
         name: '监控页',
+        icon: 'grain',
+        // badge: 'New',
         path: '2'
       },
       {
         name: '工作台',
+        icon: 'work_outline',
         path: '3'
       }
     ]
   },
   {
+    name: '管理员',
+    icon: 'group',
+    badge: 'New',
+    path: 'form/basic-form'
+  },
+  {
     name: '表单页',
-    icon: 'broken_image',
+    icon: 'widgets',
     path: 'form',
     children: [
       {
@@ -41,7 +50,7 @@ const gettingComponent = [
   },
   {
     name: '列表页',
-    icon: 'broken_image',
+    icon: 'view_list',
     path: 'list',
     children: [
       {
@@ -64,7 +73,7 @@ const gettingComponent = [
   },
   {
     name: '详情页',
-    icon: 'broken_image',
+    icon: 'assignment',
     path: 'profile',
     children: [
       {
@@ -79,7 +88,7 @@ const gettingComponent = [
   },
   {
     name: '结果页',
-    icon: 'broken_image',
+    icon: 'library_books',
     path: 'result',
     children: [
       {
@@ -94,7 +103,7 @@ const gettingComponent = [
   },
   {
     name: '异常页',
-    icon: 'broken_image',
+    icon: 'remove_circle',
     path: 'exception',
     children: [
       {
@@ -113,7 +122,7 @@ const gettingComponent = [
   },
   {
     name: '个人页',
-    icon: 'broken_image',
+    icon: 'supervised_user_circle',
     path: 'account',
     children: [
       {
@@ -131,7 +140,7 @@ const gettingComponent = [
 const gettingSystem = [
   {
     name: '管理员',
-    icon: 'broken_image',
+    icon: 'group',
     path: 'admin'
   }
 ]
@@ -139,7 +148,7 @@ const gettingSystem = [
 module.exports = [
   {
     name: '总览',
-    icon: 'broken_image',
+    icon: 'eco',
     path: 'dashboard'
   },
   // {

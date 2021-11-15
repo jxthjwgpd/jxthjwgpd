@@ -20,14 +20,9 @@
             dense
             align="left"
           >
-            <q-tab
-              name="mails"
-              icon="mail"
-            />
-            <q-tab
-              name="alarms"
-              icon="alarm"
-            />
+            <q-tab name="mails">用户</q-tab>
+            <q-tab name="alarms">角色组</q-tab>
+            <q-tab name="sa">设置</q-tab>
           </q-tabs>
         </div>
       </div>

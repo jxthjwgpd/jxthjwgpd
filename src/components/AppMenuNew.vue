@@ -89,13 +89,23 @@ export default {
         attrs,
         staticClass: 'app-menu-entry non-selectable'
       }, [
-        menu.icon !== void 0
-          ? h(QItemSection, {
-            props: { avatar: true }
-          }, [h(QIcon, { props: { name: menu.icon } }, (!this.value) ? [h(QTooltip, { props: { anchor: 'center right', self: 'center left', offset: [25, 25] } }, [menu.name])] : null)])
-          : (!this.value) ? h(QItemSection, {
-            props: { avatar: true }
-          }, [h(QIcon, { props: { name: 'select_all', color: 'blue-6' } }, [h(QTooltip, { props: { anchor: 'center right', self: 'center left', offset: [25, 25] } }, [menu.name])])]) : null,
+
+        // menu.icon !== void 0 && !this.value
+        //   ? h(QItemSection, {
+        //     props: { avatar: true }
+        //   }, [h(QIcon, { props: { name: menu.icon } }, (!this.value) ? [h(QTooltip, { props: { anchor: 'center right', self: 'center left', offset: [25, 25] } }, [menu.name])] : null)])
+        //   : (!this.value) ? h(QItemSection, {
+        //     props: { avatar: true }
+        //   }, [h(QIcon, { props: { name: 'select_all', color: 'blue-6' } }, [h(QTooltip, { props: { anchor: 'center right', self: 'center left', offset: [25, 25] } }, [menu.name])])]) : null,
+
+        !this.value ? h(QItemSection, {
+          props: { avatar: true }
+        }, [h(QIcon, { props: { name: (menu.icon !== void 0) ? menu.icon : 'select_all' } }, [h(QTooltip, { props: { anchor: 'center right', self: 'center left', offset: [25, 25] } }, [menu.name])])])
+          : null,
+
+        (this.value && props.insetLevel === 0) ? h(QItemSection, {
+          props: { avatar: true }
+        }, [h(QIcon, { props: { name: (menu.icon !== void 0) ? menu.icon : 'select_all' } })]) : null,
 
         h(QItemSection, [menu.name]),
 
