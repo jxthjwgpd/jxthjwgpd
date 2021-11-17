@@ -1,6 +1,5 @@
 <template>
   <q-layout view="hHh LpR lfr">
-
     <q-app-header :menuData="menuData" />
     <q-page-container class="main-page-container">
       <div
@@ -46,36 +45,6 @@
         </div>
       </div>
     </q-page-container>
-    <q-dialog
-      v-model="persistent"
-      persistent
-      transition-show="scale"
-      transition-hide="scale"
-    >
-      <q-card
-        class="bg-blue text-white"
-        style="width: 300px"
-      >
-        <q-card-section>
-          <div class="text-h6">Welcome to Quasar</div>
-        </q-card-section>
-
-        <q-card-section class="q-pt-none">
-          © 2020 Quasar v{{$q.version}}.
-        </q-card-section>
-
-        <q-card-actions
-          align="right"
-          class="bg-white text-blue"
-        >
-          <q-btn
-            flat
-            label="OK"
-            v-close-popup
-          />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
   </q-layout>
 </template>
 

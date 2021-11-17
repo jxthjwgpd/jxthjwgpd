@@ -14,6 +14,10 @@ export default {
 
   props: {
     value: Boolean,
+    minimize: {
+      type: Boolean,
+      default: false
+    },
     menuData: {
       default: () => { }, type: Array
     }
@@ -44,7 +48,7 @@ export default {
             props: {
               label: menu.name,
               dense: level > 0,
-              icon: menu.icon,
+              icon: level === 0 ? menu.icon : null,
               defaultOpened: menu.opened,
               expandSeparator: false,
               switchToggleSide: level > 0,
@@ -119,11 +123,16 @@ export default {
   },
 
   render (h) {
-    if (this.menuData && this.menuData[0].children) {
-      // return h(QList, { staticClass: this.value ? 'app-menu' : 'app-menu minimize' }, this.getDrawerMenu(h, this.menuData[0].children, '/' + item.path, 0))
-      return h(QList, { staticClass: this.value ? 'app-menu' : 'app-menu minimize' }, this.menuData[0].children.map(
-        item => this.getDrawerMenu(h, item, '/' + this.menuData[0].path + '/' + item.path, 0)
-      ))
+    if (this.menuData) {
+      if (this.minimize) {
+        return h(QList, { staticClass: this.value ? 'app-menu' : 'app-menu minimize' }, this.menuData.map(
+          item => this.getDrawerMenu(h, item, '/' + item.path, 0)
+        ))
+      } else {
+        return h(QList, { staticClass: this.value ? 'app-menu' : 'app-menu minimize' }, this.menuData[0].children.map(
+          item => this.getDrawerMenu(h, item, '/' + this.menuData[0].path + '/' + item.path, 0)
+        ))
+      }
     }
     return null
   },
