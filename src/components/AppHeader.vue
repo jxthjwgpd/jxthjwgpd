@@ -25,7 +25,7 @@
               width="96px"
             >
           </q-avatar>
-          <span class="q-ml-sm"><span class="text-weight-bold">Quasar</span> Admin</span>
+          <span class="q-ml-sm"><span class="text-weight-bold">Quasar</span> EAP</span>
         </q-toolbar-title>
         <q-tabs
           dense
@@ -109,7 +109,7 @@
                   <img src="statics/user1.jpg">
                 </q-avatar>
 
-                <div class="text-subtitle1 q-mt-md q-mb-xs">John Doe</div>
+                <div class="text-subtitle1 q-mt-md q-mb-xs">{{this.$q.sessionStorage.getItem('username')||'John Doe'}}</div>
 
                 <q-btn
                   color="primary"
@@ -143,7 +143,7 @@
     >
       <q-app-menu-new
         :menuData="menuData"
-        minimize=true
+        :minimize="true"
         v-model="left"
       />
     </q-drawer>

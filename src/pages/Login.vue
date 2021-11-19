@@ -20,14 +20,13 @@
           <div class="text-h6 q-mt-sm q-mb-xs">欢迎回来，请登录后继续</div>
           <q-form
             @submit="onSubmit"
-            @reset="onReset"
             class="login-form my-form q-mt-lg"
           >
             <q-input
               outlined
               dense
               no-error-icon
-              v-model.trim="form.loginName"
+              v-model.trim="form.username"
               placeholder="账号"
               :rules="[ val => val && val.length > 0 || '请输入用户账号']"
             />
@@ -42,7 +41,7 @@
             />
             <div class="column q-gutter-y-md q-mt-none">
               <q-checkbox
-                v-model="form.cbPassWeb"
+                v-model="form.rememberMe"
                 label="记住账号"
                 dense
               />
@@ -79,7 +78,6 @@
           flat
           round
           icon="settings_system_daydream"
-          @click="alert = true"
         />
       </q-card-actions>
       <q-inner-loading :showing="loading">
@@ -89,26 +87,6 @@
         />
       </q-inner-loading>
     </q-card>
-    <q-dialog v-model="alert">
-      <q-card>
-        <q-card-section>
-          <div class="text-h6">About</div>
-        </q-card-section>
-
-        <q-card-section class="q-pt-none">
-          花非花、梦非梦、花如梦、梦似花、梦里有花、花开如梦，心非心、镜非镜、心如镜、镜似心、镜中有心、心如明镜。
-        </q-card-section>
-
-        <q-card-actions align="right">
-          <q-btn
-            flat
-            label="OK"
-            color="primary"
-            v-close-popup
-          />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
   </q-page>
 </template>
 
@@ -118,13 +96,11 @@ export default {
   data () {
     return {
       loading: false,
-      alert: false,
       form: {
-        loginName: '',
+        username: '',
         password: '',
-        cbPassWeb: false
-      },
-      accept: false
+        rememberMe: false
+      }
     }
   },
 
@@ -137,20 +113,15 @@ export default {
         this.$router.push({ path: params.redirect })
       }).catch(e => {
         this.loading = false
+        const message = e.message || '登录失败，请稍后重试！'
         this.$q.notify({
           color: 'negative',
           textColor: 'white',
           position: 'top',
           icon: 'highlight_off',
-          message: '登录失败，请稍后重试！'
+          message: message
         })
       })
-    },
-
-    onReset () {
-      this.form.username = null
-      this.form.password = null
-      this.accept = false
     }
   }
 }

@@ -1,22 +1,22 @@
 import { SessionStorage, Cookies } from 'quasar'
 import setHeaderAuthorization from './token'
 
-export const LOGIN = (state, user) => {
-  state.user = user
-  SessionStorage.set('user', user)
+export const LOGIN = (state, username) => {
+  state.username = username
+  SessionStorage.set('username', username)
   setHeaderAuthorization(state)
 }
 
 export const TOKEN = (state, token, expires) => {
   state.token = token
-  Cookies.set(ACCESS_TOKEN_KEY, token, { expires })
+  Cookies.set('token', token, { expires })
   setHeaderAuthorization(state)
 }
 
 export const LOGOUT = (state) => {
-  state.user = null
+  state.token = null
+  state.username = null
   SessionStorage.clear()
+  Cookies.remove('token')
   setHeaderAuthorization(state)
 }
-
-let ACCESS_TOKEN_KEY = 'access_token'

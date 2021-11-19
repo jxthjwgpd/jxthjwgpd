@@ -1,5 +1,5 @@
 export const isAuthenticated = (state) => {
-  return !!state.user
+  return !!state.username
 }
 
 export const token = (state) => {

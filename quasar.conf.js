@@ -52,17 +52,18 @@ module.exports = function (ctx) {
       // Quasar plugins
       plugins: [
         'Loading',
-        'LoadingBar',
+        // 'LoadingBar',
         'LocalStorage',
         'SessionStorage',
         'Cookies',
         'Meta',
         'Notify',
         'Dialog'
-      ],
-      config: {
-        loadingBar: { color: 'blue-3', size: '3px' }
-      }
+      ]
+      // ,
+      // config: {
+      //   loadingBar: { color: 'blue-3', size: '3px' }
+      // }
     },
 
     // https://quasar.dev/quasar-cli/cli-documentation/supporting-ie

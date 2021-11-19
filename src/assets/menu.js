@@ -141,6 +141,7 @@ const gettingSystem = [
   {
     name: '管理员',
     icon: 'group',
+    badge: 'New',
     path: 'admin'
   }
 ]

@@ -41,39 +41,6 @@
         :card-style="{ boxShadow: 'none', padding: '0 10px' }"
         :table-header-style="{ backgroundColor: '#eeeeee'}"
       >
-        <template v-slot:top-left>
-          <q-btn
-            label="新增用户"
-            color="primary"
-            to="/system/users/create"
-          />
-          <q-btn-group
-            class="q-ml-sm"
-            v-if="$q.screen.gt.sm"
-          >
-            <q-btn
-              label="活跃"
-              color="primary"
-            />
-            <q-btn
-              label="管理员"
-              color="primary"
-            />
-            <q-btn
-              label="外部"
-              color="primary"
-            />
-            <q-btn
-              label="禁用"
-              color="primary"
-            />
-            <q-btn
-              label="无策略"
-              color="primary"
-            />
-          </q-btn-group>
-        </template>
-
         <template v-slot:top-right>
           <q-input
             dense
@@ -98,27 +65,32 @@
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td
-              key="loginName"
+              key="username"
               :props="props"
             >
               <router-link
-                :to="`/system/users/${props.row.userId}/${props.row.loginName}`"
+                :to="`/system/users/${props.row.id}/${props.row.username}`"
                 class="text-primary"
-              >{{ props.row.loginName }}</router-link>
+              >{{ props.row.username }}</router-link>
             </q-td>
             <q-td
-              key="nickname"
+              key="roleName"
               :props="props"
-            >{{ props.row.nickname }}</q-td>
+            >{{ props.row.roleName }}</q-td>
             <q-td
-              class="text-line2-f"
-              key="remarks"
+              key="lastLoginIp"
               :props="props"
-            >{{ props.row.remarks }}</q-td>
+            >{{ props.row.lastLoginIp }}（{{ props.row.lastLoginDate }}）</q-td>
             <q-td
-              key="createTime"
+              key="status"
               :props="props"
-            >{{ props.row.createTime }}</q-td>
+            >
+              <q-dict-status :status="props.row.status" />
+            </q-td>
+            <q-td
+              key="created"
+              :props="props"
+            >{{ props.row.created }}</q-td>
             <q-td
               key="action"
               :props="props"
@@ -128,13 +100,7 @@
                 flat
                 dense
                 color="primary"
-                label="添加用户组"
-              />
-              <q-btn
-                flat
-                dense
-                color="primary"
-                label="添加权限"
+                label="编辑"
               />
               <q-btn
                 flat
@@ -153,6 +119,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'UserList',
   data () {
@@ -161,17 +128,18 @@ export default {
       loading: false,
       tab: 'mails',
       pagination: {
-        sortBy: 'desc',
+        sortBy: '',
         descending: false,
         page: 1,
         rowsPerPage: 10,
         rowsNumber: 10
       },
       columns: [
-        { name: 'loginName', label: '用户名称', align: 'left', field: 'loginName', sortable: true },
-        { name: 'nickname', label: '昵称', align: 'left', field: 'nickname', sortable: true },
-        { name: 'remarks', label: '备注', align: 'left', field: 'remarks' },
-        { name: 'createTime', label: '创建时间', align: 'center', field: 'createTime', sortable: true },
+        { name: 'username', label: '用户账号', align: 'left', field: 'username', sortable: true },
+        { name: 'roleName', label: '角色组', align: 'left', field: 'roleName' },
+        { name: 'lastLoginIp', label: '最后登录信息', align: 'left', field: 'lastLoginIp', style: 'width: 200px' },
+        { name: 'status', label: '状态', align: 'center', field: 'status', sortable: true, style: 'width: 100px' },
+        { name: 'created', label: '创建时间', align: 'center', field: 'created', style: 'width: 180px' },
         { name: 'action', label: '操作', field: 'action', align: 'center', style: 'width: 100px' }
       ],
       data: [],
@@ -195,17 +163,19 @@ export default {
     },
     async onRequest (props) {
       const { page, rowsPerPage, sortBy, descending } = props.pagination
-      const filter = props.filter
-      console.log('filter:' + filter)
+      // const filter = props.filter
       this.loading = true
-      await this.$store.dispatch('system/getUserList', { current: page, size: rowsPerPage }).then(data => {
-        this.pagination.page = data.current
-        this.pagination.rowsNumber = data.total
-        this.pagination.rowsPerPage = data.size
+      await axios.get('/admin/users', { params: { current: page, size: rowsPerPage } }).then(response => {
+        const { code, data } = response.data
+        if (code === '200' && data) {
+          this.pagination.page = data.current
+          this.pagination.rowsNumber = data.total
+          this.pagination.rowsPerPage = data.size
 
-        this.pagination.sortBy = sortBy
-        this.pagination.descending = descending
-        this.data = data.records
+          this.pagination.sortBy = sortBy
+          this.pagination.descending = descending
+          this.data = data.records
+        }
       }).catch(error => {
         console.error(error)
       })

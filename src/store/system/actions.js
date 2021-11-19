@@ -8,9 +8,9 @@ export function init (state) {
 }
 
 export function getUserList ({ commit, state }, config) {
-  return axios.get('/v1/users', { params: { ...config } }).then(response => {
-    const { data, status } = response
-    if (data && status === 200) {
+  return axios.get('/admin/users', { params: { ...config } }).then(response => {
+    const { code, data } = response.data
+    if (code === '200' && data) {
       commit('receiveUserList', {
         ...data,
         ...config

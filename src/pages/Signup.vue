@@ -130,12 +130,6 @@ export default {
           message: '登录失败，请稍后重试！'
         })
       })
-    },
-
-    onReset () {
-      this.form.username = null
-      this.form.password = null
-      this.accept = false
     }
   }
 }

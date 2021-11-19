@@ -1,4 +1,5 @@
 import axios from 'axios'
+import qs from 'Qs'
 
 import setAxiosHeaders from './token'
 
@@ -9,29 +10,31 @@ export function init (state) {
 export function login ({ commit, dispatch, getters }, form) {
   if (getters.isAuthenticated) { return dispatch('validate') }
   delete axios.defaults.headers.common.Authorization
-  return axios.post('/admin/login', form).then(response => {
-    const username = response.data.username
-    commit('LOGIN', username)
-    // Add token to cookie
-    commit('TOKEN', response.data.access_token, '1h')
-    return username
+  return axios.post('/admin/login', qs.stringify(form)).then(response => {
+    const { code, data } = response.data
+    if (code === '200' && data.access_token) {
+      commit('LOGIN', data.username)
+      commit('TOKEN', data.access_token, '24h')
+      return data
+    }
+    return Promise.reject(response.data)
   })
 }
 
 export function validate ({ commit, state }) {
-  if (!state.user) return Promise.resolve(null)
-  return state.user
-  // return axios.get('/admin/login')
-  //   .then(response => {
-  //     const user = response.data.user
-  //     commit('LOGIN', user)
-  //     return user
-  //   }).catch(error => {
-  //     if (error.response && error.response.status === 401) {
-  //       commit('LOGOUT')
-  //     }
-  //     return null
-  //   })
+  if (!state.username) return Promise.resolve(null)
+  return axios.get('/admin/check_token')
+    .then(response => {
+      const { code, data } = response.data
+      if (code === '200' && data.access_token) {
+        commit('LOGIN', data.username)
+        commit('TOKEN', data.access_token, '24h')
+        return data
+      } else {
+        commit('LOGOUT')
+        return null
+      }
+    })
 }
 
 export function logout ({ commit }) {
