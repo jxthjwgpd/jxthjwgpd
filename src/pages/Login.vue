@@ -115,10 +115,6 @@ export default {
         this.loading = false
         const message = e.message || '登录失败，请稍后重试！'
         this.$q.notify({
-          color: 'negative',
-          textColor: 'white',
-          position: 'top',
-          icon: 'highlight_off',
           message: message
         })
       })

@@ -5,24 +5,22 @@
 <script>
 export default {
   name: 'DictStatus',
-  props: {
-    status: String,
-    dictStatusData: {
-      default: {
+  data () {
+    return {
+      dictStatusData: {
         '0': {
           label: '正常',
-          color: 'blue'
-        },
-        '1': {
-          label: '删除',
-          color: 'yellow-6'
+          color: 'positive'
         },
         '2': {
           label: '锁定',
-          color: 'red'
+          color: 'negative'
         }
       }
     }
+  },
+  props: {
+    status: String
   }
 }
 </script>

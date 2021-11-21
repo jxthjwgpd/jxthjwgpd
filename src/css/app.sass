@@ -31,12 +31,31 @@ body.body--light
 .my-table
   & .q-table__top
     padding: 12px 0
+  & .q-table
+    & tbody
+      & td
+        height: 38px
+        &.action
+          & > a
+            margin-right: 10px
+          & > a:last-child
+            margin-right: 0
 
-.text
-  &-line2-f
-    white-space: inherit !important
-    word-break: break-all !important
-
+  &.text
+    &-line2-f
+      white-space: inherit !important
+      word-break: break-all !important
+.my-dialog
+  & .q-dialog-header
+    padding-top: 10px
+    padding-bottom: 10px
+  & .q-form-item
+    & .q-field--with-bottom
+      padding-bottom: 10px
+  & .q-dialog-footer
+    & > button
+      min-width: 65px
+      max-height: 35px
 .my-form
   & .q-label
     display: inline-block
@@ -45,6 +64,8 @@ body.body--light
     white-space: nowrap
     text-align: right
     vertical-align: middle
+    &.text-left
+      text-align: left
     & > label
       position: relative
       display: inline-flex
@@ -53,8 +74,16 @@ body.body--light
     &::after
       content: ":"
       position: relative
-      top: -.5px
-      margin: 0 8px 0 2px
+      top: -1px
+      margin: 0 15px 0 3px
+      font-weight: 400
+    &.required::before
+      content: "*"
+      position: relative
+      top: 1px
+      margin: 0 5px 0 10px
+      font-weight: 400
+      color: $negative
   & .q-value
     color: rgba(0,0,0,.65)
     display: inline-block
@@ -67,6 +96,6 @@ body.body--light
         & div
           width: max-content
           border-radius: 5px
-          background: red
+          background: $negative 
           color: #fff
           padding: 5px

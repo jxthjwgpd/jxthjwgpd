@@ -34,19 +34,26 @@
         row-key="id"
         :pagination.sync="pagination"
         :loading="loading"
-        :filter="filter"
+        :filter="username"
         @request="onRequest"
         binary-state-sort
         square
         :card-style="{ boxShadow: 'none', padding: '0 10px' }"
         :table-header-style="{ backgroundColor: '#eeeeee'}"
       >
+        <template v-slot:top-left>
+          <q-btn
+            label="新建用户"
+            color="primary"
+            @click="fixed=!fixed"
+          />
+        </template>
         <template v-slot:top-right>
           <q-input
             dense
             debounce="300"
-            v-model="filter"
-            placeholder="查询"
+            v-model="username"
+            placeholder="请输入用户名"
           >
             <template v-slot:append>
               <q-icon name="search" />
@@ -76,11 +83,11 @@
             <q-td
               key="roleName"
               :props="props"
-            >{{ props.row.roleName }}</q-td>
+            >{{ props.row.roleName|| '-' }}</q-td>
             <q-td
               key="lastLoginIp"
               :props="props"
-            >{{ props.row.lastLoginIp }}（{{ props.row.lastLoginDate }}）</q-td>
+            >{{ props.row.lastLoginIp }} <span v-show="props.row.lastLoginDate">（{{ props.row.lastLoginDate }}）</span></q-td>
             <q-td
               key="status"
               :props="props"
@@ -94,37 +101,41 @@
             <q-td
               key="action"
               :props="props"
-              class="q-gutter-xs"
+              class="q-gutter-xs action"
             >
-              <q-btn
-                flat
-                dense
-                color="primary"
-                label="编辑"
-              />
-              <q-btn
-                flat
-                dense
-                color="negative"
-                label="删除"
+              <a
+                class="text-primary"
+                href="#"
+              >编辑</a>
+              <a
+                class="text-negative"
+                href="#"
                 @click="confirm(props.row)"
-              />
+              >删除</a>
             </q-td>
           </q-tr>
         </template>
       </q-table>
     </div>
+    <user-form
+      v-model="fixed"
+      v-on:refresh="onRefresh"
+    />
     <!-- </q-scroll-area> -->
   </q-page>
 </template>
 
 <script>
+import UserForm from './UserForm.vue'
 import axios from 'axios'
 export default {
   name: 'UserList',
+  components: {
+    UserForm
+  },
   data () {
     return {
-      filter: '',
+      username: '',
       loading: false,
       tab: 'mails',
       pagination: {
@@ -143,7 +154,8 @@ export default {
         { name: 'action', label: '操作', field: 'action', align: 'center', style: 'width: 100px' }
       ],
       data: [],
-      selected: []
+      selected: [],
+      fixed: false
     }
   },
   mounted () {
@@ -163,9 +175,9 @@ export default {
     },
     async onRequest (props) {
       const { page, rowsPerPage, sortBy, descending } = props.pagination
-      // const filter = props.filter
+      const filter = props.filter
       this.loading = true
-      await axios.get('/admin/users', { params: { current: page, size: rowsPerPage } }).then(response => {
+      await axios.get('/admin/users', { params: { current: page, size: rowsPerPage, username: filter } }).then(response => {
         const { code, data } = response.data
         if (code === '200' && data) {
           this.pagination.page = data.current
