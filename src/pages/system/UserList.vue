@@ -135,8 +135,8 @@ export default {
   },
   data () {
     return {
-      username: '',
       loading: false,
+      username: '',
       tab: 'mails',
       pagination: {
         sortBy: '',

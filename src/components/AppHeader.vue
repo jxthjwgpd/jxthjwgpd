@@ -19,13 +19,7 @@
           shrink
           class="row items-center no-wrap"
         >
-          <q-avatar v-if="$q.screen.gt.xs">
-            <img
-              src="statics/icons/favicon-96x96.png"
-              width="96px"
-            >
-          </q-avatar>
-          <span class="q-ml-sm"><span class="text-weight-bold">Quasar</span> EAP</span>
+          <span class="q-ml-sm"><span class="text-weight-bold">QUASAR</span> Mont <span class="text-subtitle2">{{$q.version}}</span></span>
         </q-toolbar-title>
         <q-tabs
           dense

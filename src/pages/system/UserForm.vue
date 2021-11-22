@@ -30,7 +30,7 @@
                   outlined
                   dense
                   no-error-icon
-                  v-model.trim="form.loginName"
+                  v-model.trim="form.username"
                   placeholder="请输入账号"
                   :rules="[ val => val && val.length > 0 || '请设置用户账号']"
                 />
@@ -65,8 +65,8 @@
                   outlined
                   dense
                   no-error-icon
+                  v-model.trim="cpassword"
                   type="password"
-                  v-model.trim="form.cpassword"
                   placeholder="请输入确认密码"
                   :rules="[ val => val && val.length > 0 || '请再次输入你的密码', val => val && val === form.password || '两次密码输入不一致' ]"
                 />
@@ -79,7 +79,7 @@
                 </label>
               </div>
               <div class="col-8">
-
+                <user-role-list v-model="form.roleIds" />
               </div>
             </div>
           </template>
@@ -105,6 +105,7 @@
             outline
             label="取消"
             color="primary"
+            @click="onReset"
             v-close-popup
           />
         </q-card-actions>
@@ -114,8 +115,13 @@
 </template>
 
 <script>
+import UserRoleList from './UserRoleList.vue'
+import axios from 'axios'
 export default {
   name: 'RoleForm',
+  components: {
+    UserRoleList
+  },
   props: {
     value: {
       type: Boolean,
@@ -128,10 +134,11 @@ export default {
       loading: false,
       action: false,
       form: {
-        roleId: null,
-        roleName: null,
-        remarks: null
-      }
+        roleIds: [],
+        username: null,
+        password: null
+      },
+      cpassword: null
     }
   },
   watch: {
@@ -144,23 +151,34 @@ export default {
     }
   },
   methods: {
-    onSubmit () {
+    async onSubmit () {
       this.loading = true
-      this.$store.dispatch('system/saveRole', this.form).then(data => {
-        this.loading = false
-        this.action = true
+      await axios.post('/admin/users', this.form).then(response => {
+        const { code, message, data } = response.data
+        if (code === '200' && data) {
+          this.data = data.records
+          this.action = true
 
-        this.$emit('refresh')
+          this.$emit('refresh')
 
-        this.onReset()
-      }).catch(e => {
-        this.loading = false
+          this.onReset()
+        } else {
+          this.$q.notify({
+            message
+          })
+        }
+      }).catch(error => {
+        console.error(error)
       })
+      setTimeout(() => {
+        this.loading = false
+      }, 500)
     },
     onReset () {
-      this.form.roleId = null
-      this.form.roleName = null
-      this.form.remarks = null
+      this.form.roleIds = []
+      this.form.username = null
+      this.form.password = null
+      this.cpassword = null
     }
   }
 }

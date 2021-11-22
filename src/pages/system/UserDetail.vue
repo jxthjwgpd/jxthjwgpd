@@ -145,7 +145,7 @@
               name="group"
               class="q-pa-none"
             >
-              <user-group />
+              <!-- <user-group /> -->
             </q-tab-panel>
 
             <q-tab-panel name="policy">
@@ -174,11 +174,11 @@
 </template>
 
 <script>
-import UserGroup from './UserGroup.vue'
+// import UserGroup from './UserGroup.vue'
 export default {
   name: 'UserCreate',
   components: {
-    UserGroup
+    // UserGroup
   },
   data () {
     return {
