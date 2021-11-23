@@ -11,8 +11,9 @@ export default ({ app, router, Vue }) => {
         }
         return response
     }, function (error) {
-        if (error.response.status === 404) {
-            // router.push({ path: '/404' })
+        if (error + '' === 'Error: Network Error') {
+            router.push({ path: '/503' })
+        } else if (error.response && error.response.status === 404) {
             Vue.prototype.$q.notify({
                 message: '请求地址不存在 [' + error.response.request.responseURL + ']'
             })

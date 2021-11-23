@@ -10,6 +10,10 @@ const routes = [
     ]
   },
   {
+    path: '/503',
+    component: () => import('pages/Error503.vue')
+  },
+  {
     path: '/',
     component: () => import('layouts/MainLayoutNew.vue'),
     // meta: { auth: true },
