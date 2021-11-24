@@ -70,10 +70,10 @@ export default {
     },
     async onRequest () {
       this.loading = true
-      await axios.get('/admin/roles', { params: { current: 1, size: 1000 } }).then(response => {
+      await axios.get('/admin/roles/list', {}).then(response => {
         const { code, data } = response.data
         if (code === '200' && data) {
-          this.data = data.records
+          this.data = data
         }
       }).catch(error => {
         console.error(error)

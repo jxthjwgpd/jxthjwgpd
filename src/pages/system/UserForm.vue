@@ -118,7 +118,7 @@
 import UserRoleList from './UserRoleList.vue'
 import axios from 'axios'
 export default {
-  name: 'RoleForm',
+  name: 'UserForm',
   components: {
     UserRoleList
   },
@@ -156,7 +156,6 @@ export default {
       await axios.post('/admin/users', this.form).then(response => {
         const { code, message, data } = response.data
         if (code === '200' && data) {
-          this.data = data.records
           this.action = true
 
           this.$emit('refresh')

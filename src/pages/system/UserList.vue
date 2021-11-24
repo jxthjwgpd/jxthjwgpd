@@ -105,12 +105,15 @@
             >
               <a
                 class="text-primary"
-                href="#"
+                href="javascript:;"
+                @click="onUserEdit(props.row)"
+                v-super-admin="props.row.isa"
               >编辑</a>
               <a
-                class="text-negative"
-                href="#"
-                @click="confirm(props.row)"
+                class="text-primary"
+                href="javascript:;"
+                @click="onUserDel(props.row)"
+                v-super-admin="props.row.isa"
               >删除</a>
             </q-td>
           </q-tr>
@@ -121,17 +124,24 @@
       v-model="fixed"
       v-on:refresh="onRefresh"
     />
+    <user-edit
+      v-model="fixedEdit"
+      v-on:refresh="onRefresh"
+      :user="user"
+    />
     <!-- </q-scroll-area> -->
   </q-page>
 </template>
 
 <script>
 import UserForm from './UserForm.vue'
+import UserEdit from './UserEdit.vue'
 import axios from 'axios'
 export default {
   name: 'UserList',
   components: {
-    UserForm
+    UserForm,
+    UserEdit
   },
   data () {
     return {
@@ -146,16 +156,18 @@ export default {
         rowsNumber: 10
       },
       columns: [
-        { name: 'username', label: '用户账号', align: 'left', field: 'username', sortable: true },
-        { name: 'roleName', label: '角色组', align: 'left', field: 'roleName' },
+        { name: 'username', label: '用户账号', align: 'left', field: 'username', sortable: true, style: 'width: 200px' },
+        { name: 'roleName', label: '角色组', align: 'left', field: 'roleName', style: 'width: 200px' },
         { name: 'lastLoginIp', label: '最后登录信息', align: 'left', field: 'lastLoginIp', style: 'width: 200px' },
         { name: 'status', label: '状态', align: 'center', field: 'status', sortable: true, style: 'width: 100px' },
         { name: 'created', label: '创建时间', align: 'center', field: 'created', style: 'width: 180px' },
         { name: 'action', label: '操作', field: 'action', align: 'center', style: 'width: 100px' }
       ],
+      user: {},
       data: [],
       selected: [],
-      fixed: false
+      fixed: false,
+      fixedEdit: false
     }
   },
   mounted () {
@@ -195,22 +207,30 @@ export default {
         this.loading = false
       }, 1000)
     },
-    confirm (item) {
+    onUserEdit (user) {
+      this.fixedEdit = !this.fixedEdit
+      this.user = user
+    },
+    onUserDel (user) {
       this.$q.dialog({
         title: '删除操作',
         message: '确定要删除当前所选记录吗?',
-        color: 'negative',
-        cancel: true,
+        cancel: '取消',
+        ok: '确认',
         persistent: true
       }).onOk(() => {
-        console.log(item)
-        // console.log('>>>> OK')
-      }).onOk(() => {
-        // console.log('>>>> second OK catcher')
-      }).onCancel(() => {
-        // console.log('>>>> Cancel')
-      }).onDismiss(() => {
-        // console.log('I am triggered on both OK and Cancel')
+        this.$store.dispatch('system/deleteUser', user.id).then(response => {
+          const { code, message, data } = response
+          if (code === '200' && data) {
+            this.onRefresh()
+          } else {
+            this.$q.notify({
+              message
+            })
+          }
+        }).catch(error => {
+          console.log(error)
+        })
       })
     }
   }

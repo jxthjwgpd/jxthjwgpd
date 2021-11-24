@@ -1,0 +1,184 @@
+<template>
+  <q-dialog v-model="fixed">
+    <q-card
+      class="my-dialog"
+      style="min-width:680px;"
+    >
+      <q-form
+        @submit="onSubmit"
+        class="my-form"
+      >
+        <q-card-section class="q-dialog-header">
+          <div class="text-subtitle1">编辑用户</div>
+        </q-card-section>
+
+        <q-separator />
+
+        <q-card-section
+          style="max-height: 50vh; "
+          class="scroll q-gutter-y-md q-mt-none"
+        >
+          <div class="row q-form-item">
+            <div class="col-3 q-label text-right">
+              <label for="username">
+                用户账号
+              </label>
+            </div>
+            <div class="col-8 q-value">
+              {{user.username}}
+            </div>
+          </div>
+          <div class="row q-form-item">
+            <div class="col-3 q-label text-right">
+              <label for="id">
+                用户ID
+              </label>
+            </div>
+            <div class="col-8 q-value">
+              {{user.id}}
+            </div>
+          </div>
+          <div class="row q-form-item">
+            <div class="col-3 q-label text-right">
+              <label for="id">
+                创建时间
+              </label>
+            </div>
+            <div class="col-8 q-value">
+              {{user.created}}
+            </div>
+          </div>
+          <div class="row q-form-item">
+            <div class="col-3 q-label text-right">
+              <label for="status">
+                状态
+              </label>
+            </div>
+            <div class="col-8 q-value">
+              <div class="q-gutter-sm">
+                <q-radio
+                  v-model="form.status"
+                  val="0"
+                  label="正常"
+                  dense
+                />
+                <q-radio
+                  v-model="form.status"
+                  val="2"
+                  label="禁用"
+                  dense
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row q-form-item">
+            <div class="col-3 q-label text-right">
+              <label for="remark">
+                备注
+              </label>
+            </div>
+            <div class="col-8">
+              <q-input
+                outlined
+                dense
+                no-error-icon
+                v-model="form.remark"
+                type="textarea"
+              />
+            </div>
+          </div>
+        </q-card-section>
+
+        <q-separator />
+
+        <q-card-actions
+          align="right"
+          class="q-dialog-footer"
+        >
+          <q-btn
+            label="确认"
+            color="primary"
+            type="submit"
+            :loading="loading"
+          />
+          <q-btn
+            outline
+            label="取消"
+            color="primary"
+            @click="onReset"
+            v-close-popup
+          />
+        </q-card-actions>
+      </q-form>
+    </q-card>
+  </q-dialog>
+</template>
+
+<script>
+import axios from 'axios'
+export default {
+  name: 'UserEdit',
+  props: {
+    value: {
+      type: Boolean,
+      default: false
+    },
+    user: {
+      type: Object,
+      default: () => { }
+    }
+  },
+  data () {
+    return {
+      fixed: false,
+      loading: false,
+      form: {
+        id: null,
+        remark: null,
+        status: null
+      }
+    }
+  },
+  watch: {
+    value () {
+      this.action = false
+      this.fixed = this.value
+    },
+    fixed () {
+      this.form.status = this.user.status
+      this.form.id = this.user.id
+      this.form.remark = this.user.remark
+      this.$emit('input', this.fixed)
+    }
+  },
+  methods: {
+    async onSubmit () {
+      this.loading = true
+      await axios.post('/admin/users/update', this.form).then(response => {
+        const { code, message, data } = response.data
+        if (code === '200' && data) {
+          this.$emit('refresh')
+
+          this.onReset()
+
+          this.$emit('input', false) // 关闭窗口
+        } else {
+          this.$q.notify({
+            message
+          })
+        }
+      }).catch(error => {
+        console.error(error)
+      })
+      setTimeout(() => {
+        this.loading = false
+      }, 500)
+    },
+    onReset () {
+      this.form.id = null
+      this.form.remark = null
+      this.form.status = this.user.status
+    }
+  }
+}
+</script>

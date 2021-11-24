@@ -18,3 +18,28 @@ requireComponent.keys().forEach(fileName => {
   // Globally register the component
   Vue.component('Q' + componentName, componentConfig.default || componentConfig)
 })
+
+// Vue.directive('super-admin', {
+//   // 当被绑定的元素插入到 DOM 中时……
+//   inserted: function (el, { value }) {
+//     // 聚焦元素
+
+//     el.style = value === '1' ? 'pointer-events：none' : null
+//   }
+// })
+
+const requireDirective = require.context('../directives', true, /[a-z0-9]+\.(js)$/i)
+requireDirective.keys().forEach(fileName => {
+  const directiveConfig = requireDirective(fileName)
+  // const directiveName = fileName
+  //   .substr(fileName.lastIndexOf('/') + 1)
+  //   // Remove the file extension from the end
+  //   .replace(/\.\w+$/, '')
+  // Globally register the directive
+  // Vue.component('v' + directiveName, directiveConfig.default || directiveConfig)
+  const d = directiveConfig.default || directiveConfig
+  // console.log(directiveConfig)
+  if (d.name !== undefined && d.unbind !== void 0) {
+    Vue.directive(d.name, d)
+  }
+})

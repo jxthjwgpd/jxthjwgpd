@@ -14,6 +14,10 @@ const routes = [
     component: () => import('pages/Error503.vue')
   },
   {
+    path: '/404',
+    component: () => import('pages/Error404.vue')
+  },
+  {
     path: '/',
     component: () => import('layouts/MainLayoutNew.vue'),
     // meta: { auth: true },
@@ -70,7 +74,7 @@ const routes = [
 if (process.env.MODE !== 'ssr') {
   routes.push({
     path: '*',
-    component: () => import('pages/Error404.vue')
+    redirect: { path: '/404' }
   })
 }
 

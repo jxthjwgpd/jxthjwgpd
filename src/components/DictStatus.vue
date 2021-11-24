@@ -13,7 +13,7 @@ export default {
           color: 'positive'
         },
         '2': {
-          label: '锁定',
+          label: '禁用',
           color: 'negative'
         }
       }
