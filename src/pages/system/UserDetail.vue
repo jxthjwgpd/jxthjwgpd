@@ -1,34 +1,35 @@
 <template>
-  <q-page class="q-pa-lg user-create">
-    <div class="row items-center justify-between q-mb-md">
-      <div>
+  <q-page class="my-page">
+    <div class="row items-center justify-between">
+      <div class="my-page-header q-pb-none">
         <q-breadcrumbs align="left">
           <q-breadcrumbs-el
-            label="系统管理"
-            to="/system"
+            label="首页"
+            to=""
           />
           <q-breadcrumbs-el
-            label="用户"
-            to="/system/users"
+            label="管理员"
+            to=""
           />
-          <q-breadcrumbs-el label="用户详情" />
+          <q-breadcrumbs-el label="用户" />
         </q-breadcrumbs>
-        <div
-          class="q-mt-xs row items-center"
-          v-if="$q.screen.gt.sm"
-        >
-          <router-link to="/system/users">
+        <div class="my-page-header-subtitle">
+          <router-link
+            to="/system/admin/users"
+            class="my-page-header-goback"
+          >
             <q-icon
               name="arrow_back"
               size="sm"
               class="text-bold text-dark"
             />
           </router-link>
-          <div class="text-h6">用户（{{ user.loginName }}）详情</div>
+          用户信息
         </div>
       </div>
     </div>
-    <div class="q-mb-lg my-card">
+
+    <div class="my-page-body">
       <q-card
         flat
         class="q-pb-md"
@@ -185,8 +186,7 @@ export default {
       loading: false,
       tab: 'group',
       user: {
-        userId: this.$route.params.userId,
-        loginName: this.$route.params.loginName
+        username: this.$route.params.username
       }
     }
   },

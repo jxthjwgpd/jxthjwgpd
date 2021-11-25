@@ -13,21 +13,23 @@
           />
           <q-breadcrumbs-el label="管理员" />
         </q-breadcrumbs>
-        <div class="my-page-header-subtitle">基础表单</div>
-        <div class="q-mt-sm">
-          <q-tabs
-            v-model="tab"
-            dense
-            align="left"
-          >
-            <q-tab name="mails">用户</q-tab>
-            <q-tab name="alarms">角色组</q-tab>
-            <q-tab name="sa">设置</q-tab>
-          </q-tabs>
-        </div>
+        <div class="my-page-header-subtitle q-mb-sm"></div>
       </div>
     </div>
     <div class="my-page-body my-table">
+      <div class="my-tabs">
+        <q-tabs
+          narrow-indicator
+          align="left"
+          class="text-grey"
+          active-color="primary"
+          indicator-color="primary"
+        >
+          <q-route-tab to="/system/admin/users">用户列表</q-route-tab>
+          <q-route-tab to="/system/admin/roles">角色组</q-route-tab>
+          <q-route-tab to="/system/admin/log">操作日志</q-route-tab>
+        </q-tabs>
+      </div>
       <q-table
         :data="data"
         :columns="columns"
@@ -76,7 +78,7 @@
               :props="props"
             >
               <router-link
-                :to="`/system/users/${props.row.id}/${props.row.username}`"
+                :to="`users/${props.row.username}`"
                 class="text-primary"
               >{{ props.row.username }}</router-link>
             </q-td>
@@ -147,7 +149,6 @@ export default {
     return {
       loading: false,
       username: '',
-      tab: 'mails',
       pagination: {
         sortBy: '',
         descending: false,

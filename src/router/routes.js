@@ -32,7 +32,6 @@ const routes = [
           { path: 'overview', meta: { sidebar: true, auth: true }, component: () => import('pages/system/Overview.vue') },
           { path: 'groups', meta: { sidebar: true, auth: true }, component: () => import('pages/system/GroupList.vue') },
           { path: 'users', meta: { sidebar: true, auth: true }, component: () => import('pages/system/UserList.vue') },
-          { path: 'users/create', meta: { sidebar: true, auth: true }, component: () => import('pages/system/UserCreate.vue') },
           { path: 'users/:userId/:loginName', meta: { sidebar: true, auth: true }, component: () => import('pages/system/UserDetail.vue') },
           { path: 'settings', meta: { sidebar: true }, component: () => import('pages/system/Setting.vue') },
           { path: 'roles', meta: { sidebar: true, auth: true }, component: () => import('pages/system/RoleList.vue') },
@@ -62,8 +61,10 @@ const routes = [
         path: 'system',
         component: () => import('layouts/BlankLayout.vue'),
         children: [
-          { path: '', redirect: { path: 'admin' } },
-          { path: 'admin', meta: { sidebar: true, auth: true }, component: () => import('pages/system/UserList.vue') }
+          { path: '', redirect: { path: 'admin/users' } },
+          { path: 'admin', redirect: { path: 'admin/users' } },
+          { path: 'admin/users', meta: { sidebar: true, auth: true }, component: () => import('pages/system/UserList.vue') },
+          { path: 'admin/users/:username', meta: { sidebar: true, auth: true }, component: () => import('pages/system/UserDetail.vue') }
         ]
       }
     ]

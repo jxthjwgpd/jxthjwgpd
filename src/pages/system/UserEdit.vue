@@ -158,9 +158,7 @@ export default {
         const { code, message, data } = response.data
         if (code === '200' && data) {
           this.$emit('refresh')
-
           this.onReset()
-
           this.$emit('input', false) // 关闭窗口
         } else {
           this.$q.notify({
