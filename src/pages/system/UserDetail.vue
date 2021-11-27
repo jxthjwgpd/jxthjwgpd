@@ -39,48 +39,48 @@
           <div class="row">
             <div class="col-6">
               <q-desc-item title="用户名">
-                {{ user.loginName }}
+                {{ users.user.username }}
               </q-desc-item>
             </div>
             <div class="col-6">
               <q-desc-item title="USER_ID">
-                {{user.userId}}
+                {{ users.user.id}}
               </q-desc-item>
             </div>
             <div class="col-6">
               <q-desc-item title="用户昵称">
-                {{ user.nickname }}
+                {{  users.user.nickname }}
               </q-desc-item>
             </div>
             <div class="col-6">
               <q-desc-item title="创建时间">
-                {{ user.createTime }}
+                {{  users.user.created }}
               </q-desc-item>
             </div>
             <div class="col-12">
               <q-desc-item title="备注">
-                {{ user.remarks }}
+                {{  users.user.remark }}
               </q-desc-item>
             </div>
           </div>
           <q-separator />
           <q-item-label>联系方式</q-item-label>
           <div class="row">
-            <div class="col-6">
+            <!-- <div class="col-6">
               <q-desc-item title="邮箱">
-                {{ user.email }}
+                {{  users.user.email }}
               </q-desc-item>
             </div>
             <div class="col-6">
               <q-desc-item title="手机号码">
-                {{user.mobile}}
+                {{ users.user.mobile}}
               </q-desc-item>
             </div>
             <div class="col-6">
               <q-desc-item title="电话">
-                {{user.phone}}
+                {{ users.user.phone}}
               </q-desc-item>
-            </div>
+            </div> -->
           </div>
         </q-card-section>
 
@@ -185,7 +185,7 @@ export default {
     return {
       loading: false,
       tab: 'group',
-      user: {
+      users: {
         username: this.$route.params.username
       }
     }
@@ -196,14 +196,21 @@ export default {
   methods: {
     async onRequest () {
       this.loading = true
-      await this.$store.dispatch('system/getUser', { userId: this.user.userId }).then(data => {
-        this.user = data
+      await this.$store.dispatch('system/userDetailInfo', this.users.username).then(response => {
+        const { code, message, data } = response
+        if (code === '200' && data) {
+          this.users = data
+        } else {
+          this.$q.notify({
+            message
+          })
+        }
       }).catch(error => {
         console.error(error)
       })
       setTimeout(() => {
         this.loading = false
-      }, 1000)
+      }, 500)
     }
   }
 }

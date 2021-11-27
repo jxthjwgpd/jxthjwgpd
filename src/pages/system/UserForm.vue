@@ -94,7 +94,6 @@
             color="primary"
             type="submit"
             :loading="loading"
-            v-if="!action"
           />
           <q-btn
             outline

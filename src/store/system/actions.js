@@ -13,3 +13,11 @@ export function deleteUser ({ dispatch, state }, id) {
     return Promise.reject(error)
   })
 }
+
+export function userDetailInfo ({ dispatch, state }, username) {
+  return axios.get('/admin/users/detail/info', { params: { username } }).then(response => {
+    return response.data
+  }).catch(error => {
+    return Promise.reject(error)
+  })
+}
