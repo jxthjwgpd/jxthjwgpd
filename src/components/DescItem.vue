@@ -1,5 +1,5 @@
 <template>
-  <div class="desc-item">
+  <div class="my-desc-item">
     <p>
       {{title}}
     </p>
@@ -18,8 +18,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.desc-item
-  font-size: 12px
+.my-desc-item
   color: rgba(0, 0, 0, 0.65)
   p
     margin-right: 8px

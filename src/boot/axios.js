@@ -8,6 +8,17 @@ export default ({ app, router, Vue }) => {
         if (code === '401') {
             console.warn(message + '[' + code + ']')
             router.push({ path: '/user/login', query: { 'redirect': router.history.current.path } })
+        } else if (code === '1007') {
+            console.warn(message + '[' + code + ']')
+            Vue.prototype.$q.dialog({
+                title: '提示',
+                message: message,
+                ok: '重新登录',
+                cancel: '取消',
+                persistent: true
+            }).onOk(() => {
+                router.push({ path: '/user/login', query: { 'redirect': router.history.current.path } })
+            })
         }
         return response
     }, function (error) {

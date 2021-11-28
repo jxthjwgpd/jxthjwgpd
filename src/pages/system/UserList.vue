@@ -1,7 +1,7 @@
 <template>
   <q-page class="my-page">
     <div class="row items-center justify-between">
-      <div class="my-page-header q-pb-none">
+      <div class="my-page-header">
         <q-breadcrumbs align="left">
           <q-breadcrumbs-el
             label="首页"
@@ -13,7 +13,6 @@
           />
           <q-breadcrumbs-el label="管理员" />
         </q-breadcrumbs>
-        <div class="my-page-header-subtitle q-mb-sm"></div>
       </div>
     </div>
     <div class="my-page-body my-table">
@@ -40,8 +39,6 @@
         @request="onRequest"
         binary-state-sort
         square
-        :card-style="{ boxShadow: 'none', padding: '0 10px' }"
-        :table-header-style="{ backgroundColor: '#eeeeee'}"
       >
         <template v-slot:top-left>
           <q-btn
@@ -220,15 +217,8 @@ export default {
         ok: '确认',
         persistent: true
       }).onOk(() => {
-        this.$store.dispatch('system/deleteUser', user.id).then(response => {
-          const { code, message, data } = response
-          if (code === '200' && data) {
-            this.onRefresh()
-          } else {
-            this.$q.notify({
-              message
-            })
-          }
+        this.$store.dispatch('system/DeleteUser', user.id).then(data => {
+          this.onRefresh()
         }).catch(error => {
           console.log(error)
         })

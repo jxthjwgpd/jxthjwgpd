@@ -12,7 +12,7 @@ export function login ({ commit, dispatch, getters }, form) {
   delete axios.defaults.headers.common.Authorization
   return axios.post('/admin/login', qs.stringify(form)).then(response => {
     const { code, data } = response.data
-    if (code === '200' && data.access_token) {
+    if (code === '200' && data) {
       commit('LOGIN', data.username)
       commit('TOKEN', data.access_token, '24h')
       return data
@@ -26,7 +26,7 @@ export function validate ({ commit, state }) {
   return axios.get('/admin/check_token')
     .then(response => {
       const { code, data } = response.data
-      if (code === '200' && data.access_token) {
+      if (code === '200' && data) {
         commit('LOGIN', data.username)
         commit('TOKEN', data.access_token, '24h')
         return data

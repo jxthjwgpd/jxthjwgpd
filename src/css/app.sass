@@ -21,7 +21,7 @@ body.body--light
   &-header
     width: 100%
     background: #fff
-    padding: 15px 10px 0 10px
+    padding: 15px 10px 12px 10px
     &-subtitle
       font-size: 23px
       margin-top: 10px
@@ -36,18 +36,27 @@ body.body--light
     margin: 10px
 
 .my-table
-  & .q-table__top
-    padding: 12px 0
   & .q-table
-    & tbody
-      & td
-        height: 38px
-        &.action
-          & > a
-            margin-right: 10px
-          & > a:last-child
-            margin-right: 0
-
+    &__container
+      border-radius: 4px
+    &__card
+      box-shadow: none
+      padding: 0 12px
+      & .q-table__top
+        padding: 12px 0
+      & thead
+        & tr
+          background: $grey-3
+      & tbody
+        & td
+          height: 38px
+          &.action
+            & > a
+              margin-right: 10px
+            & > a:last-child
+              margin-right: 0
+    &__card-f
+      padding: 0
   &.text
     &-line2-f
       white-space: inherit !important
@@ -114,5 +123,6 @@ body.body--light
 .my-tabs
   background: $light 
   margin-bottom: 10px
+  border-radius: 4px
 
 

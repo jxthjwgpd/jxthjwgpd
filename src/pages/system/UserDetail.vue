@@ -35,21 +35,21 @@
         class="q-pb-md"
       >
         <q-card-section class="q-gutter-y-md q-mt-none">
-          <q-item-label class="q-mt-none">用户账号基本信息</q-item-label>
+          <q-item-label class="q-mt-none text-h6">基本信息</q-item-label>
           <div class="row">
             <div class="col-6">
-              <q-desc-item title="用户名">
+              <q-desc-item title="用户账号">
                 {{ users.user.username }}
               </q-desc-item>
             </div>
             <div class="col-6">
-              <q-desc-item title="USER_ID">
+              <q-desc-item title="用户ID">
                 {{ users.user.id}}
               </q-desc-item>
             </div>
             <div class="col-6">
               <q-desc-item title="用户昵称">
-                {{  users.user.nickname }}
+                {{  users.user.nickname || '-' }}
               </q-desc-item>
             </div>
             <div class="col-6">
@@ -59,39 +59,44 @@
             </div>
             <div class="col-12">
               <q-desc-item title="备注">
-                {{  users.user.remark }}
+                {{  users.user.remark || '-'}}
               </q-desc-item>
             </div>
           </div>
           <q-separator />
-          <q-item-label>联系方式</q-item-label>
+          <q-item-label class="text-h6">联系方式</q-item-label>
           <div class="row">
-            <!-- <div class="col-6">
+            <div class="col-6">
+              <q-desc-item title="姓名">
+                {{  users.user.realname || '-' }}
+              </q-desc-item>
+            </div>
+            <div class="col-6">
+              <q-desc-item title="身份">
+                {{ users.user.identity || '-'}}
+              </q-desc-item>
+            </div>
+            <div class="col-6">
               <q-desc-item title="邮箱">
-                {{  users.user.email }}
+                {{ users.user.email || '-'}}
               </q-desc-item>
             </div>
             <div class="col-6">
-              <q-desc-item title="手机号码">
-                {{ users.user.mobile}}
+              <q-desc-item title="电话号码">
+                {{ users.user.mobile || '-'}}
               </q-desc-item>
             </div>
-            <div class="col-6">
-              <q-desc-item title="电话">
-                {{ users.user.phone}}
-              </q-desc-item>
-            </div> -->
           </div>
         </q-card-section>
 
-        <q-card-actions class="q-pl-md">
+        <!-- <q-card-actions class="q-pl-md">
           <q-btn
             label="详情编辑"
             color="primary"
             class="wd-80"
             :loading="loading"
           />
-        </q-card-actions>
+        </q-card-actions> -->
 
         <q-inner-loading :showing="loading">
           <q-spinner-hourglass
@@ -107,7 +112,6 @@
         <q-card>
           <q-tabs
             v-model="tab"
-            dense
             narrow-indicator
             align="left"
             class="text-grey"
@@ -115,24 +119,12 @@
             indicator-color="primary"
           >
             <q-tab
-              name="group"
-              label="用户组"
+              name="roles"
+              label="角色组"
             />
             <q-tab
-              name="policy"
-              label="权限"
-            />
-            <q-tab
-              name="project"
-              label="项目"
-            />
-            <q-tab
-              name="application"
-              label="应用"
-            />
-            <q-tab
-              name="setting"
-              label="设置"
+              name="menus"
+              label="用户权限"
             />
           </q-tabs>
 
@@ -143,27 +135,37 @@
             animated
           >
             <q-tab-panel
-              name="group"
-              class="q-pa-none"
+              name="roles"
+              class="my-table"
             >
-              <!-- <user-group /> -->
+              <q-markup-table
+                flat
+                class="q-table__card-f"
+              >
+                <thead>
+                  <tr>
+                    <th class="text-left wd-200">角色名称</th>
+                    <th class="text-left">备注</th>
+                    <th class="text-right">操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="text-left">系统管理员</td>
+                    <td class="text-left">-</td>
+                    <td class="text-right">删除</td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">系统管理员</td>
+                    <td class="text-left">-</td>
+                    <td class="text-right">删除</td>
+                  </tr>
+                </tbody>
+              </q-markup-table>
             </q-tab-panel>
 
-            <q-tab-panel name="policy">
+            <q-tab-panel name="menus">
               <div class="text-h6">Policy</div>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            </q-tab-panel>
-
-            <q-tab-panel name="project">
-              <div class="text-h6">Project</div>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            </q-tab-panel>
-            <q-tab-panel name="application">
-              <div class="text-h6">Appliction</div>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            </q-tab-panel>
-            <q-tab-panel name="setting">
-              <div class="text-h6">Setting</div>
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
             </q-tab-panel>
           </q-tab-panels>
@@ -184,9 +186,10 @@ export default {
   data () {
     return {
       loading: false,
-      tab: 'group',
+      tab: 'roles',
       users: {
-        username: this.$route.params.username
+        username: this.$route.params.username,
+        user: {}
       }
     }
   },
@@ -196,18 +199,15 @@ export default {
   methods: {
     async onRequest () {
       this.loading = true
-      await this.$store.dispatch('system/userDetailInfo', this.users.username).then(response => {
-        const { code, message, data } = response
-        if (code === '200' && data) {
-          this.users = data
-        } else {
-          this.$q.notify({
-            message
-          })
+      await this.$store.dispatch('system/UserDetailInfo', this.users.username).then(data => {
+        this.users = {
+          ...data,
+          username: data.user.username
         }
       }).catch(error => {
         console.error(error)
       })
+      await this.$store.dispatch('system/UserRoleList', { username: this.users.username })
       setTimeout(() => {
         this.loading = false
       }, 500)
