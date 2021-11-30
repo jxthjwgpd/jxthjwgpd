@@ -42,7 +42,7 @@
       >
         <template v-slot:top-left>
           <q-btn
-            label="新建用户"
+            label="新建"
             color="primary"
             @click="fixed=!fixed"
           />
@@ -213,10 +213,16 @@ export default {
       this.$q.dialog({
         title: '删除操作',
         message: '确定要删除当前所选记录吗?',
-        cancel: '取消',
-        ok: '确认',
-        persistent: true
-      }).onOk(() => {
+        cancel: {
+          color: 'primary',
+          label: '确认'
+        },
+        ok: {
+          color: 'white',
+          textColor: 'black',
+          label: '取消'
+        }
+      }).onCancel(() => {
         this.$store.dispatch('system/DeleteUser', user.id).then(data => {
           this.onRefresh()
         }).catch(error => {

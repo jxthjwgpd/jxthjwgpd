@@ -4,16 +4,21 @@
       class="my-dialog"
       style="min-width:680px;"
     >
+      <q-toolbar>
+        <q-toolbar-title>编辑用户</q-toolbar-title>
+        <q-btn
+          flat
+          round
+          dense
+          icon="close"
+          v-close-popup
+        />
+      </q-toolbar>
+      <q-separator />
       <q-form
         @submit="onSubmit"
         class="my-form"
       >
-        <q-card-section class="q-dialog-header">
-          <div class="text-subtitle1">编辑用户</div>
-        </q-card-section>
-
-        <q-separator />
-
         <q-card-section
           style="max-height: 50vh; "
           class="scroll q-gutter-y-md q-mt-none"
@@ -79,11 +84,12 @@
             </div>
             <div class="col-8">
               <q-input
-                outlined
                 dense
+                outlined
                 no-error-icon
                 v-model="form.remark"
-                type="textarea"
+                autogrow
+                :input-style="{ minHeight: '60px' }"
               />
             </div>
           </div>
@@ -102,9 +108,7 @@
             :loading="loading"
           />
           <q-btn
-            outline
             label="取消"
-            color="primary"
             @click="onReset"
             v-close-popup
           />

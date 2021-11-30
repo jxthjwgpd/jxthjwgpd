@@ -6,7 +6,7 @@ a
 
 body.body--light
   // background: rgba(26, 108, 225, 0.03)
-  background: #92bf99
+  background: $green-3 
   height: 100%
   overflow: hidden
 
@@ -17,7 +17,6 @@ body.body--light
   border-radius: 5px
 
 .my-page
-  // background: #f0f2f5
   &-header
     width: 100%
     background: #fff
@@ -46,7 +45,7 @@ body.body--light
         padding: 12px 0
       & thead
         & tr
-          background: $grey-3
+          background: $grey-2
       & tbody
         & td
           height: 38px
@@ -66,9 +65,9 @@ body.body--light
     font-size: 30px
     
 .my-dialog
-  & .q-dialog-header
-    padding-top: 10px
-    padding-bottom: 10px
+  & .q-toolbar
+    &__title
+      font-size: 16px
   & .q-form-item
     & .q-field--with-bottom
       padding-bottom: 10px
@@ -124,5 +123,4 @@ body.body--light
   background: $light 
   margin-bottom: 10px
   border-radius: 4px
-
 

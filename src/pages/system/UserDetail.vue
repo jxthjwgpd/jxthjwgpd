@@ -200,9 +200,11 @@ export default {
     async onRequest () {
       this.loading = true
       await this.$store.dispatch('system/UserDetailInfo', this.users.username).then(data => {
-        this.users = {
-          ...data,
-          username: data.user.username
+        if (data.user) {
+          this.users = {
+            ...data,
+            username: data.user.username
+          }
         }
       }).catch(error => {
         console.error(error)
