@@ -119,7 +119,7 @@
         </template>
       </q-table>
     </div>
-    <user-form
+    <user-add
       v-model="fixed"
       v-on:refresh="onRefresh"
     />
@@ -133,13 +133,13 @@
 </template>
 
 <script>
-import UserForm from './UserForm.vue'
+import UserAdd from './UserAdd.vue'
 import UserEdit from './UserEdit.vue'
 import axios from 'axios'
 export default {
   name: 'UserList',
   components: {
-    UserForm,
+    UserAdd,
     UserEdit
   },
   data () {
@@ -211,18 +211,10 @@ export default {
     },
     onUserDel (user) {
       this.$q.dialog({
-        title: '删除操作',
-        message: '确定要删除当前所选记录吗?',
-        cancel: {
-          color: 'primary',
-          label: '确认'
-        },
-        ok: {
-          color: 'white',
-          textColor: 'black',
-          label: '取消'
-        }
-      }).onCancel(() => {
+        title: this.$t('dialog.delete.title'),
+        message: this.$t('dialog.delete.message'),
+        cancel: true
+      }).onOk(() => {
         this.$store.dispatch('system/DeleteUser', user.id).then(data => {
           this.onRefresh()
         }).catch(error => {

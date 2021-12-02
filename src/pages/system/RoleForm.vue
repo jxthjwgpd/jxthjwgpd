@@ -39,7 +39,7 @@
 
         <q-card-actions align="right">
           <q-btn
-            label="确认"
+            label="确定"
             color="primary"
             type="submit"
             class="wd-80"

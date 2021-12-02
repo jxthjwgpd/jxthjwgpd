@@ -7,7 +7,7 @@ export function init (state) {
 }
 
 export function error ({ dispatch, state }, playload) {
-  console.log(playload)
+  console.error(playload)
 }
 
 export function DeleteUser ({ dispatch, state }, id) {
@@ -43,6 +43,18 @@ export function UserRoleList ({ dispatch, commit }, params) {
       commit('ReceiveUserRoleList', {
         data
       })
+    } else {
+      dispatch('error', { ...response.data })
+    }
+  }).catch(error => {
+    return Promise.reject(error)
+  })
+}
+export function DeleteUserRole ({ dispatch }, { id, username }) {
+  return axios.post('/admin/users/role/delete', { id }).then(response => {
+    const { code, data } = response.data
+    if (code === '200' && data) {
+      dispatch('UserRoleList', { username })
     } else {
       dispatch('error', { ...response.data })
     }

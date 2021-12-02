@@ -114,9 +114,7 @@ export default {
       }).catch(e => {
         this.loading = false
         const message = e.message || '登录失败，请稍后重试！'
-        this.$q.notify({
-          message: message
-        })
+        this.$q.notify({ message })
       })
     }
   }

@@ -86,6 +86,11 @@
                 {{ users.user.mobile || '-'}}
               </q-desc-item>
             </div>
+            <div class="col-6">
+              <q-desc-item title="来源">
+                {{ users.user.createSource || '-'}}
+              </q-desc-item>
+            </div>
           </div>
         </q-card-section>
 
@@ -138,6 +143,14 @@
               name="roles"
               class="my-table"
             >
+              <div class="q-mb-sm">
+                <q-btn
+                  outline
+                  color="primary"
+                  size="sm"
+                  label="管理角色"
+                />
+              </div>
               <q-markup-table
                 flat
                 class="q-table__card-f"
@@ -146,19 +159,29 @@
                   <tr>
                     <th class="text-left wd-200">角色名称</th>
                     <th class="text-left">备注</th>
-                    <th class="text-right">操作</th>
+                    <th
+                      class="text-right"
+                      v-if="users.isa==='0'"
+                    >操作</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td class="text-left">系统管理员</td>
-                    <td class="text-left">-</td>
-                    <td class="text-right">删除</td>
-                  </tr>
-                  <tr>
-                    <td class="text-left">系统管理员</td>
-                    <td class="text-left">-</td>
-                    <td class="text-right">删除</td>
+                  <tr
+                    v-for="item in userRoleList"
+                    :key="item.id"
+                  >
+                    <td class="text-left">{{item.roleName}}</td>
+                    <td class="text-left">{{item.remark}}</td>
+                    <td
+                      class="text-right"
+                      v-if="users.isa==='0'"
+                    >
+                      <a
+                        class="text-primary"
+                        href="javascript:;"
+                        @click="onUserRoleDel(item)"
+                      >删除</a>
+                    </td>
                   </tr>
                 </tbody>
               </q-markup-table>
@@ -178,6 +201,7 @@
 
 <script>
 // import UserGroup from './UserGroup.vue'
+import { mapGetters } from 'vuex'
 export default {
   name: 'UserCreate',
   components: {
@@ -192,6 +216,11 @@ export default {
         user: {}
       }
     }
+  },
+  computed: {
+    ...mapGetters({
+      userRoleList: 'system/UserRoleList'
+    })
   },
   mounted () {
     this.onRequest()
@@ -213,6 +242,15 @@ export default {
       setTimeout(() => {
         this.loading = false
       }, 500)
+    },
+    onUserRoleDel (userRole) {
+      this.$q.dialog({
+        title: this.$t('dialog.delete.title'),
+        message: this.$t('dialog.delete.message'),
+        cancel: true
+      }).onOk(() => {
+        this.$store.dispatch('system/DeleteUserRole', { ...userRole })
+      })
     }
   }
 }

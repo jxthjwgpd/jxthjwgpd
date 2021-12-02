@@ -9,11 +9,11 @@ export default {
     return {
       dictStatusData: {
         '0': {
-          label: '正常',
+          label: this.$t('status.normal'),
           color: 'positive'
         },
         '2': {
-          label: '禁用',
+          label: this.$t('status.disable'),
           color: 'negative'
         }
       }

@@ -19,7 +19,7 @@
           shrink
           class="row items-center no-wrap"
         >
-          <span class="q-ml-sm"><span class="text-weight-bold">QUASAR</span> Mont <span class="text-subtitle2">{{$q.version}}</span></span>
+          <span class="q-ml-sm"><span>Quasar</span> admin <span class="text-subtitle2">{{$q.version}}</span></span>
         </q-toolbar-title>
         <q-tabs
           dense
@@ -83,10 +83,12 @@
               >
                 <div class="text-h6 q-mb-md">Settings</div>
                 <q-toggle
+                  dense
                   v-model="mobileData"
                   label="Use Mobile Data"
                 />
                 <q-toggle
+                  dense
                   v-model="bluetooth"
                   label="Bluetooth"
                 />

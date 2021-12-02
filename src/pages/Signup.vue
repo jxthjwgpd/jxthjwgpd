@@ -11,14 +11,13 @@
           <div class="text-h6 q-mt-sm q-mb-xs">创建我的账号</div>
           <q-form
             @submit="onSubmit"
-            @reset="onReset"
             class="login-form my-form q-mt-lg"
           >
             <q-input
               outlined
               dense
               no-error-icon
-              v-model.trim="form.loginName"
+              v-model.trim="form.username"
               placeholder="账号"
               :rules="[ val => val && val.length > 0 || '请设置用户账号']"
             />
@@ -36,7 +35,7 @@
               dense
               no-error-icon
               type="password"
-              v-model.trim="form.cpassword"
+              v-model.trim="cpassword"
               placeholder="确认密码"
               :rules="[ val => val && val.length > 0 || '请再次输入你的密码', val => val && val === form.password || '两次密码输入不一致' ]"
             />
@@ -98,38 +97,37 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'UserSignup',
   data () {
     return {
       loading: false,
       form: {
-        loginName: '',
-        password: '',
-        cpassword: '',
-        mobile: ''
+        username: null,
+        password: null,
+        mobile: null
       },
-      accept: false
+      cpassword: null
     }
   },
 
   methods: {
-    onSubmit () {
+    async onSubmit () {
       this.loading = true
-      this.$store.dispatch('session/login', this.form).then(() => {
-        this.loading = false
-        const params = { redirect: this.$route.query.redirect || '/' }
-        this.$router.push({ path: params.redirect })
-      }).catch(e => {
-        this.loading = false
-        this.$q.notify({
-          color: 'negative',
-          textColor: 'white',
-          position: 'top',
-          icon: 'highlight_off',
-          message: '登录失败，请稍后重试！'
-        })
+      await axios.post('/api/account/register', this.form).then(response => {
+        const { code, message, data } = response.data
+        if (code === '200' && data) {
+          this.$router.push({ path: '/user/login' })
+        } else {
+          this.$q.notify({ message })
+        }
+      }).catch(error => {
+        console.error(error)
       })
+      setTimeout(() => {
+        this.loading = false
+      }, 1000)
     }
   }
 }

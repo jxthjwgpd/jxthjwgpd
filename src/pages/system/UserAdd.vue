@@ -5,7 +5,7 @@
       style="min-width:680px;"
     >
       <q-toolbar>
-        <q-toolbar-title>编辑用户</q-toolbar-title>
+        <q-toolbar-title>新增用户</q-toolbar-title>
         <q-btn
           flat
           round
@@ -24,73 +24,69 @@
           class="scroll q-gutter-y-md q-mt-none"
         >
           <div class="row q-form-item">
-            <div class="col-3 q-label text-right">
+            <div class="col-3 q-label text-right required">
               <label for="username">
-                用户账号
-              </label>
-            </div>
-            <div class="col-8 q-value">
-              {{user.username}}
-            </div>
-          </div>
-          <div class="row q-form-item">
-            <div class="col-3 q-label text-right">
-              <label for="id">
-                用户ID
-              </label>
-            </div>
-            <div class="col-8 q-value">
-              {{user.id}}
-            </div>
-          </div>
-          <div class="row q-form-item">
-            <div class="col-3 q-label text-right">
-              <label for="id">
-                创建时间
-              </label>
-            </div>
-            <div class="col-8 q-value">
-              {{user.created}}
-            </div>
-          </div>
-          <div class="row q-form-item">
-            <div class="col-3 q-label text-right">
-              <label for="status">
-                状态
-              </label>
-            </div>
-            <div class="col-8 q-value">
-              <div class="q-gutter-sm">
-                <q-radio
-                  v-model="form.status"
-                  val="0"
-                  label="正常"
-                  dense
-                />
-                <q-radio
-                  v-model="form.status"
-                  val="2"
-                  label="禁用"
-                  dense
-                />
-              </div>
-            </div>
-          </div>
-          <div class="row q-form-item">
-            <div class="col-3 q-label text-right">
-              <label for="remark">
-                备注
+                账号
               </label>
             </div>
             <div class="col-8">
               <q-input
-                dense
                 outlined
+                dense
                 no-error-icon
-                v-model="form.remark"
-                autogrow
-                :input-style="{ minHeight: '60px' }"
+                v-model.trim="form.username"
+                placeholder="请输入账号"
+                :rules="[ val => val && val.length > 0 || '请设置用户账号']"
               />
+            </div>
+          </div>
+          <div class="row q-form-item">
+            <div class="col-3 q-label text-right required">
+              <label for="password">
+                密码
+              </label>
+            </div>
+            <div class="col-8">
+              <q-input
+                outlined
+                dense
+                no-error-icon
+                type="password"
+                v-model.trim="form.password"
+                placeholder="请输入密码"
+                :rules="[ val => val && val.length > 0 || '请设置登录密码']"
+              />
+            </div>
+          </div>
+          <div class="row q-form-item">
+            <div class="col-3 q-label text-right required">
+              <label for="cpassword">
+                再次输入密码
+              </label>
+            </div>
+            <div class="col-8">
+              <q-input
+                outlined
+                dense
+                no-error-icon
+                v-model.trim="cpassword"
+                type="password"
+                placeholder="请输入确认密码"
+                :rules="[ val => val && val.length > 0 || '请再次输入你的密码', val => val && val === form.password || '两次密码输入不一致' ]"
+              />
+            </div>
+          </div>
+          <div class="row q-form-item q-mb-md">
+            <div class="col-3 q-label text-right">
+              <label for="cpassword">
+                选择角色组
+              </label>
+            </div>
+            <div
+              class="col-8"
+              style="max-height: 260px; overflow: auto;"
+            >
+              <user-role-list v-model="form.roleIds" />
             </div>
           </div>
         </q-card-section>
@@ -119,17 +115,17 @@
 </template>
 
 <script>
+import UserRoleList from './UserRoleList.vue'
 import axios from 'axios'
 export default {
-  name: 'UserEdit',
+  name: 'UserAdd',
+  components: {
+    UserRoleList
+  },
   props: {
     value: {
       type: Boolean,
       default: false
-    },
-    user: {
-      type: Object,
-      default: () => { }
     }
   },
   data () {
@@ -137,28 +133,25 @@ export default {
       fixed: false,
       loading: false,
       form: {
-        id: null,
-        remark: null,
-        status: null
-      }
+        roleIds: [],
+        username: null,
+        password: null
+      },
+      cpassword: null
     }
   },
   watch: {
     value () {
-      this.action = false
       this.fixed = this.value
     },
     fixed () {
-      this.form.status = this.user.status
-      this.form.id = this.user.id
-      this.form.remark = this.user.remark
       this.$emit('input', this.fixed)
     }
   },
   methods: {
     async onSubmit () {
       this.loading = true
-      await axios.post('/admin/users/update', this.form).then(response => {
+      await axios.post('/admin/users', this.form).then(response => {
         const { code, message, data } = response.data
         if (code === '200' && data) {
           this.$emit('refresh')
@@ -177,9 +170,10 @@ export default {
       }, 500)
     },
     onReset () {
-      this.form.id = null
-      this.form.remark = null
-      this.form.status = this.user.status
+      this.form.roleIds = []
+      this.form.username = null
+      this.form.password = null
+      this.cpassword = null
     }
   }
 }
