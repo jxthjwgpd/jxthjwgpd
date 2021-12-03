@@ -36,6 +36,20 @@ export function UserDetailInfo ({ dispatch, state }, username) {
   })
 }
 
+export function RoleList ({ dispatch, commit }, params) {
+  return axios.get('/admin/roles/list', { params }).then(response => {
+    const { code, data } = response.data
+    if (code === '200' && data) {
+      commit('ReceiveRoleList', {
+        data
+      })
+    } else {
+      dispatch('error', { ...response.data })
+    }
+  }).catch(error => {
+    return Promise.reject(error)
+  })
+}
 export function UserRoleList ({ dispatch, commit }, params) {
   return axios.get('/admin/users/role', { params }).then(response => {
     const { code, data } = response.data

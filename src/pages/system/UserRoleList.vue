@@ -3,7 +3,7 @@
     <div class="row q-col-gutter-xs">
       <div
         :class="col"
-        v-for="item in data"
+        v-for="item in roleList"
         :key="item.id"
       >
         <q-item
@@ -42,13 +42,12 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { mapGetters } from 'vuex'
 export default {
   name: 'UserRoleList',
   data () {
     return {
       loading: false,
-      data: [],
       selected: []
     }
   },
@@ -61,6 +60,11 @@ export default {
       default: () => []
     }
   },
+  computed: {
+    ...mapGetters({
+      roleList: 'system/RoleList'
+    })
+  },
   mounted () {
     this.onRequest()
   },
@@ -70,14 +74,7 @@ export default {
     },
     async onRequest () {
       this.loading = true
-      await axios.get('/admin/roles/list', {}).then(response => {
-        const { code, data } = response.data
-        if (code === '200' && data) {
-          this.data = data
-        }
-      }).catch(error => {
-        console.error(error)
-      })
+      await this.$store.dispatch('system/RoleList', { roleName: null })
       this.selected = this.value
       setTimeout(() => {
         this.loading = false

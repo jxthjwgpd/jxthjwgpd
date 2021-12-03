@@ -73,7 +73,7 @@ module.exports = function (ctx) {
     build: {
       env: ctx.dev
         ? { // so on dev we'll have
-          API_HOST: JSON.stringify(process.env.API_HOST || 'http://172.28.221.9:4001')
+          API_HOST: JSON.stringify(process.env.API_HOST || 'http://huawei.s01:12002')
         }
         : { // and on build (production):
           API_HOST: JSON.stringify('http://huawei.s01:12002')

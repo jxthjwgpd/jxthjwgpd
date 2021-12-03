@@ -20,7 +20,7 @@
         class="my-form"
       >
         <q-card-section
-          style="max-height: 50vh; "
+          style="max-height: 56vh; "
           class="scroll q-gutter-y-md q-mt-none"
         >
           <div class="row q-form-item">

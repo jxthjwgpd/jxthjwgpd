@@ -1,8 +1,12 @@
 const UserRoleList = {
-  lists: []
+  data: []
+}
+const RoleList = {
+  data: []
 }
 export default function () {
   return {
+    RoleList,
     UserRoleList
   }
 }

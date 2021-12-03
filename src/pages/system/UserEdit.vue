@@ -20,7 +20,7 @@
         class="my-form"
       >
         <q-card-section
-          style="max-height: 50vh; "
+          style="max-height: 56vh; "
           class="scroll q-gutter-y-md q-mt-none"
         >
           <div class="row q-form-item">
@@ -76,7 +76,7 @@
               </div>
             </div>
           </div>
-          <div class="row q-form-item">
+          <div class="row q-form-item q-mb-md">
             <div class="col-3 q-label text-right">
               <label for="remark">
                 备注
