@@ -149,6 +149,7 @@
                   color="primary"
                   size="sm"
                   label="管理角色"
+                  @click="fixed=!fixed"
                 />
               </div>
               <q-markup-table
@@ -196,16 +197,20 @@
         </q-card>
       </q-card>
     </div>
+    <user-role-edit
+      v-model="fixed"
+      :id="users.user.id"
+    />
   </q-page>
 </template>
 
 <script>
-// import UserGroup from './UserGroup.vue'
+import UserRoleEdit from './UserRoleEdit.vue'
 import { mapGetters } from 'vuex'
 export default {
   name: 'UserCreate',
   components: {
-    // UserGroup
+    UserRoleEdit
   },
   data () {
     return {
@@ -214,7 +219,8 @@ export default {
       users: {
         username: this.$route.params.username,
         user: {}
-      }
+      },
+      fixed: false
     }
   },
   computed: {
