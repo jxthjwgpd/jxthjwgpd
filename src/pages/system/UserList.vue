@@ -106,14 +106,18 @@
                 class="text-primary"
                 href="javascript:;"
                 @click="onUserEdit(props.row)"
-                v-super-admin="props.row.isa"
+                v-if="props.row.isa==='0'"
               >编辑</a>
               <a
                 class="text-primary"
                 href="javascript:;"
                 @click="onUserDel(props.row)"
-                v-super-admin="props.row.isa"
+                v-if="props.row.isa==='0'"
               >删除</a>
+              <span
+                class="text-grey"
+                v-if="props.row.isa==='1'"
+              > 默认管理员</span>
             </q-td>
           </q-tr>
         </template>

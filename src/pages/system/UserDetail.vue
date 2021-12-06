@@ -143,7 +143,10 @@
               name="roles"
               class="my-table"
             >
-              <div class="q-mb-sm">
+              <div
+                class="q-mb-sm"
+                v-if="users.isa==='0'"
+              >
                 <q-btn
                   outline
                   color="primary"
