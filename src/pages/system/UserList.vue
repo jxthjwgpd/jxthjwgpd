@@ -123,7 +123,7 @@
         </template>
       </q-table>
     </div>
-    <user-add
+    <user-form
       v-model="fixed"
       v-on:refresh="onRefresh"
     />
@@ -137,13 +137,13 @@
 </template>
 
 <script>
-import UserAdd from './UserAdd.vue'
+import UserForm from './UserForm.vue'
 import UserEdit from './UserEdit.vue'
 import axios from 'axios'
 export default {
   name: 'UserList',
   components: {
-    UserAdd,
+    UserForm,
     UserEdit
   },
   data () {

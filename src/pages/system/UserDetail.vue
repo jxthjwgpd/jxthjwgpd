@@ -202,7 +202,7 @@
     </div>
     <user-role-edit
       v-model="fixed"
-      :id="users.user.id"
+      :userId="users.user.id"
     />
   </q-page>
 </template>

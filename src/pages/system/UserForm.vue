@@ -20,7 +20,7 @@
         class="my-form"
       >
         <q-card-section
-          style="max-height: 50vh; "
+          style="max-height: 56vh; "
           class="scroll q-gutter-y-md q-mt-none"
         >
           <div class="row q-form-item">
@@ -82,7 +82,10 @@
                 选择角色组
               </label>
             </div>
-            <div class="col-8">
+            <div
+              class="col-8"
+              style="max-height: 260px; overflow: auto;"
+            >
               <user-role-list v-model="form.roleIds" />
             </div>
           </div>
@@ -95,13 +98,13 @@
           class="q-dialog-footer"
         >
           <q-btn
-            label="确认"
+            :label="$q.lang.label.ok"
             color="primary"
             type="submit"
             :loading="loading"
           />
           <q-btn
-            label="取消"
+            :label="$q.lang.label.cancel"
             @click="onReset"
             v-close-popup
           />
@@ -115,7 +118,7 @@
 import UserRoleList from './UserRoleList.vue'
 import axios from 'axios'
 export default {
-  name: 'UserForm',
+  name: 'UserAdd',
   components: {
     UserRoleList
   },

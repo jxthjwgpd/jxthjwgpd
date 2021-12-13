@@ -61,7 +61,7 @@
 </template>
 
 <script>
-// import axios from 'axios'
+import axios from 'axios'
 import { mapGetters } from 'vuex'
 import UserRoleList from './UserRoleList.vue'
 export default {
@@ -74,7 +74,7 @@ export default {
       type: Boolean,
       default: false
     },
-    id: {
+    userId: {
       type: String
     }
   },
@@ -96,37 +96,37 @@ export default {
   watch: {
     value () {
       this.fixed = this.value
+      this.form.userId = this.userId
     },
     fixed () {
       this.$emit('input', this.fixed)
     },
     'userRoleList' () {
+      this.form.roleIds = []
       this.userRoleList.map(e => {
         this.form.roleIds.push(e.roleId)
       })
-      this.form.userId = this.id
     }
   },
   methods: {
     async onSubmit () {
-      // this.loading = true
-      // await axios.post('/admin/users/role', this.form).then(response => {
-      //   const { code, message, data } = response.data
-      //   if (code === '200' && data) {
-      //     this.$emit('refresh')
-      //     this.onReset()
-      //     this.$emit('input', false) // 关闭窗口
-      //   } else {
-      //     this.$q.notify({
-      //       message
-      //     })
-      //   }
-      // }).catch(error => {
-      //   console.error(error)
-      // })
-      // setTimeout(() => {
-      //   this.loading = false
-      // }, 500)
+      this.loading = true
+      await axios.post('/admin/users/role', this.form).then(response => {
+        const { code, message, data } = response.data
+        if (code === '200' && data) {
+          this.$store.dispatch('system/UserRoleList', { userId: this.userId })
+          this.$emit('input', false) // 关闭窗口
+        } else {
+          this.$q.notify({
+            message
+          })
+        }
+      }).catch(error => {
+        console.error(error)
+      })
+      setTimeout(() => {
+        this.loading = false
+      }, 500)
     }
   }
 }
