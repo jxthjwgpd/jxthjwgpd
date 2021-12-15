@@ -58,7 +58,7 @@ const routes = [
           { path: 'admin', redirect: { path: 'admin/users' } },
           { path: 'admin/users', meta: { sidebar: true, auth: true }, component: () => import('pages/system/UserList.vue') },
           { path: 'admin/users/:username', meta: { sidebar: true, auth: true }, component: () => import('pages/system/UserDetail.vue') },
-          { path: 'admin/roles', meta: { sidebar: true, auth: true }, component: () => import('pages/system/RoleIndex.vue') }
+          { path: 'admin/roles', meta: { sidebar: true, auth: true }, component: () => import('pages/system/RoleList.vue') }
         ]
       }
     ]

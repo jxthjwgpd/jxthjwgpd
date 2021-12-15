@@ -5,10 +5,7 @@ export default ({ app, router, Vue }) => {
     // axios.defaults.withCredentials = false
     axios.interceptors.response.use(function (response) {
         const { code, message } = response.data
-        if (code === '401') {
-            console.warn(message + '[' + code + ']')
-            router.push({ path: '/user/login', query: { 'redirect': router.history.current.path } })
-        } else if (code === '1007') {
+        if (code === '401' || code === '1007') {
             console.warn(message + '[' + code + ']')
             Vue.prototype.$q.dialog({
                 title: '提示',

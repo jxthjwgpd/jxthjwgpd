@@ -76,3 +76,16 @@ export function DeleteUserRole ({ dispatch }, { id, username }) {
     return Promise.reject(error)
   })
 }
+
+export function DeleteRole ({ dispatch, state }, id) {
+  return axios.post('/admin/roles/delete', { id }).then(response => {
+    const { code, data } = response.data
+    if (code === '200' && data) {
+      return data
+    } else {
+      dispatch('error', { ...response.data })
+    }
+  }).catch(error => {
+    return Promise.reject(error)
+  })
+}
