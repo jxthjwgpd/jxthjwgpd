@@ -5,7 +5,7 @@
       style="min-width:680px;"
     >
       <q-toolbar>
-        <q-toolbar-title>编辑用户</q-toolbar-title>
+        <q-toolbar-title>编辑角色</q-toolbar-title>
         <q-btn
           flat
           round
@@ -23,24 +23,15 @@
           style="max-height: 56vh; "
           class="scroll q-gutter-y-md q-mt-none"
         >
-          <div class="row q-form-item">
-            <div class="col-3 q-label text-right">
-              <label for="username">
-                用户账号
-              </label>
-            </div>
-            <div class="col-8 q-value">
-              {{user.username}}
-            </div>
-          </div>
+
           <div class="row q-form-item">
             <div class="col-3 q-label text-right">
               <label for="id">
-                用户ID
+                角色ID
               </label>
             </div>
             <div class="col-8 q-value">
-              {{user.id}}
+              {{role.id}}
             </div>
           </div>
           <div class="row q-form-item">
@@ -50,7 +41,24 @@
               </label>
             </div>
             <div class="col-8 q-value">
-              {{user.created}}
+              {{role.created}}
+            </div>
+          </div>
+          <div class="row q-form-item">
+            <div class="col-3 q-label text-right required">
+              <label for="roleName">
+                角色名
+              </label>
+            </div>
+            <div class="col-8">
+              <q-input
+                outlined
+                dense
+                no-error-icon
+                v-model.trim="form.roleName"
+                placeholder="请输入角色"
+                :rules="[ val => val && val.length > 0 || '请设置角色名称']"
+              />
             </div>
           </div>
           <div class="row q-form-item">
@@ -121,13 +129,13 @@
 <script>
 import axios from 'axios'
 export default {
-  name: 'UserEdit',
+  name: 'RoleEdit',
   props: {
     value: {
       type: Boolean,
       default: false
     },
-    user: {
+    role: {
       type: Object,
       default: () => { }
     }
@@ -138,6 +146,8 @@ export default {
       loading: false,
       form: {
         id: null,
+        roleName: null,
+        oldRoleName: null,
         remark: null,
         status: null
       }
@@ -148,16 +158,18 @@ export default {
       this.fixed = this.value
     },
     fixed () {
-      this.form.id = this.user.id
-      this.form.status = this.user.status
-      this.form.remark = this.user.remark
+      this.form.id = this.role.id
+      this.form.roleName = this.role.roleName
+      this.form.oldRoleName = this.role.roleName
+      this.form.status = this.role.status
+      this.form.remark = this.role.remark
       this.$emit('input', this.fixed)
     }
   },
   methods: {
     async onSubmit () {
       this.loading = true
-      await axios.post('/admin/users/update', this.form).then(response => {
+      await axios.post('/admin/roles/update', this.form).then(response => {
         const { code, message, data } = response.data
         if (code === '200' && data) {
           this.$emit('refresh')
@@ -177,8 +189,10 @@ export default {
     },
     onReset () {
       this.form.id = null
-      this.form.remark = this.user.remark
-      this.form.status = this.user.status
+      this.form.roleName = this.role.roleName
+      this.form.oldRoleName = this.role.roleName
+      this.form.remark = this.role.remark
+      this.form.status = this.role.status
     }
   }
 }

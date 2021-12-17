@@ -16,6 +16,7 @@ export default ({ app, router, Vue }) => {
             }).onOk(() => {
                 router.push({ path: '/user/login', query: { 'redirect': router.history.current.path } })
             })
+            return Promise.reject(null)
         }
         return response
     }, function (error) {

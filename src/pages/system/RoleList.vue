@@ -99,6 +99,7 @@
                 <a
                   class="text-primary"
                   href="javascript:;"
+                  @click="onRoleEdit(props.row)"
                 >编辑</a>
                 <a
                   class="text-primary"
@@ -119,16 +120,23 @@
       v-model="fixed"
       v-on:refresh="onRefresh"
     />
+    <role-edit
+      v-model="fixedEdit"
+      v-on:refresh="onRefresh"
+      :role="role"
+    />
   </q-page>
 </template>
 
 <script>
 import RoleForm from './RoleForm.vue'
+import RoleEdit from './RoleEdit.vue'
 import axios from 'axios'
 export default {
   name: 'RoleList',
   components: {
-    RoleForm
+    RoleForm,
+    RoleEdit
   },
   data () {
     return {
@@ -148,8 +156,10 @@ export default {
         { name: 'created', label: '创建时间', align: 'center', field: 'created', style: 'width: 180px' },
         { name: 'action', label: '操作', field: 'action', align: 'center', style: 'width: 100px' }
       ],
+      role: {},
       data: [],
-      fixed: false
+      fixed: false,
+      fixedEdit: false
     }
   },
   mounted () {
@@ -184,6 +194,10 @@ export default {
       setTimeout(() => {
         this.loading = false
       }, 1000)
+    },
+    onRoleEdit (role) {
+      this.fixedEdit = !this.fixedEdit
+      this.role = role
     },
     onRoleDel (role) {
       this.$q.dialog({
