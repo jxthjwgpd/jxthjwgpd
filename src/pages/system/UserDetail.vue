@@ -165,7 +165,7 @@
                     <th class="text-left">备注</th>
                     <th
                       class="text-right"
-                      v-if="users.isa==='0'"
+                      v-if="!users.isa"
                     >操作</th>
                   </tr>
                 </thead>
@@ -178,7 +178,7 @@
                     <td class="text-left">{{item.remark}}</td>
                     <td
                       class="text-right"
-                      v-if="users.isa==='0'"
+                      v-if="!users.isa"
                     >
                       <a
                         class="text-primary"
