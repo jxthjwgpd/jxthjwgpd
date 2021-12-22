@@ -1,5 +1,6 @@
 import axios from 'axios'
 import qs from 'Qs'
+import menu from './menu.js'
 
 import setAxiosHeaders from './token'
 
@@ -15,13 +16,15 @@ export function login ({ commit, dispatch, getters }, form) {
     if (code === '200' && data) {
       commit('LOGIN', data.username)
       commit('TOKEN', data.access_token, '24h')
+
+      dispatch('navs')
       return data
     }
     return Promise.reject(response.data)
   })
 }
 
-export function validate ({ commit, state }) {
+export function validate ({ commit, dispatch, state }) {
   if (!state.username) return Promise.resolve(null)
   return axios.get('/admin/check_token')
     .then(response => {
@@ -29,6 +32,7 @@ export function validate ({ commit, state }) {
       if (code === '200' && data) {
         commit('LOGIN', data.username)
         commit('TOKEN', data.access_token, '24h')
+
         return data
       } else {
         commit('LOGOUT')
@@ -39,4 +43,21 @@ export function validate ({ commit, state }) {
 
 export function logout ({ commit }) {
   commit('LOGOUT')
+}
+
+export function navs ({ commit }) {
+  commit('GLOBALLOADING', true)
+  commit('GLOBALMENULIST', { menu })
+
+  axios.get('/admin/navs').then(response => {
+    const { code, data: { menuVoList } } = response.data
+    if (code === '200' && menuVoList) {
+      // menu.push({ ...data.menuVoList })
+      commit('GLOBALMENULIST', { menu, menuVoList })
+    }
+
+    commit('GLOBALLOADING', false)
+  }).catch(() => {
+    commit('GLOBALLOADING', false)
+  })
 }

@@ -38,7 +38,7 @@ export default {
     },
 
     getDrawerMenu (h, menu, path, level) {
-      if (menu.children !== void 0) {
+      if (menu.children) {
         return h(
           QExpansionItem,
           {
@@ -104,16 +104,16 @@ export default {
 
         !this.value ? h(QItemSection, {
           props: { avatar: true }
-        }, [h(QIcon, { props: { name: (menu.icon !== void 0) ? menu.icon : 'select_all' } }, [h(QTooltip, { props: { anchor: 'center right', self: 'center left', offset: [25, 25] } }, [menu.name])])])
+        }, [h(QIcon, { props: { name: menu.icon ? menu.icon : 'select_all' } }, [h(QTooltip, { props: { anchor: 'center right', self: 'center left', offset: [25, 25] } }, [menu.name])])])
           : null,
 
         (this.value && props.insetLevel === 0) ? h(QItemSection, {
           props: { avatar: true }
-        }, [h(QIcon, { props: { name: (menu.icon !== void 0) ? menu.icon : 'select_all' } })]) : null,
+        }, [h(QIcon, { props: { name: menu.icon ? menu.icon : 'select_all' } })]) : null,
 
         h(QItemSection, [menu.name]),
 
-        menu.badge !== void 0
+        menu.badge
           ? h(QItemSection, {
             props: { side: true }
           }, [h(QBadge, [menu.badge])])

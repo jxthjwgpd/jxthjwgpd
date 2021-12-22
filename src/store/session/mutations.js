@@ -20,3 +20,13 @@ export const LOGOUT = (state) => {
   Cookies.remove('token')
   setHeaderAuthorization(state)
 }
+
+export const GLOBALLOADING = (state, payload) => {
+  state.global.loading = payload
+}
+
+export const GLOBALMENULIST = (state, { menu, menuVoList }) => {
+  if (menuVoList !== void 0) {
+    state.global.menuList = menu.concat(menuVoList)
+  }
+}

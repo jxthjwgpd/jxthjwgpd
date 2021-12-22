@@ -5,3 +5,11 @@ export const isAuthenticated = (state) => {
 export const token = (state) => {
   return state.token
 }
+
+export const globalLoading = (state) => {
+  return state.global.loading
+}
+
+export const globalMenuList = (state) => {
+  return state.global.menuList
+}

@@ -45,11 +45,18 @@
         </div>
       </div>
     </q-page-container>
+    <q-inner-loading :showing="loading">
+      <q-spinner-radio
+        size="50px"
+        color="primary"
+      />
+      <span class="text-primary text-overline">welcome</span>
+    </q-inner-loading>
   </q-layout>
 </template>
 
 <script>
-import menuData from '../assets/menu.js'
+import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
@@ -58,12 +65,18 @@ export default {
       sidebarVisibility: true,
       sidebarLeftOpen: true,
       sidebarMenuData: [],
-      menuData: menuData,
+      // menuData: menuData,
       persistent: false
     }
   },
+  computed: {
+    ...mapGetters({
+      loading: 'session/globalLoading',
+      menuData: 'session/globalMenuList'
+    })
+  },
   mounted () {
-    this.SidebarMenuDataMethod(this.$route)
+    this.onRequest()
     if (this.sidebarVisibility && this.$q.screen.gt.xs) {
       this.sidebarLeftOpen = false
     }
@@ -88,6 +101,9 @@ export default {
       if (this.sidebarVisibility) {
         this.sidebarLeftOpen = false
       }
+    },
+    menuData () {
+      this.SidebarMenuDataMethod(this.$route)
     }
   },
   methods: {
@@ -97,6 +113,9 @@ export default {
         const { path } = route.matched[1]
         this.sidebarMenuData = this.menuData.filter(item => item.children && ('/' + item.path) === path)
       }
+    },
+    async onRequest () {
+      await this.$store.dispatch('session/navs')
     }
   }
 }
