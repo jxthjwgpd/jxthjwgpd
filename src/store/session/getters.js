@@ -13,3 +13,7 @@ export const globalLoading = (state) => {
 export const globalMenuList = (state) => {
   return state.global.menuList
 }
+
+export const authorities = (state) => {
+  return state.global.permList
+}

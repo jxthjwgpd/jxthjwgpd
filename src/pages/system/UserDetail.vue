@@ -145,7 +145,7 @@
             >
               <div
                 class="q-mb-sm"
-                v-if="users.isa==='0'"
+                v-if="!users.isa"
               >
                 <q-btn
                   outline

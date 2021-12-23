@@ -47,15 +47,13 @@ export function logout ({ commit }) {
 
 export function navs ({ commit }) {
   commit('GLOBALLOADING', true)
-  commit('GLOBALMENULIST', { menu })
+  commit('AUTHORITY', { menu })
 
-  axios.get('/admin/navs').then(response => {
-    const { code, data: { menuVoList } } = response.data
-    if (code === '200' && menuVoList) {
-      // menu.push({ ...data.menuVoList })
-      commit('GLOBALMENULIST', { menu, menuVoList })
+  axios.get('/admin/authority').then(response => {
+    const { code, data: { menuList, permList } } = response.data
+    if (code === '200' && menuList) {
+      commit('AUTHORITY', { menu, menuList, permList })
     }
-
     commit('GLOBALLOADING', false)
   }).catch(() => {
     commit('GLOBALLOADING', false)

@@ -25,8 +25,9 @@ export const GLOBALLOADING = (state, payload) => {
   state.global.loading = payload
 }
 
-export const GLOBALMENULIST = (state, { menu, menuVoList }) => {
-  if (menuVoList !== void 0) {
-    state.global.menuList = menu.concat(menuVoList)
+export const AUTHORITY = (state, { menu, menuList, permList }) => {
+  if (menuList !== void 0) {
+    state.global.menuList = menu.concat(menuList)
+    state.global.permList = permList
   }
 }

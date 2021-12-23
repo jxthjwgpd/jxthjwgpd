@@ -6,7 +6,8 @@ export default function () {
     token: Cookies.get('token'),
     global: {
       loading: false,
-      menuList: []
+      menuList: [],
+      permList: []
     }
   }
 }
