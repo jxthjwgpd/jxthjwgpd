@@ -38,6 +38,9 @@ export function validate ({ commit, dispatch, state }) {
         commit('LOGOUT')
         return null
       }
+    }).catch(() => {
+      commit('LOGOUT')
+      return null
     })
 }
 

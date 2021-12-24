@@ -5,7 +5,7 @@
       style="min-width:680px;"
     >
       <q-toolbar>
-        <q-toolbar-title>角色选择</q-toolbar-title>
+        <q-toolbar-title>配置角色组</q-toolbar-title>
         <q-btn
           flat
           round
@@ -21,21 +21,19 @@
       >
         <q-card-section
           style="max-height: 56vh; "
-          class="scroll q-gutter-y-md q-mt-none"
+          class="scroll q-mt-none"
         >
-          <div class="row q-form-item q-mb-md">
-            <div class="col-3 q-label text-right">
-              <label for="cpassword">
-                选择角色组
+          <div class="row q-form-item">
+            <div class="col-2 q-label text-left">
+              <label for="username">
+                用户账号
               </label>
             </div>
-            <div
-              class="col-8"
-              style="max-height: 260px; overflow: auto;"
-            >
-              <user-role-list v-model="form.roleIds" />
+            <div class="col-9 q-value">
+              {{user.username}}
             </div>
           </div>
+          <user-role-list v-model="form.roleIds" />
         </q-card-section>
 
         <q-separator />
@@ -74,8 +72,8 @@ export default {
       type: Boolean,
       default: false
     },
-    userId: {
-      type: String
+    user: {
+      type: Object
     }
   },
   data () {
@@ -96,7 +94,7 @@ export default {
   watch: {
     value () {
       this.fixed = this.value
-      this.form.userId = this.userId
+      this.form.userId = this.user.id
     },
     fixed () {
       this.$emit('input', this.fixed)
@@ -114,7 +112,7 @@ export default {
       await axios.post('/admin/users/role', this.form).then(response => {
         const { code, message, data } = response.data
         if (code === '200' && data) {
-          this.$store.dispatch('system/UserRoleList', { userId: this.userId })
+          this.$store.dispatch('system/UserRoleList', { userId: this.user.id })
           this.$emit('input', false) // 关闭窗口
         } else {
           this.$q.notify({

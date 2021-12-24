@@ -2,7 +2,7 @@
   <q-dialog v-model="fixed">
     <q-card
       class="my-dialog"
-      style="min-width:680px;"
+      style="min-width:880px;"
     >
       <q-toolbar>
         <q-toolbar-title>新增用户</q-toolbar-title>
@@ -20,16 +20,16 @@
         class="my-form"
       >
         <q-card-section
-          style="max-height: 56vh; "
+          style="max-height: 60vh; "
           class="scroll q-gutter-y-md q-mt-none"
         >
           <div class="row q-form-item">
-            <div class="col-3 q-label text-right required">
+            <div class="col-2 q-label text-right required">
               <label for="username">
                 账号
               </label>
             </div>
-            <div class="col-8">
+            <div class="col-9">
               <q-input
                 outlined
                 dense
@@ -41,12 +41,12 @@
             </div>
           </div>
           <div class="row q-form-item">
-            <div class="col-3 q-label text-right required">
+            <div class="col-2 q-label text-right required">
               <label for="password">
                 密码
               </label>
             </div>
-            <div class="col-8">
+            <div class="col-9">
               <q-input
                 outlined
                 dense
@@ -59,12 +59,12 @@
             </div>
           </div>
           <div class="row q-form-item">
-            <div class="col-3 q-label text-right required">
+            <div class="col-2 q-label text-right required">
               <label for="cpassword">
                 再次输入密码
               </label>
             </div>
-            <div class="col-8">
+            <div class="col-9">
               <q-input
                 outlined
                 dense
@@ -77,14 +77,14 @@
             </div>
           </div>
           <div class="row q-form-item q-mb-md">
-            <div class="col-3 q-label text-right">
+            <div class="col-2 q-label text-right">
               <label for="cpassword">
                 选择角色组
               </label>
             </div>
             <div
-              class="col-8"
-              style="max-height: 260px; overflow: auto;"
+              class="col-9"
+              style="height:300px"
             >
               <user-role-list v-model="form.roleIds" />
             </div>
