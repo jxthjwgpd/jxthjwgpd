@@ -111,6 +111,12 @@
               <a
                 class="text-primary"
                 href="javascript:;"
+                @click="onUserRole(props.row)"
+                v-if="!props.row.isa"
+              >配置角色组</a>
+              <a
+                class="text-primary"
+                href="javascript:;"
                 @click="onUserDel(props.row)"
                 v-if="!props.row.isa"
               >删除</a>
@@ -132,19 +138,25 @@
       v-on:refresh="onRefresh"
       :user="user"
     />
-    <!-- </q-scroll-area> -->
+    <user-role-edit
+      v-model="fixedUserRoleEdit"
+      :user="user"
+      v-on:refresh="onRefresh"
+    />
   </q-page>
 </template>
 
 <script>
 import UserForm from './UserForm.vue'
 import UserEdit from './UserEdit.vue'
+import UserRoleEdit from './UserRoleEdit.vue'
 import axios from 'axios'
 export default {
   name: 'UserList',
   components: {
     UserForm,
-    UserEdit
+    UserEdit,
+    UserRoleEdit
   },
   data () {
     return {
@@ -169,7 +181,8 @@ export default {
       data: [],
       selected: [],
       fixed: false,
-      fixedEdit: false
+      fixedEdit: false,
+      fixedUserRoleEdit: false
     }
   },
   mounted () {
@@ -211,6 +224,11 @@ export default {
     },
     onUserEdit (user) {
       this.fixedEdit = !this.fixedEdit
+      this.user = user
+    },
+    async onUserRole (user) {
+      await this.$store.dispatch('system/UserRoleList', { username: user.username })
+      this.fixedUserRoleEdit = !this.fixedUserRoleEdit
       this.user = user
     },
     onUserDel (user) {

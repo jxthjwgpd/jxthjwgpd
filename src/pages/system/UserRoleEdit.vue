@@ -112,7 +112,8 @@ export default {
       await axios.post('/admin/users/role', this.form).then(response => {
         const { code, message, data } = response.data
         if (code === '200' && data) {
-          this.$store.dispatch('system/UserRoleList', { userId: this.user.id })
+          // this.$store.dispatch('system/UserRoleList', { userId: this.user.id })
+          this.$emit('refresh') // 关闭窗口
           this.$emit('input', false) // 关闭窗口
         } else {
           this.$q.notify({

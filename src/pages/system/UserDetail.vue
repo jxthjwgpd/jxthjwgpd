@@ -151,7 +151,7 @@
                   outline
                   color="primary"
                   size="sm"
-                  label="管理角色"
+                  label="配置角色组"
                   @click="fixed=!fixed"
                 />
               </div>
@@ -203,6 +203,7 @@
     <user-role-edit
       v-model="fixed"
       :user="users.user"
+      v-on:refresh="onRefresh"
     />
   </q-page>
 </template>
@@ -251,6 +252,9 @@ export default {
       setTimeout(() => {
         this.loading = false
       }, 500)
+    },
+    onRefresh () {
+      this.$store.dispatch('system/UserRoleList', { userId: this.users.user.id })
     },
     onUserRoleDel (userRole) {
       this.$q.dialog({
