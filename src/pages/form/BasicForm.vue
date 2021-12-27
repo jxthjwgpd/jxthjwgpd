@@ -61,6 +61,25 @@
               />
             </div>
           </div>
+          <div class="row">
+            <div class="col-4 q-label">
+              <label for="price">
+                付款项
+                <em>（选填）</em>
+              </label>
+            </div>
+            <div class="col">
+              <q-tree
+                :nodes="simple"
+                node-key="label"
+                :tick-strategy="tickStrategy"
+                :ticked.sync="ticked"
+                :expanded.sync="expanded"
+                default-expand-all
+              />
+              {{ticked}}
+            </div>
+          </div>
           <div class="row q-mt-lg">
             <div class="col offset-4">
               <q-btn color="primary q-mr-sm">提交</q-btn>
@@ -91,12 +110,70 @@ export default {
         cbPassApi: false,
         setPassType: '1',
         laSetPass: '0'
-      }
+      },
+      simple: [
+        {
+          label: 'Satisfied customers',
+          children: [
+            {
+              label: 'Good food',
+              children: [
+                { label: 'Quality ingredients' },
+                { label: 'Good recipe' }
+              ]
+            },
+            {
+              label: 'Good service (disabled node)',
+              disabled: true,
+              children: [
+                { label: 'Prompt attention' },
+                { label: 'Professional waiter' }
+              ]
+            },
+            {
+              label: 'Pleasant surroundings',
+              children: [
+                { label: 'Happy atmosphere (*)' },
+                { label: 'Good table presentation' },
+                { label: 'Pleasing decor (*)' }
+              ]
+            }
+          ]
+        }
+      ],
+      ticked: ['Happy atmosphere (*)'],
+      expanded: ['Good service (disabled node)'],
+      tickStrategy: 'leaf'
     }
+  },
+  mounted () {
+    const a = this.findNodeById(this.simple, 'Happy atmosphere (*)', true)
+    console.log(a)
   },
   methods: {
     onSubmit () {
-
+    },
+    findNodeById (array, id, withParents) {
+      if (array) {
+        for (let i = 0; i < array.length; i++) {
+          const node = JSON.parse(JSON.stringify(array[i]))
+          if (node.id === id) {
+            node.children = []
+            return node
+          } else {
+            const result = this.findNodeById(node.children, id, withParents)
+            if (result !== undefined) {
+              if (withParents) {
+                const rtn = node
+                rtn.children = [result]
+                return rtn
+              } else {
+                return result
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

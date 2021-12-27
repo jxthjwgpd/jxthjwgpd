@@ -49,6 +49,7 @@
               @click="fixed=!fixed"
             />
           </template>
+
           <template v-slot:top-right>
             <q-input
               dense

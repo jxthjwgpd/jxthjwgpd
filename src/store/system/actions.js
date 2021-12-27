@@ -8,6 +8,10 @@ export function init (state) {
 
 export function error ({ dispatch, state }, playload) {
   console.error(playload)
+  const { code, message } = playload
+  if (code === '1000' && message) {
+    alert(message)
+  }
 }
 
 export function DeleteUser ({ dispatch, state }, id) {
