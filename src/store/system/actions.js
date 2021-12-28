@@ -27,8 +27,8 @@ export function DeleteUser ({ dispatch, state }, id) {
   })
 }
 
-export function UserDetailInfo ({ dispatch, state }, username) {
-  return axios.get('/admin/users/detail/info', { params: { username } }).then(response => {
+export function UserDetail ({ dispatch, state }, username) {
+  return axios.get('/admin/users/detail', { params: { username } }).then(response => {
     const { code, data } = response.data
     if (code === '200' && data) {
       return data

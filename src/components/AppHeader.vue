@@ -30,7 +30,7 @@
           <q-route-tab
             :ripple="false"
             v-for="item in menuData"
-            :key="`${item.name}-${item.path}`"
+            :key="`${item.id}-${item.path}`"
             :label="`${item.name}`"
             :to="`${'/'+item.path}`"
           />

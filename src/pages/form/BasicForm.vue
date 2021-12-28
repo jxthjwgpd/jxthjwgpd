@@ -75,6 +75,7 @@
                 :tick-strategy="tickStrategy"
                 :ticked.sync="ticked"
                 :expanded.sync="expanded"
+                @update:ticked="onSubmit"
                 default-expand-all
               />
               {{ticked}}
@@ -86,6 +87,7 @@
               <q-btn
                 color="white"
                 text-color="black"
+                @click="onSubmit"
               >保存</q-btn>
             </div>
           </div>
@@ -141,31 +143,39 @@ export default {
           ]
         }
       ],
-      ticked: ['Happy atmosphere (*)'],
-      expanded: ['Good service (disabled node)'],
-      tickStrategy: 'leaf'
+      ticked: ['Pleasant surroundings', 'Quality ingredients'],
+      expanded: [],
+      tickStrategy: 'strict'
     }
   },
   mounted () {
-    const a = this.findNodeById(this.simple, 'Happy atmosphere (*)', true)
-    console.log(a)
+
   },
   methods: {
     onSubmit () {
+      this.ticked.map(e => {
+        // this.findNodeById(this.simple, e, true)
+      })
     },
-    findNodeById (array, id, withParents) {
+    findNodeById (array, label, withParents) {
       if (array) {
         for (let i = 0; i < array.length; i++) {
           const node = JSON.parse(JSON.stringify(array[i]))
-          if (node.id === id) {
+          if (node.label === label) {
             node.children = []
+            if (this.ticked.indexOf(node.label) < 0) {
+              this.ticked = this.ticked.concat(node.label)
+            }
             return node
           } else {
-            const result = this.findNodeById(node.children, id, withParents)
+            const result = this.findNodeById(node.children, label, withParents)
             if (result !== undefined) {
               if (withParents) {
                 const rtn = node
                 rtn.children = [result]
+                if (this.ticked.indexOf(rtn.label) < 0) {
+                  this.ticked = this.ticked.concat(rtn.label)
+                }
                 return rtn
               } else {
                 return result

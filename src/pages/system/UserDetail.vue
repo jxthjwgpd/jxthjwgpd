@@ -238,7 +238,7 @@ export default {
   methods: {
     async onRequest () {
       this.loading = true
-      await this.$store.dispatch('system/UserDetailInfo', this.users.username).then(data => {
+      await this.$store.dispatch('system/UserDetail', this.users.username).then(data => {
         if (data.user) {
           this.users = {
             ...data,

@@ -102,10 +102,10 @@
                   href="javascript:;"
                   @click="onRoleEdit(props.row)"
                 >编辑</a>
-                <a
+                <router-link
+                  :to="`roles/${props.row.id}/menu`"
                   class="text-primary"
-                  href="javascript:;"
-                >权限配置</a>
+                >权限配置</router-link>
                 <a
                   class="text-primary"
                   href="javascript:;"
