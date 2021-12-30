@@ -44,7 +44,7 @@ export default {
           {
             staticClass: 'non-selectable',
             ref: path,
-            key: `${menu.name}-${path}`,
+            key: `${menu.id}-${path}`,
             props: {
               label: menu.name,
               dense: level > 0,
@@ -88,7 +88,7 @@ export default {
       }
       return h(QItem, {
         ref: path,
-        key: path,
+        key: `${menu.id}-${path}`,
         props,
         attrs,
         staticClass: 'app-menu-entry non-selectable'

@@ -192,8 +192,11 @@
             </q-tab-panel>
 
             <q-tab-panel name="menus">
-              <div class="text-h6">Policy</div>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              <q-tree
+                :nodes="treeData"
+                node-key="id"
+                label-key="name"
+              />
             </q-tab-panel>
           </q-tab-panels>
 
@@ -211,6 +214,7 @@
 <script>
 import UserRoleEdit from './UserRoleEdit.vue'
 import { mapGetters } from 'vuex'
+import axios from 'axios'
 export default {
   name: 'UserCreate',
   components: {
@@ -224,6 +228,7 @@ export default {
         username: this.$route.params.username,
         user: {}
       },
+      treeData: [],
       fixed: false
     }
   },
@@ -249,6 +254,16 @@ export default {
         console.error(error)
       })
       await this.$store.dispatch('system/UserRoleList', { username: this.users.username })
+
+      await axios.get('/admin/users/menu', { params: { userId: this.users.user.id } }).then(response => {
+        const { code, data } = response.data
+        if (code === '200' && data) {
+          this.treeData = data.menuList
+        }
+      }).catch(error => {
+        console.error(error)
+      })
+
       setTimeout(() => {
         this.loading = false
       }, 500)
