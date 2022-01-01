@@ -5,11 +5,11 @@
         <q-breadcrumbs align="left">
           <q-breadcrumbs-el
             label="首页"
-            to=""
+            to="/"
           />
           <q-breadcrumbs-el
             label="仪表盘"
-            to=""
+            to="/"
           />
           <q-breadcrumbs-el label="概览" />
         </q-breadcrumbs>

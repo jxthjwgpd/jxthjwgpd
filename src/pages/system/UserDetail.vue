@@ -5,11 +5,11 @@
         <q-breadcrumbs align="left">
           <q-breadcrumbs-el
             label="首页"
-            to=""
+            to="/"
           />
           <q-breadcrumbs-el
-            label="管理员"
-            to=""
+            label="用户列表"
+            to="/system/admin/users"
           />
           <q-breadcrumbs-el label="用户" />
         </q-breadcrumbs>
@@ -35,7 +35,26 @@
         class="q-pb-md"
       >
         <q-card-section class="q-gutter-y-md q-mt-none">
-          <q-item-label class="q-mt-none text-h6">基本信息</q-item-label>
+          <div class="row no-wrap items-center">
+            <q-item-label class="q-mt-none text-h6">基本信息</q-item-label>
+            <q-space />
+            <q-btn
+              outline
+              color="primary"
+              size="sm"
+              label="编辑"
+              @click="fixedUserDetail=!fixedUserDetail"
+            />
+            <q-btn
+              outline
+              color="negative"
+              size="sm"
+              label="删除"
+              class="q-ml-xs"
+              v-if="!users.isa"
+              @click="onUserDel(users.user)"
+            />
+          </div>
           <div class="row">
             <div class="col-6">
               <q-desc-item title="用户账号">
@@ -208,17 +227,25 @@
       :user="users.user"
       v-on:refresh="onRefresh"
     />
+    <user-detail-edit
+      v-model="fixedUserDetail"
+      :user="users.user"
+      v-on:refresh="onRefresh"
+    />
+
   </q-page>
 </template>
 
 <script>
 import UserRoleEdit from './UserRoleEdit.vue'
+import UserDetailEdit from './UserDetailEdit.vue'
 import { mapGetters } from 'vuex'
 import axios from 'axios'
 export default {
   name: 'UserCreate',
   components: {
-    UserRoleEdit
+    UserRoleEdit,
+    UserDetailEdit
   },
   data () {
     return {
@@ -229,7 +256,8 @@ export default {
         user: {}
       },
       treeData: [],
-      fixed: false
+      fixed: false,
+      fixedUserDetail: false
     }
   },
   computed: {
@@ -266,10 +294,23 @@ export default {
 
       setTimeout(() => {
         this.loading = false
-      }, 500)
+      }, 200)
     },
     onRefresh () {
       this.$store.dispatch('system/UserRoleList', { userId: this.users.user.id })
+    },
+    onUserDel (user) {
+      this.$q.dialog({
+        title: this.$t('dialog.delete.title'),
+        message: this.$t('dialog.delete.message'),
+        cancel: true
+      }).onOk(() => {
+        this.$store.dispatch('system/DeleteUser', user.id).then(data => {
+          this.$router.push({ path: '/system/admin/users' })
+        }).catch(error => {
+          console.log(error)
+        })
+      })
     },
     onUserRoleDel (userRole) {
       this.$q.dialog({

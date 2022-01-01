@@ -5,11 +5,11 @@
         <q-breadcrumbs align="left">
           <q-breadcrumbs-el
             label="首页"
-            to=""
+            to="/"
           />
           <q-breadcrumbs-el
             label="系统设置"
-            to=""
+            to="/system"
           />
           <q-breadcrumbs-el label="角色组" />
         </q-breadcrumbs>
@@ -38,7 +38,7 @@
           <div class="row">
             <div class="col-4 q-label">
               <label for="roleName">
-                角色名称
+                角色名
               </label>
             </div>
             <div class="col-8 q-value">
@@ -48,11 +48,21 @@
           <div class="row">
             <div class="col-4 q-label">
               <label for="remark">
-                角色描述
+                备注
               </label>
             </div>
             <div class="col-8 q-value">
               {{role.remark||'-'}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 q-label">
+              <label for="created">
+                创建时间
+              </label>
+            </div>
+            <div class="col-8 q-value">
+              {{role.created}}
             </div>
           </div>
           <div class="row">

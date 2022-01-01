@@ -5,11 +5,11 @@
         <q-breadcrumbs align="left">
           <q-breadcrumbs-el
             label="首页"
-            to=""
+            to="/"
           />
           <q-breadcrumbs-el
             label="系统设置"
-            to=""
+            to="/system"
           />
           <q-breadcrumbs-el label="管理员" />
         </q-breadcrumbs>
