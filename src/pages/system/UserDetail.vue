@@ -230,7 +230,7 @@
     <user-detail-edit
       v-model="fixedUserDetail"
       :user="users.user"
-      v-on:refresh="onRefresh"
+      v-on:refresh="onUserDetail"
     />
 
   </q-page>
@@ -271,16 +271,7 @@ export default {
   methods: {
     async onRequest () {
       this.loading = true
-      await this.$store.dispatch('system/UserDetail', this.users.username).then(data => {
-        if (data.user) {
-          this.users = {
-            ...data,
-            username: data.user.username
-          }
-        }
-      }).catch(error => {
-        console.error(error)
-      })
+      await this.onUserDetail()
       await this.$store.dispatch('system/UserRoleList', { username: this.users.username })
 
       await axios.get('/admin/users/menu', { params: { userId: this.users.user.id } }).then(response => {
@@ -295,6 +286,18 @@ export default {
       setTimeout(() => {
         this.loading = false
       }, 200)
+    },
+    onUserDetail () {
+      this.$store.dispatch('system/UserDetail', this.users.username).then(data => {
+        if (data.user) {
+          this.users = {
+            ...data,
+            username: data.user.username
+          }
+        }
+      }).catch(error => {
+        console.error(error)
+      })
     },
     onRefresh () {
       this.$store.dispatch('system/UserRoleList', { userId: this.users.user.id })
