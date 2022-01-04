@@ -61,7 +61,7 @@
               />
               <div class="q-mt-md">登录已有账号？<router-link
                   to="/user/login"
-                  class="text-blue"
+                  class="text-primary"
                 >点击登录</router-link>
               </div>
             </div>

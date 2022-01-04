@@ -55,7 +55,7 @@
               />
               <div class="q-mt-md">如果还没有账号？<router-link
                   to="/user/signup"
-                  class="text-blue"
+                  class="text-primary"
                 >点击注册</router-link>
               </div>
             </div>

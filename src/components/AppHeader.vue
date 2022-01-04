@@ -2,7 +2,7 @@
   <div>
     <q-header
       elevated
-      class="bg-primary text-white"
+      class="bg-primary text-white my-header"
       height-hint="98"
     >
       <q-toolbar>
@@ -14,12 +14,18 @@
           @click="left = !left"
           v-if="!$q.screen.gt.xs"
         />
-
+        <q-avatar class="q-logo">
+          <img src="~assets/logo.svg" />
+        </q-avatar>
         <q-toolbar-title
           shrink
-          class="row items-center no-wrap"
+          class="text-bold"
         >
-          <span class="q-ml-sm"><span>Quasar</span> admin <span class="text-subtitle2">{{$q.version}}</span></span>
+          大唐西市
+          <span
+            class="q-ml-xs"
+            style="letter-spacing: 0.1em;font-size:12px;font-weight:500;"
+          >CLOUD PRO5</span>
         </q-toolbar-title>
         <q-tabs
           dense
@@ -210,6 +216,14 @@ export default {
 </script>
 
 <style lang="sass">
+.my-header
+  // background: linear-gradient(145deg,$primary 11%,$primary 75%) !important
+.q-logo
+  img
+    transform: rotate(0deg)
+    transition: transform .8s ease-in-out
+  &:hover img
+    transform: rotate(-360deg)
 .q-tab__content
-  min-width: auto !important;
+  min-width: auto !important
 </style>
