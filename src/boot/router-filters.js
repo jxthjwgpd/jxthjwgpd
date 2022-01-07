@@ -11,7 +11,6 @@ export default ({ app, router, Vue }) => {
         user ? next() : next({ name: 'user-login', query: { 'redirect': to.fullPath } })
       })
     }
-
     next({ name: 'user-login', query: { 'redirect': to.fullPath } })
   })
 }
