@@ -191,6 +191,10 @@ export default {
       pagination: this.pagination,
       filter: undefined
     })
+    // test
+    axios.get('/admin/users/log', { params: { current: 1, size: 10 } }).then(response => {
+      console.log(response)
+    })
   },
   methods: {
     onRefresh () {

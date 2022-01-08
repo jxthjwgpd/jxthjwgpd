@@ -10,11 +10,11 @@ export default ({ app, router, Vue }) => {
             Vue.prototype.$q.dialog({
                 title: '提示',
                 message: message,
-                ok: '确认',
-                cancel: false,
+                ok: '重新登录',
+                cancel: '取消',
                 persistent: true
             }).onOk(() => {
-                // router.push({ path: '/user/login', query: { 'redirect': router.history.current.path } })
+                router.push({ path: '/user/login', query: { 'redirect': router.history.current.path } })
             })
             return Promise.reject(null)
         }

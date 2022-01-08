@@ -287,8 +287,8 @@ export default {
         this.loading = false
       }, 200)
     },
-    onUserDetail () {
-      this.$store.dispatch('system/UserDetail', this.users.username).then(data => {
+    async onUserDetail () {
+      await this.$store.dispatch('system/UserDetail', this.users.username).then(data => {
         if (data.user) {
           this.users = {
             ...data,
