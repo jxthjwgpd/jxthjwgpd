@@ -16,24 +16,6 @@
         <div class="my-page-header-subtitle">中枢分析数据概览</div>
       </div>
     </div>
-    <q-banner
-      dense
-      class="bg-grey-3 q-mb-md"
-    >
-      喜欢的话，鼓励一下给个star，谢谢！
-      <template v-slot:action>
-        <q-btn
-          flat
-          type="a"
-          color="red-7"
-          href='https://gitee.com/ruyangit/quasar-element-pro/stargazers'
-        >
-          <img
-            src='https://gitee.com/ruyangit/tangdao/badge/star.svg?theme=white'
-            alt='star'
-          /></q-btn>
-      </template>
-    </q-banner>
     <div class="my-page-body row">
       <div class="col-md-8 col-12">
         <q-card flat>

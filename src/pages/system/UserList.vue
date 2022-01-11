@@ -26,7 +26,7 @@
         >
           <q-route-tab to="/system/admin/users">用户列表</q-route-tab>
           <q-route-tab to="/system/admin/roles">角色组</q-route-tab>
-          <q-route-tab to="/system/admin/log">操作日志</q-route-tab>
+          <q-route-tab to="/system/admin/users/log">操作日志</q-route-tab>
         </q-tabs>
       </div>
       <q-table
@@ -192,9 +192,9 @@ export default {
       filter: undefined
     })
     // test
-    axios.get('/admin/users/log', { params: { current: 1, size: 10 } }).then(response => {
-      console.log(response)
-    })
+    // axios.get('/admin/users/log', { params: { current: 1, size: 10 } }).then(response => {
+    //   console.log(response)
+    // })
   },
   methods: {
     onRefresh () {
