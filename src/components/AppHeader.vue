@@ -6,20 +6,20 @@
       height-hint="98"
     >
       <q-toolbar>
-        <q-btn
+        <!-- <q-btn
           dense
           flat
           round
           icon="menu"
           @click="left = !left"
           v-if="!$q.screen.gt.xs"
-        />
+        /> -->
         <q-avatar class="q-logo">
           <img src="~assets/logo.svg" />
         </q-avatar>
         <q-toolbar-title
           shrink
-          class="text-bold"
+          class="text-bold logo-text-primary"
         >
           大唐西市
           <span
@@ -30,15 +30,16 @@
         <q-tabs
           dense
           narrow-indicator
+          shrink
           align="left"
           v-if="$q.screen.gt.xs"
         >
           <q-route-tab
             :ripple="false"
             v-for="item in menuData"
-            :key="`${item.id}-${item.path}`"
-            :label="`${item.name}`"
-            :to="`${'/'+item.path}`"
+            :key="item.id"
+            :label="item.name"
+            :to="item.path"
           />
         </q-tabs>
         <q-space />
@@ -97,6 +98,7 @@
                   dense
                   v-model="bluetooth"
                   label="Bluetooth"
+                  class="q-mt-md"
                 />
               </div>
 
@@ -136,19 +138,7 @@
       </q-toolbar>
 
     </q-header>
-    <q-drawer
-      v-model="left"
-      side="left"
-      overlay
-      bordered
-      :width="240"
-    >
-      <q-app-menu-new
-        :menuData="menuData"
-        :minimize="true"
-        v-model="left"
-      />
-    </q-drawer>
+
     <q-drawer
       v-model="right"
       side="right"
@@ -157,7 +147,6 @@
     >
       <q-settings />
     </q-drawer>
-
     <q-dialog v-model="toolbar">
       <q-card>
         <q-toolbar>
@@ -189,6 +178,7 @@
 </template>
 
 <script>
+import { colors } from 'quasar'
 export default {
   name: 'AppHeader',
   props: {
@@ -199,11 +189,15 @@ export default {
   data () {
     return {
       toolbar: false,
-      left: false,
       right: false,
       mobileData: false,
       bluetooth: true
     }
+  },
+  mounted () {
+    const { setBrand } = colors
+    console.log(setBrand)
+    // setBrand('primary', this.$q.primary)
   },
   methods: {
     logout () {

@@ -16,6 +16,7 @@
 
       <q-banner
         dense
+        inline-actions
         class="q-mb-md bg-amber-1"
       >
         云服务器ECS主机管理，精简效果上线，邀请你参与问卷调查。
@@ -27,7 +28,7 @@
           <q-btn
             flat
             label="前往填写"
-            color="red-7"
+            color="primary"
           />
         </template>
       </q-banner>

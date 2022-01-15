@@ -43,8 +43,8 @@ export default {
           QExpansionItem,
           {
             staticClass: 'non-selectable',
-            ref: path,
-            key: `${menu.id}-${path}`,
+            ref: menu.id,
+            key: menu.id,
             props: {
               label: menu.name,
               dense: level > 0,
@@ -58,7 +58,7 @@ export default {
           menu.children.map(item => this.getDrawerMenu(
             h,
             item,
-            path + (item.path !== void 0 ? '/' + item.path : ''),
+            item.path,
             level + 0.45
           ))
         )
@@ -87,8 +87,8 @@ export default {
         props.insetLevel = 0
       }
       return h(QItem, {
-        ref: path,
-        key: `${menu.id}-${path}`,
+        ref: menu.id,
+        key: menu.id,
         props,
         attrs,
         staticClass: 'app-menu-entry non-selectable'
@@ -126,11 +126,11 @@ export default {
     if (this.menuData) {
       if (this.minimize) {
         return h(QList, { staticClass: this.value ? 'app-menu' : 'app-menu minimize' }, this.menuData.map(
-          item => this.getDrawerMenu(h, item, '/' + item.path, 0)
+          item => this.getDrawerMenu(h, item, item.path, 0)
         ))
       } else {
         return h(QList, { staticClass: this.value ? 'app-menu' : 'app-menu minimize' }, this.menuData[0].children.map(
-          item => this.getDrawerMenu(h, item, '/' + this.menuData[0].path + '/' + item.path, 0)
+          item => this.getDrawerMenu(h, item, item.path, 0)
         ))
       }
     }

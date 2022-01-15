@@ -44,6 +44,31 @@
           <router-view />
         </div>
       </div>
+      <q-page-sticky
+        position="bottom-right"
+        :offset="[18, 18]"
+        v-if="!$q.screen.gt.xs"
+      >
+        <q-btn
+          round
+          color="primary"
+          icon="menu"
+          @click="left=!left"
+        />
+      </q-page-sticky>
+      <q-drawer
+        v-model="left"
+        side="left"
+        overlay
+        bordered
+        :width="240"
+      >
+        <q-app-menu-new
+          :menuData="menuData"
+          :minimize="true"
+          v-model="left"
+        />
+      </q-drawer>
     </q-page-container>
     <q-inner-loading :showing="loading">
       <q-spinner-radio
@@ -60,9 +85,10 @@ import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
+      left: false,
       sidebar: 240,
       sidebarMinimize: 55,
-      sidebarVisibility: true,
+      sidebarVisibility: false,
       sidebarLeftOpen: true,
       sidebarMenuData: [],
       // menuData: menuData,
@@ -111,7 +137,7 @@ export default {
       this.sidebarVisibility = route.meta.sidebar
       if (this.sidebarVisibility) {
         const { path } = route.matched[1]
-        this.sidebarMenuData = this.menuData.filter(item => item.children && ('/' + item.path) === path)
+        this.sidebarMenuData = this.menuData.filter(item => item.children && item.path === path)
       }
     },
     async onRequest () {
