@@ -122,8 +122,12 @@ export default {
       axios.get('/actuator/env', {}).then(response => {
         this.data = response.data
         this.activeProfiles = response.data.activeProfiles
-        this.systemProperties = response.data.propertySources[2].properties
-        this.systemEnvironments = response.data.propertySources[3].properties
+        if (response.data.propertySources[2]) {
+          this.systemProperties = response.data.propertySources[2].properties
+        }
+        if (response.data.propertySources[3]) {
+          this.systemEnvironments = response.data.propertySources[3].properties
+        }
       })
     }
   },
