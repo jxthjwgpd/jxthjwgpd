@@ -76,7 +76,7 @@ module.exports = function (ctx) {
           API_HOST: JSON.stringify(process.env.API_HOST || 'http://127.0.0.1:4001')
         }
         : { // and on build (production):
-          API_HOST: JSON.stringify('http://huawei.s01:12002')
+          API_HOST: JSON.stringify('http://121.37.180.48:12002')
         },
       scopeHoisting: true,
       vueRouterMode: 'hash', // available values: 'hash', 'history'

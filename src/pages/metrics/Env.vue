@@ -63,7 +63,7 @@
       >
         系统
         <q-space />
-        {{systemEnvironments['OS'].value}}
+        <!-- {{systemEnvironments['OS'].value}} -->
       </div>
     </q-card-section>
     <q-separator />
@@ -74,9 +74,10 @@
       >
         架构
         <q-space />
-        {{systemEnvironments['PROCESSOR_ARCHITECTURE'].value}}
+        <!-- {{systemEnvironments['PROCESSOR_ARCHITECTURE'].value}} -->
       </div>
     </q-card-section>
+    <q-separator />
     <q-card-section class="q-pb-none q-pt-none">
       <div
         class="row no-wrap items-center"
@@ -84,7 +85,7 @@
       >
         用户
         <q-space />
-        {{systemEnvironments['USERNAME'].value}}
+        <!-- {{systemEnvironments['USERNAME'].value}} -->
       </div>
     </q-card-section>
 
@@ -107,10 +108,10 @@ export default {
         'java.runtime.version': '-'
       },
       systemEnvironments: {
-        'PROCESSOR_ARCHITECTURE': '-',
-        'USERNAME': '-',
-        'OS': '-',
-        'COMPUTERNAME': '-'
+        'PROCESSOR_ARCHITECTURE': {},
+        'USERNAME': {},
+        'OS': {},
+        'COMPUTERNAME': {}
       }
     }
   },
@@ -140,5 +141,4 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-
 </style>

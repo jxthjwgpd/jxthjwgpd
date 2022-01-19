@@ -447,22 +447,13 @@
             flat
             class="q-mt-md"
           >
-            <q-card-section>
-              <div class="row no-wrap items-center">
-                <div class="col text-subtitle2 ellipsis">
-                  事件日历
-                </div>
-                <div class="col-auto text-primary text-caption row no-wrap items-center">
-                  更多
-                </div>
-              </div>
-            </q-card-section>
 
-            <q-card-section class="q-pt-none">
+            <q-card-section class="q-pa-none">
               <q-date
                 v-model="date"
-                landscape
                 flat
+                :events="events"
+                :event-color="(date) => date[9] % 2 === 0 ? 'teal' : 'orange'"
                 style="width:100%"
               />
             </q-card-section>
@@ -563,6 +554,7 @@ export default {
     return {
       progress1: 0.3,
       date: '2019/02/01',
+      events: ['2019/02/01', '2019/02/05', '2019/02/06', '2019/02/09', '2019/02/23'],
       expanded: true,
       slide: 'style',
       lorem: 'Lorem ipsum dolor. '
@@ -584,6 +576,16 @@ export default {
   methods: {
     splitterWatch (val) {
       this.splitterModel = val ? 243 : 0
+    },
+    eventsFn (date) {
+      if (date === '2019/02/01' ||
+        date === '2019/02/05' ||
+        date === '2019/02/06' ||
+        date === '2019/02/09' ||
+        date === '2019/02/23') {
+        return true
+      }
+      return false
     }
   }
 }
@@ -592,18 +594,18 @@ export default {
 <style lang="sass">
 .ccl-dashboard
   & .q-splitter__before
-    background-color: #fff;
+    background-color: #fff
   & .view-nav-menu
-    position: absolute;
-    top: 0;
-    bottom: 0;
+    position: absolute
+    top: 0
+    bottom: 0
     &-content
-      position: absolute;
-      top: 65px;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      position: absolute
+      top: 65px
+      left: 0
+      right: 0
+      bottom: 0
 @media (max-width: $breakpoint-sm-max)
   .q-splitter--vertical > .q-splitter__separator
-    width: 0px;
+    width: 0px
 </style>
