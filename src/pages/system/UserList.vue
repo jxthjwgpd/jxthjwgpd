@@ -26,6 +26,7 @@
         >
           <q-route-tab to="/system/admin/users">用户列表</q-route-tab>
           <q-route-tab to="/system/admin/roles">角色组</q-route-tab>
+          <q-route-tab to="/system/admin/policies">权限策略</q-route-tab>
           <q-route-tab to="/system/admin/users/log">操作日志</q-route-tab>
         </q-tabs>
       </div>
@@ -91,7 +92,7 @@
               key="status"
               :props="props"
             >
-              <q-dict-status :status="props.row.status" />
+              <q-sys-status :value="props.row.status" />
             </q-td>
             <q-td
               key="created"

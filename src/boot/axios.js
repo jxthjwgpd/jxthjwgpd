@@ -9,7 +9,7 @@ export default ({ app, router, Vue }) => {
             console.warn(message + '[' + code + ']')
             Vue.prototype.$q.dialog({
                 title: '提示',
-                message: message,
+                message: message + '[' + code + ']',
                 ok: '确认',
                 cancel: false,
                 persistent: true

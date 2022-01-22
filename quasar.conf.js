@@ -1,6 +1,6 @@
+const HtmlWebpackPlugin = require("html-webpack-plugin")
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
-
 module.exports = function (ctx) {
   return {
     // app boot file (/src/boot)
@@ -52,7 +52,6 @@ module.exports = function (ctx) {
       // Quasar plugins
       plugins: [
         'Loading',
-        // 'LoadingBar',
         'LocalStorage',
         'SessionStorage',
         'Cookies',
@@ -98,6 +97,19 @@ module.exports = function (ctx) {
             formatter: require('eslint').CLIEngine.getFormatter('stylish')
           }
         })
+        const htmlWebpackPlugin = cfg.plugins.find(plugin => plugin.constructor === HtmlWebpackPlugin)
+        htmlWebpackPlugin.options.clientVersion = Math.floor(Date.now() / 1000)
+
+        // if (cfg.mode === 'production') {
+        //   cfg.externals = [
+        //     'quasar',
+        //     'vue',
+        //     'vuex',
+        //     'vue-router',
+        //     'vue-i18n',
+        //     'axios'
+        //   ]
+        // }
       }
     },
 

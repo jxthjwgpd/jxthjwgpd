@@ -1,176 +1,225 @@
 <template>
-  <q-page class="q-pa-lg">
-    <div class="row items-center justify-between q-mb-md">
-      <div>
+  <q-page class="my-page">
+    <div class="row items-center justify-between">
+      <div class="my-page-header q-pb-none">
         <q-breadcrumbs align="left">
           <q-breadcrumbs-el
-            label="系统管理"
+            label="首页"
+            to="/"
+          />
+          <q-breadcrumbs-el
+            label="系统设置"
             to="/system"
           />
-          <q-breadcrumbs-el label="策略管理" />
+          <q-breadcrumbs-el label="权限策略" />
         </q-breadcrumbs>
-        <div
-          class="text-h6 q-mt-xs"
-          v-if="$q.screen.gt.sm"
-        >策略管理</div>
-      </div>
-      <div
-        class="q-gutter-sm"
-        v-if="$q.screen.gt.sm"
-      >
-        <q-btn
-          icon="loop"
-          color="primary"
-          outline
-          dense
-          :loading="loading"
-          @click="onRefresh"
-        />
-      </div>
-    </div>
-    <div class="q-mb-lg my-table">
-      <q-table
-        :data="data"
-        :columns="columns"
-        row-key="id"
-        :pagination.sync="pagination"
-        :loading="loading"
-        :filter="filter"
-        @request="onRequest"
-        binary-state-sort
-        square
-        :card-style="{ boxShadow: 'none', padding: '0 10px' }"
-        :table-header-style="{ backgroundColor: '#eeeeee'}"
-      >
-        <template v-slot:top-left>
-          <q-btn
-            label="新增策略"
-            color="primary"
-            to="/system/policies/create"
-          />
-        </template>
-
-        <template v-slot:top-right>
-          <q-input
-            dense
-            debounce="300"
-            v-model="filter"
-            placeholder="查询"
+        <div class="my-page-header-subtitle">
+          <router-link
+            to="/system/admin/users"
+            class="my-page-header-goback"
           >
-            <template v-slot:append>
-              <q-icon name="search" />
-            </template>
-          </q-input>
-        </template>
-
-        <template v-slot:no-data="{ message }">
-          <div class="full-width row flex-center q-gutter-sm q-pa-lg">
-            <span>
-              {{ message }}
-            </span>
-          </div>
-        </template>
-
-        <template v-slot:body="props">
-          <q-tr :props="props">
-            <q-td
-              key="policyName"
-              :props="props"
-            >{{ props.row.policyName }}</q-td>
-            <q-td
-              class="text-line2-f"
-              key="remarks"
-              :props="props"
-            >{{ props.row.remarks }}</q-td>
-            <q-td
-              key="policyType"
-              :props="props"
-            >{{ props.row.policyType }}</q-td>
-            <q-td
-              key="action"
-              :props="props"
-              class="q-gutter-xs"
-            >
-              <q-btn
-                flat
-                dense
-                color="primary"
-                label="添加策略"
-              />
-              <q-btn
-                flat
-                dense
-                color="primary"
-                label="添加权限"
-              />
-              <q-btn
-                flat
-                dense
-                color="negative"
-                label="删除"
-                @click="confirm(props.row)"
-              />
-            </q-td>
-          </q-tr>
-        </template>
-      </q-table>
+            <q-icon
+              name="arrow_back"
+              size="sm"
+              class="text-bold text-dark"
+            />
+          </router-link>
+          策略管理
+        </div>
+      </div>
     </div>
+
+    <div class="my-page-body">
+      <div class="my-table">
+        <q-table
+          :data="data"
+          :columns="columns"
+          row-key="id"
+          :pagination.sync="pagination"
+          :loading="loading"
+          :filter="policyName"
+          @request="onRequest"
+          binary-state-sort
+          square
+        >
+          <template v-slot:top-left>
+            <q-btn
+              label="新建"
+              color="primary"
+              @click="fixed=!fixed"
+            />
+          </template>
+
+          <template v-slot:top-right>
+            <q-input
+              dense
+              debounce="300"
+              v-model="policyName"
+              placeholder="请输入策略名称"
+            >
+              <template v-slot:append>
+                <q-icon name="search" />
+              </template>
+            </q-input>
+          </template>
+
+          <template v-slot:no-data="{ message }">
+            <div class="full-width row flex-center q-gutter-sm q-pa-lg">
+              <span>
+                {{ message }}
+              </span>
+            </div>
+          </template>
+
+          <template v-slot:body="props">
+            <q-tr :props="props">
+              <q-td
+                key="policyName"
+                :props="props"
+              >{{ props.row.policyName|| '-' }}</q-td>
+              <q-td
+                key="policyNameCn"
+                :props="props"
+                class="text--line2-f"
+              >{{ props.row.policyNameCn }}</q-td>
+              <q-td
+                key="policyType"
+                :props="props"
+              >
+                {{ policyType[props.row.policyType] }}</q-td>
+              <q-td
+                key="status"
+                :props="props"
+              >
+                <q-sys-status :value="props.row.status" />
+              </q-td>
+              <q-td
+                key="created"
+                :props="props"
+              >{{ props.row.created }}</q-td>
+              <q-td
+                key="action"
+                :props="props"
+                class="q-gutter-xs action"
+              >
+                <a
+                  class="text-primary"
+                  href="javascript:;"
+                  @click="onContent(props.row)"
+                >查看</a>
+                <a
+                  class="text-primary"
+                  href="javascript:;"
+                  @click="onRoleEdit(props.row)"
+                >编辑</a>
+                <a
+                  class="text-primary"
+                  href="javascript:;"
+                  @click="onRoleDel(props.row)"
+                >删除</a>
+              </q-td>
+            </q-tr>
+          </template>
+        </q-table>
+      </div>
+    </div>
+    <!-- <role-form
+      v-model="fixed"
+      v-on:refresh="onRefresh"
+    />
+    <role-edit
+      v-model="fixedEdit"
+      v-on:refresh="onRefresh"
+      :role="role"
+    /> -->
+    <!-- <q-dialog v-model="show"> -->
+    <div style="width: 500px">
+      <codemirror
+        v-model="policy.content"
+        :options="cmOptions"
+      />
+    </div>
+    <!-- </q-dialog> -->
   </q-page>
 </template>
 
 <script>
+// import RoleForm from './RoleForm.vue'
+// import RoleEdit from './RoleEdit.vue'
+import axios from 'axios'
+import { codemirror } from 'vue-codemirror'
+import 'codemirror/lib/codemirror.css'
+import 'codemirror/addon/selection/active-line.js'
+import 'codemirror/mode/javascript/javascript.js'
+import { js as beautify } from 'js-beautify'
+import { policyType } from '../../assets/dict.js'
 export default {
   name: 'PolicyList',
+  components: {
+    codemirror
+  },
   data () {
     return {
-      filter: '',
+      cmOptions: {
+        tabSize: 4,
+        lineNumbers: true,
+        mode: {
+          name: 'javascript',
+          json: true
+        }
+      },
       loading: false,
+      policyName: null,
       pagination: {
-        sortBy: 'desc',
+        sortBy: null,
         descending: false,
         page: 1,
         rowsPerPage: 10,
         rowsNumber: 10
       },
       columns: [
-        { name: 'policyName', label: '策略名称', align: 'left', field: 'policyName', sortable: true },
-        { name: 'remarks', label: '备注', align: 'left', field: 'remarks' },
-        { name: 'policyType', label: '策略类型', align: 'left', field: 'policyType', sortable: true },
+        { name: 'policyName', label: '策略名称', align: 'left', field: 'policyName', style: 'width: 280px' },
+        { name: 'policyNameCn', label: '说明', align: 'left', field: 'policyNameCn' },
+        { name: 'policyType', label: '策略类型', align: 'left', field: 'policyType', style: 'width: 100px' },
+        { name: 'status', label: '状态', align: 'center', field: 'status', sortable: true, style: 'width: 100px' },
+        { name: 'created', label: '创建时间', align: 'center', field: 'created', style: 'width: 180px' },
         { name: 'action', label: '操作', field: 'action', align: 'center', style: 'width: 100px' }
       ],
+      policy: {},
       data: [],
-      selected: [],
-      fixed: false
+      fixed: false,
+      fixedEdit: false,
+      show: false,
+      policyType
     }
   },
   mounted () {
-    // get initial data from server (1st page)
-    this.onRequest({
-      pagination: this.pagination,
-      filter: undefined
-    })
+    this.onRefresh()
   },
   methods: {
+    beautify,
     onRefresh () {
       this.pagination.page = 0
       this.onRequest({
         pagination: this.pagination,
-        filter: undefined
+        filter: null
       })
     },
     async onRequest (props) {
       const { page, rowsPerPage, sortBy, descending } = props.pagination
       const filter = props.filter
-      console.log('filter:' + filter)
       this.loading = true
-      await this.$store.dispatch('system/getPolicyList', { current: page, size: rowsPerPage }).then(data => {
-        this.pagination.page = data.current
-        this.pagination.rowsNumber = data.total
-        this.pagination.rowsPerPage = data.size
+      await axios.get('/admin/policies', { params: { current: page, size: rowsPerPage, policyName: filter } }).then(response => {
+        const { code, data } = response.data
+        if (code === '200' && data) {
+          this.pagination.page = data.current
+          this.pagination.rowsNumber = data.total
+          this.pagination.rowsPerPage = data.size
 
-        this.pagination.sortBy = sortBy
-        this.pagination.descending = descending
-        this.data = data.records
+          this.pagination.sortBy = sortBy
+          this.pagination.descending = descending
+          this.data = data.records
+        }
       }).catch(error => {
         console.error(error)
       })
@@ -178,24 +227,28 @@ export default {
         this.loading = false
       }, 1000)
     },
-    confirm (item) {
-      this.$q.dialog({
-        title: '删除操作',
-        message: '确定要删除当前所选记录吗?',
-        color: 'negative',
-        cancel: true,
-        persistent: true
-      }).onOk(() => {
-        console.log(item)
-        // console.log('>>>> OK')
-      }).onOk(() => {
-        // console.log('>>>> second OK catcher')
-      }).onCancel(() => {
-        // console.log('>>>> Cancel')
-      }).onDismiss(() => {
-        // console.log('I am triggered on both OK and Cancel')
-      })
+    onContent (policy) {
+      this.show = !this.show
+      this.policy = policy
+      this.policy.content = this.beautify(policy.content, { indent_size: 2, space_in_empty_paren: true })
     }
+    // onRoleEdit (role) {
+    //   this.fixedEdit = !this.fixedEdit
+    //   this.role = role
+    // },
+    // onRoleDel (role) {
+    //   this.$q.dialog({
+    //     title: this.$t('dialog.delete.title'),
+    //     message: this.$t('dialog.delete.message'),
+    //     cancel: true
+    //   }).onOk(() => {
+    //     this.$store.dispatch('system/DeleteRole', role.id).then(data => {
+    //       this.onRefresh()
+    //     }).catch(error => {
+    //       console.log(error)
+    //     })
+    //   })
+    // }
   }
 }
 </script>

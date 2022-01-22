@@ -86,7 +86,7 @@
                 key="status"
                 :props="props"
               >
-                <q-dict-status :status="props.row.status" />
+                <q-sys-status :value="props.row.status" />
               </q-td>
               <q-td
                 key="created"
