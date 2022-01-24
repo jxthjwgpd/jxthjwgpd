@@ -29,8 +29,8 @@
       </div>
     </div>
 
-    <div class="my-page-body">
-      <div class="my-table">
+    <div class="my-page-body row q-col-gutter-xs">
+      <div class="my-table col-12 col-sm-6 col-lg-8">
         <q-table
           :data="data"
           :columns="columns"
@@ -76,7 +76,13 @@
               <q-td
                 key="policyName"
                 :props="props"
-              >{{ props.row.policyName|| '-' }}</q-td>
+              >
+                <a
+                  class="text-primary"
+                  href="javascript:;"
+                  @click="onContent(props.row)"
+                >{{ props.row.policyName|| '-' }}</a>
+              </q-td>
               <q-td
                 key="policyNameCn"
                 :props="props"
@@ -105,22 +111,47 @@
                 <a
                   class="text-primary"
                   href="javascript:;"
-                  @click="onContent(props.row)"
-                >查看</a>
-                <a
-                  class="text-primary"
-                  href="javascript:;"
                   @click="onRoleEdit(props.row)"
+                  v-if="props.row.policyType==='2'"
                 >编辑</a>
                 <a
                   class="text-primary"
                   href="javascript:;"
                   @click="onRoleDel(props.row)"
+                  v-if="props.row.policyType==='2'"
                 >删除</a>
               </q-td>
             </q-tr>
           </template>
         </q-table>
+      </div>
+      <div class="col-12 col-sm-6 col-lg-4">
+        <q-form
+          @submit="onSubmit"
+          class="my-form"
+        >
+          <q-card
+            flat
+            class="q-pa-none"
+          >
+            <q-item>
+
+              <q-item-section>
+                <q-item-label>{{policy.policyName}}</q-item-label>
+                <q-item-label caption>
+                  {{policy.policyNameCn}}
+                </q-item-label>
+              </q-item-section>
+              <q-btn color="primary">保存</q-btn>
+            </q-item>
+
+            <q-separator />
+            <codemirror
+              v-model="policy.content"
+              :options="cmOptions"
+            />
+          </q-card>
+        </q-form>
       </div>
     </div>
     <!-- <role-form
@@ -133,12 +164,7 @@
       :role="role"
     /> -->
     <!-- <q-dialog v-model="show"> -->
-    <div style="width: 500px">
-      <codemirror
-        v-model="policy.content"
-        :options="cmOptions"
-      />
-    </div>
+
     <!-- </q-dialog> -->
   </q-page>
 </template>
@@ -151,8 +177,9 @@ import { codemirror } from 'vue-codemirror'
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/addon/selection/active-line.js'
 import 'codemirror/mode/javascript/javascript.js'
-import { js as beautify } from 'js-beautify'
+
 import { policyType } from '../../assets/dict.js'
+import json from '../../assets/json.js'
 export default {
   name: 'PolicyList',
   components: {
@@ -175,7 +202,7 @@ export default {
         descending: false,
         page: 1,
         rowsPerPage: 10,
-        rowsNumber: 10
+        rowsNumber: 15
       },
       columns: [
         { name: 'policyName', label: '策略名称', align: 'left', field: 'policyName', style: 'width: 280px' },
@@ -197,7 +224,7 @@ export default {
     this.onRefresh()
   },
   methods: {
-    beautify,
+    prettify: json.prettify,
     onRefresh () {
       this.pagination.page = 0
       this.onRequest({
@@ -219,6 +246,10 @@ export default {
           this.pagination.sortBy = sortBy
           this.pagination.descending = descending
           this.data = data.records
+
+          if (this.data && this.data[0]) {
+            this.onContent(this.data[0])
+          }
         }
       }).catch(error => {
         console.error(error)
@@ -230,7 +261,10 @@ export default {
     onContent (policy) {
       this.show = !this.show
       this.policy = policy
-      this.policy.content = this.beautify(policy.content, { indent_size: 2, space_in_empty_paren: true })
+      this.policy.content = this.prettify(policy.content)
+    },
+    onSubmit () {
+
     }
     // onRoleEdit (role) {
     //   this.fixedEdit = !this.fixedEdit
