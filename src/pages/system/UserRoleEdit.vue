@@ -5,7 +5,7 @@
       style="min-width:680px;"
     >
       <q-toolbar>
-        <q-toolbar-title>配置角色组</q-toolbar-title>
+        <q-toolbar-title>角色配置</q-toolbar-title>
         <q-btn
           flat
           round
@@ -23,16 +23,12 @@
           style="max-height: 56vh; "
           class="scroll q-mt-none"
         >
-          <div class="row q-form-item">
-            <div class="col-2 q-label text-left">
-              <label for="username">
-                用户账号
-              </label>
-            </div>
-            <div class="col-9 q-value">
-              {{user.username}}
-            </div>
-          </div>
+          <q-item-label
+            header
+            class="text-dark text-bold q-pt-none q-pl-none"
+          >
+            对象 ： <span class="text-primary"> {{user.username}}</span>
+          </q-item-label>
           <user-role-list v-model="form.roleIds" />
         </q-card-section>
 

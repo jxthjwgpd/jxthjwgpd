@@ -166,7 +166,7 @@ export default {
         sortBy: null,
         descending: false,
         page: 1,
-        rowsPerPage: 10,
+        rowsPerPage: 15,
         rowsNumber: 10
       },
       columns: [
@@ -220,7 +220,7 @@ export default {
       })
       setTimeout(() => {
         this.loading = false
-      }, 1000)
+      }, 200)
     }
   }
 }

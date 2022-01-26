@@ -109,6 +109,11 @@
                 <a
                   class="text-primary"
                   href="javascript:;"
+                  @click="onRolePolicy(props.row)"
+                >授权</a>
+                <a
+                  class="text-primary"
+                  href="javascript:;"
                   @click="onRoleDel(props.row)"
                 >删除</a>
               </q-td>
@@ -126,18 +131,27 @@
       v-on:refresh="onRefresh"
       :role="role"
     />
+    <policy-selected
+      v-model="fixedPolicyEdit"
+      :id="role.id"
+      :label="role.roleName"
+      :data="rolePolicyList"
+      url="/admin/roles/policies"
+    />
   </q-page>
 </template>
 
 <script>
 import RoleForm from './RoleForm.vue'
 import RoleEdit from './RoleEdit.vue'
+import PolicySelected from './PolicySelected.vue'
 import axios from 'axios'
 export default {
   name: 'RoleList',
   components: {
     RoleForm,
-    RoleEdit
+    RoleEdit,
+    PolicySelected
   },
   data () {
     return {
@@ -160,7 +174,9 @@ export default {
       role: {},
       data: [],
       fixed: false,
-      fixedEdit: false
+      fixedEdit: false,
+      fixedPolicyEdit: false,
+      rolePolicyList: []
     }
   },
   mounted () {
@@ -198,6 +214,22 @@ export default {
     },
     onRoleEdit (role) {
       this.fixedEdit = !this.fixedEdit
+      this.role = role
+    },
+    async onRolePolicy (role) {
+      await axios.get('/admin/roles/policies', { params: { roleId: role.id } }).then(response => {
+        const { code, data } = response.data
+        if (code === '200' && data) {
+          this.rolePolicyList = data.map(e => e.policyId)
+        }
+      }).catch(error => {
+        console.error(error)
+      })
+      setTimeout(() => {
+        this.loading = false
+      }, 1000)
+
+      this.fixedPolicyEdit = !this.fixedPolicyEdit
       this.role = role
     },
     onRoleDel (role) {

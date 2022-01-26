@@ -1,8 +1,7 @@
 <template>
-  <div class="q-role">
-    <div class="row q-col-gutter-md">
-      <div class="col my-table">
-        <q-markup-table
+  <div class="row q-col-gutter-md">
+    <div class="col col-md-6">
+      <!-- <q-markup-table
           flat
           bordered
           class="q-table__card-f"
@@ -12,37 +11,47 @@
               <th class="text-left">角色组名称/描述 <span class="text-primary">可选（{{roleList.length}}）</span></th>
             </tr>
           </thead>
-          <tbody>
-            <div style="height: 260px; overflow: auto;">
-              <q-item
-                tag="label"
-                v-ripple
-                v-for="item in roleList"
-                :key="item.id"
-              >
-                <q-item-section
-                  side
-                  top
-                >
-                  <q-checkbox
-                    dense
-                    v-model="selected"
-                    :val="item.id"
-                  />
-                </q-item-section>
-                <q-item-section>
-                  <q-item-label>
-                    {{item.roleName}}
-                  </q-item-label>
-                  <q-item-label caption>{{item.remark||'--'}}</q-item-label>
-                </q-item-section>
-              </q-item>
-            </div>
-          </tbody>
-        </q-markup-table>
-      </div>
-      <div class="col">
-        <q-markup-table
+          <tbody> -->
+      <q-card
+        flat
+        bordered
+      >
+        <q-card-section>
+          角色组名称/描述 <span class="text-primary">可选（{{roleList.length}}）</span>
+        </q-card-section>
+        <q-separator />
+        <q-list
+          class="scroll"
+          style="height: 260px;"
+        >
+          <q-item
+            tag="label"
+            v-ripple
+            v-for="item in roleList"
+            :key="item.id"
+          >
+            <q-item-section
+              side
+              top
+            >
+              <q-checkbox
+                dense
+                v-model="selected"
+                :val="item.id"
+              />
+            </q-item-section>
+            <q-item-section>
+              {{item.roleName}}
+              <q-item-label caption>{{item.remark||'--'}}</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-card>
+      <!-- </tbody>
+        </q-markup-table> -->
+    </div>
+    <div class="col col-md-6">
+      <!-- <q-markup-table
           flat
           bordered
           class="q-table__card-f"
@@ -55,44 +64,51 @@
               </th>
             </tr>
           </thead>
-          <tbody>
-            <div style="height: 260px; overflow: auto;">
-              <div
-                v-for="item in selectedRoleList"
-                :key="item.id"
-              >
-                <q-item
-                  tag="label"
-                  v-ripple
-                >
-                  <q-item-section>
-                    <q-item-label>
-
-                      {{item.roleName}}
-                    </q-item-label>
-                    <q-item-label caption>{{item.remark||'--'}}</q-item-label>
-                  </q-item-section>
-                  <a
-                    class="text-primary"
-                    @click="clearSelected(item.id)"
-                  >
-                    <q-icon
-                      name="clear"
-                      size="14px"
-                    />
-                  </a>
-                </q-item>
-              </div>
-              <div
-                v-if="selectedRoleList.length==0"
-                style="line-height:45px; text-align:center;"
-              >
-                暂无数据
-              </div>
-            </div>
-          </tbody>
-        </q-markup-table>
-      </div>
+          <tbody> -->
+      <q-card
+        flat
+        bordered
+      >
+        <q-card-section>
+          角色组名称/描述 <span class="text-primary">已选（{{selectedRoleList.length}}）</span>
+        </q-card-section>
+        <q-separator />
+        <q-list
+          class="scroll"
+          style="height: 260px;"
+        >
+          <div
+            v-for="item in selectedRoleList"
+            :key="item.id"
+          >
+            <q-item
+              tag="label"
+              v-ripple
+            >
+              <q-item-section>
+                {{item.roleName}}
+                <q-item-label caption>{{item.remark||'--'}}</q-item-label>
+              </q-item-section>
+              <q-item-section side>
+                <q-icon
+                  name="clear"
+                  size="14px"
+                  color="primary"
+                  @click="clearSelected(item.id)"
+                />
+              </q-item-section>
+            </q-item>
+          </div>
+          <div
+            v-if="selectedRoleList.length==0"
+            style="line-height:45px; text-align:center;"
+          >
+            暂无数据
+          </div>
+        </q-list>
+      </q-card>
+      <!-- </tbody>
+        </q-markup-table> -->
     </div>
     <q-inner-loading :showing="loading">
       <q-spinner-hourglass
@@ -110,7 +126,7 @@ export default {
   data () {
     return {
       loading: false,
-      selected: ['2']
+      selected: []
     }
   },
   props: {
@@ -153,11 +169,3 @@ export default {
   }
 }
 </script>
-<style lang="sass" scoped>
-.q-role
-  & .th-pos
-    position: relative
-    & .th-action
-      position: absolute
-      right: 10px
-</style>

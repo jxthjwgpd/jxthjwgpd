@@ -24,7 +24,7 @@
               class="text-bold text-dark"
             />
           </router-link>
-          权限设置
+          权限配置
         </div>
       </div>
     </div>

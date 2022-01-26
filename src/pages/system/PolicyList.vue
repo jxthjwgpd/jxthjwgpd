@@ -120,6 +120,10 @@
                   @click="onRoleDel(props.row)"
                   v-if="props.row.policyType==='2'"
                 >删除</a>
+                <span
+                  class="text-grey"
+                  v-if="props.row.policyType==='1'"
+                >限制</span>
               </q-td>
             </q-tr>
           </template>
@@ -163,15 +167,11 @@
       v-on:refresh="onRefresh"
       :role="role"
     /> -->
-    <!-- <q-dialog v-model="show"> -->
-
-    <!-- </q-dialog> -->
   </q-page>
 </template>
 
 <script>
 // import RoleForm from './RoleForm.vue'
-// import RoleEdit from './RoleEdit.vue'
 import axios from 'axios'
 import { codemirror } from 'vue-codemirror'
 import 'codemirror/lib/codemirror.css'

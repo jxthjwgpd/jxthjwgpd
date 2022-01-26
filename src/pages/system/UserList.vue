@@ -114,7 +114,13 @@
                 href="javascript:;"
                 @click="onUserRole(props.row)"
                 v-if="!props.row.isa"
-              >配置角色组</a>
+              >角色配置</a>
+              <a
+                class="text-primary"
+                href="javascript:;"
+                @click="onUserPolicy(props.row)"
+                v-if="!props.row.isa"
+              >授权</a>
               <a
                 class="text-primary"
                 href="javascript:;"
@@ -144,6 +150,13 @@
       :user="user"
       v-on:refresh="onRefresh"
     />
+    <policy-selected
+      v-model="fixedPolicyEdit"
+      :id="user.id"
+      :label="user.username"
+      :data="userPolicyList"
+      url="/admin/users/policies"
+    />
   </q-page>
 </template>
 
@@ -151,13 +164,15 @@
 import UserForm from './UserForm.vue'
 import UserEdit from './UserEdit.vue'
 import UserRoleEdit from './UserRoleEdit.vue'
+import PolicySelected from './PolicySelected.vue'
 import axios from 'axios'
 export default {
   name: 'UserList',
   components: {
     UserForm,
     UserEdit,
-    UserRoleEdit
+    UserRoleEdit,
+    PolicySelected
   },
   data () {
     return {
@@ -183,7 +198,9 @@ export default {
       selected: [],
       fixed: false,
       fixedEdit: false,
-      fixedUserRoleEdit: false
+      fixedUserRoleEdit: false,
+      fixedPolicyEdit: false,
+      userPolicyList: []
     }
   },
   mounted () {
@@ -234,6 +251,22 @@ export default {
     async onUserRole (user) {
       await this.$store.dispatch('system/UserRoleList', { username: user.username })
       this.fixedUserRoleEdit = !this.fixedUserRoleEdit
+      this.user = user
+    },
+    async onUserPolicy (user) {
+      await axios.get('/admin/users/policies', { params: { userId: user.id } }).then(response => {
+        const { code, data } = response.data
+        if (code === '200' && data) {
+          this.userPolicyList = data.map(e => e.policyId)
+        }
+      }).catch(error => {
+        console.error(error)
+      })
+      setTimeout(() => {
+        this.loading = false
+      }, 1000)
+
+      this.fixedPolicyEdit = !this.fixedPolicyEdit
       this.user = user
     },
     onUserDel (user) {
