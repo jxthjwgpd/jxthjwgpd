@@ -117,7 +117,7 @@
                 <a
                   class="text-primary"
                   href="javascript:;"
-                  @click="onRoleDel(props.row)"
+                  @click="onDel(props.row)"
                   v-if="props.row.policyType==='2'"
                 >删除</a>
                 <span
@@ -146,10 +146,10 @@
                   {{policy.policyNameCn}}
                 </q-item-label>
               </q-item-section>
-              <q-btn color="primary">保存</q-btn>
             </q-item>
 
             <q-separator />
+
             <codemirror
               v-model="policy.content"
               :options="cmOptions"
@@ -158,11 +158,11 @@
         </q-form>
       </div>
     </div>
-    <!-- <role-form
+    <policy-form
       v-model="fixed"
       v-on:refresh="onRefresh"
     />
-    <role-edit
+    <!-- <role-edit
       v-model="fixedEdit"
       v-on:refresh="onRefresh"
       :role="role"
@@ -171,7 +171,7 @@
 </template>
 
 <script>
-// import RoleForm from './RoleForm.vue'
+import PolicyForm from './PolicyForm.vue'
 import axios from 'axios'
 import { codemirror } from 'vue-codemirror'
 import 'codemirror/lib/codemirror.css'
@@ -183,7 +183,8 @@ import json from '../../assets/json.js'
 export default {
   name: 'PolicyList',
   components: {
-    codemirror
+    codemirror,
+    PolicyForm
   },
   data () {
     return {
@@ -201,8 +202,8 @@ export default {
         sortBy: null,
         descending: false,
         page: 1,
-        rowsPerPage: 10,
-        rowsNumber: 15
+        rowsPerPage: 15,
+        rowsNumber: 10
       },
       columns: [
         { name: 'policyName', label: '策略名称', align: 'left', field: 'policyName', style: 'width: 280px' },
@@ -265,24 +266,30 @@ export default {
     },
     onSubmit () {
 
-    }
+    },
     // onRoleEdit (role) {
     //   this.fixedEdit = !this.fixedEdit
     //   this.role = role
     // },
-    // onRoleDel (role) {
-    //   this.$q.dialog({
-    //     title: this.$t('dialog.delete.title'),
-    //     message: this.$t('dialog.delete.message'),
-    //     cancel: true
-    //   }).onOk(() => {
-    //     this.$store.dispatch('system/DeleteRole', role.id).then(data => {
-    //       this.onRefresh()
-    //     }).catch(error => {
-    //       console.log(error)
-    //     })
-    //   })
-    // }
+    onDel (policy) {
+      this.$q.dialog({
+        title: this.$t('dialog.delete.title'),
+        message: this.$t('dialog.delete.message'),
+        cancel: true
+      }).onOk(() => {
+        this.loading = true
+        axios.post('/admin/policies/delete', { id: policy.id }).then(response => {
+          const { code, data } = response.data
+          if (code === '200' && data) {
+            this.onRefresh()
+          }
+          this.loading = false
+        }).catch(error => {
+          console.error(error)
+          this.loading = false
+        })
+      })
+    }
   }
 }
 </script>
