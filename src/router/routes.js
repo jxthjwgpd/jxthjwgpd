@@ -62,6 +62,7 @@ const routes = [
           { path: 'admin/roles', meta: { sidebar: true, auth: true }, component: () => import('pages/system/RoleList.vue') },
           { path: 'admin/roles/:id/menu', meta: { sidebar: true, auth: true }, component: () => import('pages/system/RoleMenuEdit.vue') },
           { path: 'admin/policies', meta: { sidebar: true, auth: true }, component: () => import('pages/system/PolicyList.vue') },
+          { path: 'admin/policies/:id', meta: { sidebar: true, auth: true }, component: () => import('pages/system/PolicyEdit.vue') },
           { path: 'metrics', meta: { sidebar: true, auth: true }, component: () => import('pages/system/Metrics.vue') }
         ]
       }

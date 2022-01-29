@@ -29,106 +29,105 @@
       </div>
     </div>
 
-    <div class="my-page-body row q-col-gutter-xs">
-      <div class="my-table col-12 col-sm-6 col-lg-8">
-        <q-table
-          :data="data"
-          :columns="columns"
-          row-key="id"
-          :pagination.sync="pagination"
-          :loading="loading"
-          :filter="policyName"
-          @request="onRequest"
-          binary-state-sort
-          square
-        >
-          <template v-slot:top-left>
-            <q-btn
-              label="新建"
-              color="primary"
-              @click="fixed=!fixed"
-            />
-          </template>
+    <div class="my-page-body">
+      <!-- <div class="my-table col-12 col-sm-6 col-lg-8"> -->
+      <q-table
+        :data="data"
+        :columns="columns"
+        row-key="id"
+        :pagination.sync="pagination"
+        :loading="loading"
+        :filter="policyName"
+        @request="onRequest"
+        binary-state-sort
+        square
+      >
+        <template v-slot:top-left>
+          <q-btn
+            label="新建"
+            color="primary"
+            @click="fixed=!fixed"
+          />
+        </template>
 
-          <template v-slot:top-right>
-            <q-input
-              dense
-              debounce="300"
-              v-model="policyName"
-              placeholder="请输入策略名称"
+        <template v-slot:top-right>
+          <q-input
+            dense
+            debounce="300"
+            v-model="policyName"
+            placeholder="请输入策略名称"
+          >
+            <template v-slot:append>
+              <q-icon name="search" />
+            </template>
+          </q-input>
+        </template>
+
+        <template v-slot:no-data="{ message }">
+          <div class="full-width row flex-center q-gutter-sm q-pa-lg">
+            <span>
+              {{ message }}
+            </span>
+          </div>
+        </template>
+
+        <template v-slot:body="props">
+          <q-tr :props="props">
+            <q-td
+              key="policyName"
+              :props="props"
             >
-              <template v-slot:append>
-                <q-icon name="search" />
-              </template>
-            </q-input>
-          </template>
-
-          <template v-slot:no-data="{ message }">
-            <div class="full-width row flex-center q-gutter-sm q-pa-lg">
-              <span>
-                {{ message }}
-              </span>
-            </div>
-          </template>
-
-          <template v-slot:body="props">
-            <q-tr :props="props">
-              <q-td
-                key="policyName"
-                :props="props"
-              >
-                <a
-                  class="text-primary"
-                  href="javascript:;"
-                  @click="onContent(props.row)"
-                >{{ props.row.policyName|| '-' }}</a>
-              </q-td>
-              <q-td
-                key="policyNameCn"
-                :props="props"
-                class="text--line2-f"
-              >{{ props.row.policyNameCn }}</q-td>
-              <q-td
-                key="policyType"
-                :props="props"
-              >
-                {{ policyType[props.row.policyType] }}</q-td>
-              <q-td
-                key="status"
-                :props="props"
-              >
-                <q-sys-status :value="props.row.status" />
-              </q-td>
-              <q-td
-                key="created"
-                :props="props"
-              >{{ props.row.created }}</q-td>
-              <q-td
-                key="action"
-                :props="props"
-                class="q-gutter-xs action"
-              >
-                <a
-                  class="text-primary"
-                  href="javascript:;"
-                  @click="onRoleEdit(props.row)"
-                  v-if="props.row.policyType==='2'"
-                >编辑</a>
-                <a
-                  class="text-primary"
-                  href="javascript:;"
-                  @click="onDel(props.row)"
-                  v-if="props.row.policyType==='2'"
-                >删除</a>
-                <span
-                  class="text-grey"
-                  v-if="props.row.policyType==='1'"
-                >限制</span>
-              </q-td>
-            </q-tr>
-          </template>
-        </q-table>
-      </div>
+              <a
+                class="text-primary"
+                href="javascript:;"
+                @click="onContent(props.row)"
+              >{{ props.row.policyName|| '-' }}</a>
+            </q-td>
+            <q-td
+              key="policyNameCn"
+              :props="props"
+              class="text--line2-f"
+            >{{ props.row.policyNameCn }}</q-td>
+            <q-td
+              key="policyType"
+              :props="props"
+            >
+              {{ policyType[props.row.policyType] }}</q-td>
+            <q-td
+              key="status"
+              :props="props"
+            >
+              <q-sys-status :value="props.row.status" />
+            </q-td>
+            <q-td
+              key="created"
+              :props="props"
+            >{{ props.row.created }}</q-td>
+            <q-td
+              key="action"
+              :props="props"
+              class="q-gutter-xs action"
+            >
+              <router-link
+                :to="`policies/${props.row.id}`"
+                class="text-primary"
+                v-if="props.row.policyType==='2'"
+              >编辑</router-link>
+              <a
+                class="text-primary"
+                href="javascript:;"
+                @click="onDel(props.row)"
+                v-if="props.row.policyType==='2'"
+              >删除</a>
+              <span
+                class="text-grey"
+                v-if="props.row.policyType==='1'"
+              >限制</span>
+            </q-td>
+          </q-tr>
+        </template>
+      </q-table>
+      <!-- </div>
       <div class="col-12 col-sm-6 col-lg-4">
         <q-form
           @submit="onSubmit"
@@ -156,12 +155,33 @@
             />
           </q-card>
         </q-form>
-      </div>
+      </div>-->
     </div>
     <policy-form
       v-model="fixed"
       v-on:refresh="onRefresh"
     />
+    <q-dialog
+      v-model="fixedEdit"
+      position="right"
+    >
+      <q-card
+        flat
+        bordered
+        style="width:580px;"
+      >
+        <q-card-section header>
+          策略内容
+        </q-card-section>
+        <q-separator />
+        <q-card-section class="q-pa-none">
+          <codemirror
+            v-model="policy.content"
+            :options="cmOptions"
+          />
+        </q-card-section>
+      </q-card>
+    </q-dialog>
     <!-- <role-edit
       v-model="fixedEdit"
       v-on:refresh="onRefresh"
@@ -217,7 +237,6 @@ export default {
       data: [],
       fixed: false,
       fixedEdit: false,
-      show: false,
       policyType
     }
   },
@@ -248,9 +267,9 @@ export default {
           this.pagination.descending = descending
           this.data = data.records
 
-          if (this.data && this.data[0]) {
-            this.onContent(this.data[0])
-          }
+          // if (this.data && this.data[0]) {
+          //   this.onContent(this.data[0])
+          // }
         }
       }).catch(error => {
         console.error(error)
@@ -260,17 +279,13 @@ export default {
       }, 1000)
     },
     onContent (policy) {
-      this.show = !this.show
+      this.fixedEdit = !this.fixedEdit
       this.policy = policy
       this.policy.content = this.prettify(policy.content)
     },
     onSubmit () {
 
     },
-    // onRoleEdit (role) {
-    //   this.fixedEdit = !this.fixedEdit
-    //   this.role = role
-    // },
     onDel (policy) {
       this.$q.dialog({
         title: this.$t('dialog.delete.title'),
