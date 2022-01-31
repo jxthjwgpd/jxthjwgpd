@@ -117,6 +117,7 @@
                       outline
                       color="brown"
                       label="minify"
+                      @click="policyContent = minify(policyContent)"
                     />
                   </q-btn-group>
                 </div>
@@ -178,6 +179,7 @@ export default {
   },
   methods: {
     prettify: json.prettify,
+    minify: json.minify,
     async onRequest (props) {
       this.loading = true
       await axios.get('/admin/policies/detail', { params: { id: this.$route.params.id } }).then(response => {
@@ -198,7 +200,7 @@ export default {
     async onSubmit () {
       this.loading = true
       this.form.oldPolicyName = this.oldPolicyName
-      this.form.content = this.policyContent
+      this.form.content = this.minify(this.policyContent)
       await axios.post('/admin/policies/update', this.form).then(response => {
         const { code, message } = response.data
         if (code === '200') {

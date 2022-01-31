@@ -28,8 +28,27 @@ const NUNJUCKS_CLOSE_STATES = {
  */
 // module.exports.prettify = function (json, indentChars = '\t', replaceUnicode = true) {
 export default {
-  prettify
+  prettify,
+  minify
 }
+
+function minify (json, replaceUnicode = true) {
+  if (!json) {
+    return ''
+  }
+  if (replaceUnicode) {
+    try {
+      json = _convertUnicode(json)
+    } catch (err) {
+      // Just in case (should never happen)
+      console.warn('Prettify failed to handle unicode', err)
+    }
+  }
+  var object = JSON.parse(json)
+  var minified = JSON.stringify(object, null, 0)
+  return minified
+}
+
 function prettify (json, indentChars = '\t', replaceUnicode = true) {
   if (!json) {
     return ''
