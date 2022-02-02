@@ -68,22 +68,6 @@
         {{  db.details.database || '-'}}
       </div>
     </q-card-section>
-    <q-separator />
-    <q-card-section>
-      <div class="text-h6 row no-wrap items-center">
-        <div class="ellipsis text-capitalize">
-          <span :class="`${ping.status==='UP'?'text-positive':''}`">{{ping.status}}</span>
-        </div>
-        <q-space />
-        <div>Inter</div>
-      </div>
-    </q-card-section>
-    <q-card-section class="text-h5 q-pb-none">
-      0.0.0.0
-    </q-card-section>
-    <q-card-section>
-      Control
-    </q-card-section>
   </q-card>
 </template>
 

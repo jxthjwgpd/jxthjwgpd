@@ -31,9 +31,6 @@
 
         </div>
         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-          <Env />
-        </div>
-        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
           <StartTime />
           <q-separator />
           <Uptime />
@@ -50,7 +47,6 @@
 </template>
 
 <script>
-import Env from '../metrics/Env'
 import Health from '../metrics/Health'
 import CpuCount from '../metrics/CpuCount'
 import CpuUsage from '../metrics/CpuUsage'
@@ -62,7 +58,6 @@ import Tangdao from '../metrics/Tangdao'
 export default {
   name: 'Metrics',
   components: {
-    Env,
     Health,
     CpuCount,
     CpuUsage,

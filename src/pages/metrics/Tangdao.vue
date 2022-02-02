@@ -9,14 +9,18 @@
           <span :class="`${tangdao.status==='UP'?'text-positive':''}`">{{tangdao.status}}</span>
         </div>
         <q-space />
-        <div>SInner</div>
+        <div>{{tangdao.details.applicationName}}</div>
       </div>
     </q-card-section>
-    <q-card-section class="text-h5 q-pb-none">
-      {{tangdao.details.name}}
-    </q-card-section>
-    <q-card-section>
-      描述健康检查内容
+    <q-card-section class="q-pb-none q-pt-none">
+      <div
+        class="row no-wrap items-center"
+        style="line-height:36px"
+      >
+        Cache
+        <q-space />
+        {{tangdao.details.cacheNameCount}}
+      </div>
     </q-card-section>
   </q-card>
 </template>

@@ -190,28 +190,52 @@
       <q-settings />
     </q-drawer>
     <q-dialog v-model="toolbar">
-      <q-card class="wd-300">
-        <q-toolbar>
-          <q-toolbar-title>
-            提示
-          </q-toolbar-title>
-          <q-space />
-          <q-btn
-            flat
-            round
-            dense
-            icon="close"
-            v-close-popup
-          />
-        </q-toolbar>
+      <q-card class="wd-500">
+        <img src="statics/index.jpg">
 
-        <q-card-section class="flex column items-center">
-          <img
-            src="statics/pay/wechat-pay1.jpeg"
-            height="200"
-          />
-          <div class="q-pa-sm text-blue">谢谢鼓励！</div>
-        </q-card-section>
+        <q-list>
+          <q-item clickable>
+            <q-item-section avatar>
+              <q-icon
+                color="primary"
+                name="local_bar"
+              />
+            </q-item-section>
+
+            <q-item-section>
+              <q-item-label>Bar XYZ</q-item-label>
+              <q-item-label caption>Have a drink.</q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item clickable>
+            <q-item-section avatar>
+              <q-icon
+                color="red"
+                name="local_gas_station"
+              />
+            </q-item-section>
+
+            <q-item-section>
+              <q-item-label>Gas Station</q-item-label>
+              <q-item-label caption>Fill your gas tank.</q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item clickable>
+            <q-item-section avatar>
+              <q-icon
+                color="amber"
+                name="local_movies"
+              />
+            </q-item-section>
+
+            <q-item-section>
+              <q-item-label>Cinema XYZ</q-item-label>
+              <q-item-label caption>Watch a movie.</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
       </q-card>
     </q-dialog>
   </div>
