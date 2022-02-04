@@ -1,4 +1,4 @@
-# Quasar Admin Element Pro (quasar-element-pro)
+# Tangdao Admin Element Pro (quasar-element-pro)
 
 A Quasar Framework app
 
@@ -10,7 +10,7 @@ A Quasar Framework app
 <img src='http://121.37.180.48:12001/statics/4.png' width="100%" />
 <img src='http://121.37.180.48:12001/statics/5.png' width="100%" />
 
-**[前端预览](http://121.37.180.48:12001/#/dashboard)**
+**[前端预览](http://121.37.180.48:12001/#/user/login)**
 
 **[后端项目](https://gitee.com/ruyangit/tangdao)**
 
