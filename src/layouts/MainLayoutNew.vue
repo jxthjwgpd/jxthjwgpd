@@ -30,7 +30,7 @@
             @click="sidebarLeftOpen = !sidebarLeftOpen"
             :icon="`${sidebarLeftOpen?'format_indent_decrease':'format_indent_increase'}`"
             aria-label="Menu"
-            color="blue-6"
+            color="primary"
             size="sm"
           />
         </div>

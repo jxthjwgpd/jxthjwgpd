@@ -104,12 +104,12 @@ export default {
 
         !this.value ? h(QItemSection, {
           props: { avatar: true }
-        }, [h(QIcon, { props: { name: menu.icon ? menu.icon : 'select_all' } }, [h(QTooltip, { props: { anchor: 'center right', self: 'center left', offset: [25, 25] } }, [menu.name])])])
+        }, [h(QIcon, { props: { name: menu.icon ? menu.icon : 'select_all', color: 'primary' } }, [h(QTooltip, { props: { anchor: 'center right', self: 'center left', offset: [25, 25] } }, [menu.name])])])
           : null,
 
         (this.value && props.insetLevel === 0) ? h(QItemSection, {
           props: { avatar: true }
-        }, [h(QIcon, { props: { name: menu.icon ? menu.icon : 'select_all' } })]) : null,
+        }, [h(QIcon, { props: { name: menu.icon ? menu.icon : 'select_all', color: 'primary' } })]) : null,
 
         h(QItemSection, [menu.name]),
 
@@ -145,19 +145,20 @@ export default {
 
 <style lang="sass">
 .app-menu
-
   .q-item__section--avatar
     color: $primary
+    color: var(--q-color-primary)
     min-width: 2px
 
   .q-item__section--side
     padding-right: 10px
     & > .q-icon
-      font-size: 20px
+      font-size: 19px
 
   .q-expansion-item--expanded > div > .q-item > .q-item__section--main
     color: $primary
-    font-weight: 700
+    color: var(--q-color-primary)
+    font-weight: 400
 
   .q-expansion-item__content .q-item
     border-radius: 0
@@ -165,8 +166,9 @@ export default {
     &--dense
       min-height: 38px
 
-  .q-item.q-router-link--active
-    background: scale-color($primary, $lightness: 90%)
+  .q-item
+    &.q-router-link--active
+      background: scale-color($primary, $lightness: 90%)
 
   &.minimize
     & .q-item__section--main,.q-item__section--side

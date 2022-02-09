@@ -142,6 +142,44 @@
                   label="Bluetooth"
                   class="q-mt-md"
                 />
+                <div class="q-gutter-sm q-mt-md">
+                  <q-badge
+                    color="blue"
+                    text-color="black"
+                    class="skin-color"
+                    @click="setBrand('primary', '#1976D2')"
+                  />
+                  <q-badge
+                    color="brown"
+                    text-color="black"
+                    class="skin-color"
+                    @click="setBrand('primary', 'brown')"
+                  />
+                  <q-badge
+                    color="teal"
+                    text-color="black"
+                    class="skin-color"
+                    @click="setBrand('primary', 'teal')"
+                  />
+                  <q-badge
+                    color="dark"
+                    text-color="black"
+                    class="skin-color"
+                    @click="setBrand('primary', '#263238')"
+                  />
+                  <q-badge
+                    color="indigo"
+                    text-color="black"
+                    class="skin-color"
+                    @click="setBrand('primary', 'indigo')"
+                  />
+                  <q-badge
+                    color="orange"
+                    text-color="black"
+                    class="skin-color"
+                    @click="setBrand('primary', '#ff6a00')"
+                  />
+                </div>
               </div>
 
               <q-separator
@@ -261,11 +299,11 @@ export default {
     }
   },
   mounted () {
-    const { setBrand } = colors
-    console.log(setBrand)
-    // setBrand('primary', this.$q.primary)
+    // const { setBrand } = colors
+    // setBrand('primary', this.)
   },
   methods: {
+    setBrand: colors.setBrand,
     onLoadMenu (index, done) {
       if (index > 1) {
         setTimeout(() => {
@@ -292,6 +330,9 @@ export default {
 <style lang="sass">
 .my-header
   // background: linear-gradient(145deg,$primary 11%,$primary 75%) !important
+.skin-color.q-badge
+  padding: 8px
+  border-radius: 50%
 .q-logo
   img
     transform: rotate(0deg)
