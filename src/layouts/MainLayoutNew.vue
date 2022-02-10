@@ -141,7 +141,7 @@ export default {
       }
     },
     async onRequest () {
-      await this.$store.dispatch('session/navs')
+      await this.$store.dispatch('session/navs', this.$route.meta)
     }
   }
 }

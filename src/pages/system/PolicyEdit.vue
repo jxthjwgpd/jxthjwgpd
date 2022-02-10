@@ -131,10 +131,16 @@
                 label="保存设置"
                 @click="onSubmit"
               />
+              <q-btn
+                label="返回"
+                class="q-ml-sm"
+                to="/system/admin/policies"
+              />
             </div>
           </div>
         </q-form>
-        <q-inner-loading :showing="loading">
+        <q-inner-loading :showing="
+                loading">
           <q-spinner-hourglass
             size="sm"
             color="primary"

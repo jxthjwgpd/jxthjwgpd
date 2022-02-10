@@ -66,13 +66,7 @@
       <q-separator />
 
       <q-card-actions v-if="$q.screen.gt.sm">
-        <q-chip
-          color="primary"
-          text-color="white"
-          icon="directions"
-        >
-          Get directions
-        </q-chip>
+        <q-brand-color />
         <q-space />
         <q-btn
           flat

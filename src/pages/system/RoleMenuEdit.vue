@@ -90,6 +90,11 @@
                 label="保存设置"
                 @click="onSubmit"
               />
+              <q-btn
+                label="返回"
+                class="q-ml-sm"
+                to="/system/admin/roles"
+              />
             </div>
           </div>
         </q-form>
