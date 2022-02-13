@@ -62,7 +62,7 @@
               fit
               anchor="bottom left"
               self="top middle"
-              :offset="[58, 0]"
+              :offset="[93, 0]"
               @show="scrollTarget = $refs.scrollTargetRef"
             >
               <q-item-label header>
@@ -71,7 +71,7 @@
               <q-list
                 ref="scrollTargetRef"
                 class="scroll"
-                style="max-height: 250px; width:230px;"
+                style="max-height: 250px; width:300px;"
               >
                 <q-infinite-scroll
                   @load="onLoadMenu"
@@ -85,12 +85,35 @@
                     v-for="(item, index) in itemsMenu"
                     :key="index"
                   >
-                    <q-item-section>
+                    <!-- <q-item-section>
                       <q-item-label>Content filtering {{ index + 1 }}</q-item-label>
                       <q-item-label caption>
                         Set the content filtering level to restrict
                         apps that can be downloaded
                       </q-item-label>
+                    </q-item-section> -->
+                    <q-item-section avatar>
+                      <q-avatar
+                        color="primary"
+                        text-color="white"
+                      >
+                        R{{ index + 1 }}
+                      </q-avatar>
+                    </q-item-section>
+
+                    <q-item-section>
+                      <q-item-label>Ruddy Jedrzej {{ index + 1 }}</q-item-label>
+                      <q-item-label
+                        caption
+                        lines="1"
+                      >rjedrzej0@discuz{{ index + 1 }}.net</q-item-label>
+                    </q-item-section>
+
+                    <q-item-section side>
+                      <q-icon
+                        name="chat_bubble"
+                        color="green"
+                      />
                     </q-item-section>
                   </q-item>
 

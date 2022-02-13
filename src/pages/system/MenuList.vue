@@ -1,6 +1,6 @@
 <template>
   <q-page class="my-page">
-    <div class="row items-center justify-between">
+    <!-- <div class="row items-center justify-between">
       <div class="my-page-header q-pb-none">
         <q-breadcrumbs align="left">
           <q-breadcrumbs-el
@@ -14,10 +14,51 @@
           <q-breadcrumbs-el label="菜单管理" />
         </q-breadcrumbs>
       </div>
-    </div>
+    </div> -->
 
-    <div class="my-page-body">
-      <div class="my-table">
+    <div class="my-page-body-none">
+      <div class="menu-f">
+        <div class="menu-f-sider">
+          <div class="menu-f-sider-header row items-center justify-center">
+            <q-btn
+              label="新增菜单"
+              color="primary"
+              size="12px"
+            />
+          </div>
+          <div class="menu-f-sider-body">
+            <q-scroll-area class="fit">
+              <div
+                v-for="n in 100"
+                :key="n"
+                class="q-py-xs"
+              >
+                Lorem ipsum dolor sit amet, consectetur adipisicing
+                elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua.
+              </div>
+            </q-scroll-area>
+          </div>
+        </div>
+        <div class="menu-f-body">
+          <div class="menu-f-body-header row items-center">
+            Test
+          </div>
+          <div class="menu-f-body-content">
+            <div
+              v-for="n in 100"
+              :key="n"
+              class="q-py-xs"
+            >
+              Lorem ipsum dolor sit amet, consectetur adipisicing
+              elit, sed do eiusmod tempor incididunt ut labore et
+              dolore magna aliqua.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="my-table">
         <q-table
           :data="data"
           :columns="columns"
@@ -45,19 +86,19 @@
             <MenuTreeItem :lists="props" />
           </template>
         </q-table>
-      </div>
+      </div> -->
     </div>
   </q-page>
 </template>
 
 <script>
 import axios from 'axios'
-import MenuTreeItem from './MenuTreeItem.vue'
+// import MenuTreeItem from './MenuTreeItem.vue'
 export default {
   name: 'MenuList',
-  components: {
-    MenuTreeItem
-  },
+  // components: {
+  //   MenuTreeItem
+  // },
   data () {
     return {
       loading: false,
@@ -140,3 +181,38 @@ export default {
   }
 }
 </script>
+<style lang="sass" scoped>
+.menu-f
+  position: relative
+  &-sider
+    &-header
+      border-right: 1px solid #eee
+      border-bottom: 1px solid #eee
+      position: fixed
+      top: 50px
+      width: 260px
+      height: 48px
+      background: #fff
+    &-body
+      border-right: 1px solid #eee
+      position: fixed
+      top: 98px
+      bottom: 0
+      width: 260px
+      background: #fff
+  &-body
+    position: absolute
+    top: 0
+    left: 260px
+    right: 0
+    bottom: 0
+    &-header
+      height: 48px
+      background: #fff
+    &-content
+      position: absolute
+      top: 48px
+      left: 0
+      right: 0
+      bottom: 0
+</style>
