@@ -28,32 +28,192 @@
           </div>
           <div class="menu-f-sider-body">
             <q-scroll-area class="fit">
-              <div
-                v-for="n in 100"
-                :key="n"
-                class="q-py-xs"
-              >
-                Lorem ipsum dolor sit amet, consectetur adipisicing
-                elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua.
-              </div>
+              <q-tree
+                :nodes="treeData"
+                node-key="id"
+                label-key="name"
+                selected-color="primary"
+                :selected.sync="selected"
+                default-expand-all
+              />
             </q-scroll-area>
           </div>
         </div>
         <div class="menu-f-body">
-          <div class="menu-f-body-header row items-center">
-            Test
-          </div>
-          <div class="menu-f-body-content">
-            <div
-              v-for="n in 100"
-              :key="n"
-              class="q-py-xs"
+          <div class="menu-f-body-header  row items-center justify-center q-pl-md">
+            <q-chip
+              v-show="loading"
+              size="12px"
+              color="primary"
+              text-color="white"
             >
-              Lorem ipsum dolor sit amet, consectetur adipisicing
-              elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua.
-            </div>
+              <label class="q-mr-sm">正在编辑</label>
+              <q-spinner-dots size="1.5em" />
+            </q-chip>
+          </div>
+          <div class="menu-f-body-content q-pt-lg container">
+            <q-card flat>
+              <q-card-section>
+                <q-icon name="last_page" /> 表单信息
+              </q-card-section>
+              <q-separator />
+              <q-card-section class="q-pa-xl">
+                <q-form class="my-form ">
+                  <div class="row q-col-gutter-md">
+                    <div class="col-12 col-lg-4">
+                      <label for="username"> 上级菜单 </label>
+                      <q-input
+                        outlined
+                        dense
+                        no-error-icon
+                        v-model.trim="form.pid"
+                        placeholder="请输入上级菜单"
+                        class="q-mt-sm"
+                      />
+                    </div>
+                    <div class="col-12 col-lg-2">
+                      <label for="username"> 菜单类型 </label>
+                      <q-select
+                        outlined
+                        dense
+                        options-dense
+                        v-model="form.menuType"
+                        :options="menuTypeOptions"
+                        emit-value
+                        map-options
+                        class="q-mt-sm"
+                      />
+                    </div>
+                    <div class="col-12 col-lg-6">
+                      <label for="username"> 菜单名称 </label>
+                      <q-input
+                        outlined
+                        dense
+                        no-error-icon
+                        v-model.trim="form.menuName"
+                        placeholder="请输入菜单名称"
+                        :rules="[ val => val && val.length > 0 || '请设置菜单名称']"
+                        class="q-mt-sm"
+                      >
+                        <template v-slot:prepend>
+                          <q-icon :name="form.icon" />
+                        </template>
+                      </q-input>
+                    </div>
+                    <div class="col-12 col-lg-12">
+                      <label for="username"> 菜单地址 </label>
+                      <q-input
+                        outlined
+                        dense
+                        no-error-icon
+                        v-model.trim="form.menuPath"
+                        placeholder="请输入菜单地址"
+                        class="q-mt-sm"
+                      />
+                    </div>
+                    <div class="col-12 col-lg-6">
+                      <label for="username"> 权限代码 </label>
+                      <q-input
+                        outlined
+                        dense
+                        no-error-icon
+                        v-model.trim="form.permission"
+                        placeholder="请输入权限代码"
+                        class="q-mt-sm"
+                      />
+                    </div>
+                    <div class="col-12 col-lg-6">
+                      <label for="username"> 菜单排序 </label>
+                      <q-input
+                        outlined
+                        dense
+                        no-error-icon
+                        v-model.trim="form.sort"
+                        placeholder="请输入菜单排序"
+                        class="q-mt-sm"
+                        type="number"
+                      />
+                    </div>
+                    <div class="col-12 col-lg-6">
+                      <label for="username"> 徽章提示 </label>
+                      <q-input
+                        outlined
+                        dense
+                        no-error-icon
+                        v-model.trim="form.badge"
+                        placeholder="请输入提示内容"
+                        class="q-mt-sm"
+                      />
+                    </div>
+                  </div>
+                  <div class="row q-mt-md">
+                    <div class="col-12">
+                      <label for="username"> 展开 </label>
+                      <div class="q-mt-sm q-gutter-sm">
+                        <q-radio
+                          v-model="form.opened"
+                          val="1"
+                          label="是"
+                          dense
+                        />
+                        <q-radio
+                          v-model="form.opened"
+                          val="0"
+                          label="否"
+                          dense
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row q-mt-md">
+                    <div class="col-12">
+                      <label for="username"> 显示 </label>
+                      <div class="q-mt-sm q-gutter-sm">
+                        <q-radio
+                          v-model="form.isShow"
+                          val="1"
+                          label="是"
+                          dense
+                        />
+                        <q-radio
+                          v-model="form.isShow"
+                          val="0"
+                          label="否"
+                          dense
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row q-mt-md">
+                    <div class="col-12">
+                      <label for="username"> 备注 </label>
+                      <q-input
+                        dense
+                        outlined
+                        no-error-icon
+                        v-model="form.remark"
+                        autogrow
+                        :input-style="{ minHeight: '60px' }"
+                        class="q-mt-sm"
+                      />
+                    </div>
+                  </div>
+                </q-form>
+              </q-card-section>
+              <q-separator />
+              <q-card-actions class="q-pa-xl q-mb-lg">
+                <q-btn
+                  color="primary"
+                  class="wd-80"
+                >保存</q-btn>
+                <q-btn class="wd-80">重置</q-btn>
+                <q-space />
+                <q-btn
+                  color="negative"
+                  class="wd-80"
+                >删除</q-btn>
+              </q-card-actions>
+            </q-card>
           </div>
         </div>
       </div>
@@ -102,74 +262,54 @@ export default {
   data () {
     return {
       loading: false,
-      pagination: {
-        sortBy: null,
-        descending: false,
-        page: 1,
-        rowsPerPage: 15,
-        rowsNumber: 10
-      },
-      columns: [
-        { name: 'title', label: '标题', align: 'left', field: 'title' },
-        { name: 'requestUri', label: '请求地址', align: 'left', field: 'requestUri' },
-        { name: 'operation', label: '操作描述', align: 'left', field: 'operation' },
-        { name: 'createByName', label: '操作用户', align: 'center', field: 'createByName' },
-        { name: 'isException', label: '异常', align: 'center', field: 'isException' },
-        { name: 'created', label: '操作时间', align: 'center', field: 'created' },
-        { name: 'remoteAddr', label: '客户端地址', align: 'left', field: 'remoteAddr' },
-        { name: 'deviceName', label: '操作平台', align: 'left', field: 'deviceName' },
-        { name: 'browserName', label: '浏览器', align: 'left', field: 'browserName' },
-        { name: 'executeTime', label: '响应时间', field: 'executeTime', align: 'center' }
+      treeData: [],
+      selected: null,
+      menuTypeOptions: [
+        { label: '菜单', value: '1' },
+        { label: '权限', value: '2' }
       ],
-      log: {
-        title: null,
-        requestUri: null
+      form: {
+        sort: 10,
+        opened: '0',
+        isShow: '1'
       },
-      data: [],
-      fixed: false,
-      nodes: [
-        {
-          'id': 1,
-          'name': 'text01',
-          'children': [
-            {
-              'id': 3,
-              'name': 'text03'
-            }
-          ]
-        },
-        {
-          'id': 2,
-          'name': 'text02'
-        }
-      ]
+      smd5: null
     }
   },
   mounted () {
     this.onRefresh()
   },
+  watch: {
+    'selected' () {
+      if (this.selected) {
+        this.onRefeshMenuDetail()
+      }
+    }
+  },
   methods: {
     onRefresh () {
-      this.pagination.page = 0
-      this.onRequest({
-        pagination: this.pagination,
-        filter: null
-      })
+      this.onRequest()
     },
-    async onRequest (props) {
-      const { page, rowsPerPage, sortBy, descending } = props.pagination
-      const filter = props.filter
+    async onRequest () {
       this.loading = true
-      await axios.get('/admin/users/log', { params: { current: page, size: rowsPerPage, roleName: filter } }).then(response => {
+      await axios.get('/admin/menus/tree', {}).then(response => {
         const { code, data } = response.data
         if (code === '200' && data) {
-          this.pagination.page = data.current
-          this.pagination.rowsNumber = data.total
-          this.pagination.rowsPerPage = data.size
-
-          this.pagination.sortBy = sortBy
-          this.pagination.descending = descending
-          this.data = data.records
+          this.treeData = data
+        }
+      }).catch(error => {
+        console.error(error)
+      })
+      setTimeout(() => {
+        this.loading = false
+      }, 200)
+    },
+    async onRefeshMenuDetail () {
+      this.loading = true
+      await axios.get('/admin/menus/detail', { params: { id: this.selected } }).then(response => {
+        const { code, data } = response.data
+        if (code === '200' && data.menu) {
+          this.form = data.menu
         }
       }).catch(error => {
         console.error(error)
