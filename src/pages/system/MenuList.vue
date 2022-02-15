@@ -35,6 +35,7 @@
                 selected-color="primary"
                 :selected.sync="selected"
                 default-expand-all
+                no-connectors
               />
             </q-scroll-area>
           </div>
@@ -50,6 +51,7 @@
               <label class="q-mr-sm">正在编辑</label>
               <q-spinner-dots size="1.5em" />
             </q-chip>
+            <div v-show="!loading">菜单管理</div>
           </div>
           <div class="menu-f-body-content q-pt-lg container">
             <q-card flat>
@@ -69,7 +71,11 @@
                         v-model.trim="form.pid"
                         placeholder="请输入上级菜单"
                         class="q-mt-sm"
-                      />
+                      >
+                        <template v-slot:append>
+                          <q-icon name="low_priority" />
+                        </template>
+                      </q-input>
                     </div>
                     <div class="col-12 col-lg-2">
                       <label for="username"> 菜单类型 </label>
