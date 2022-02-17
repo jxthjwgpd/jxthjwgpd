@@ -273,6 +273,7 @@ export default {
       this.$q.dialog({
         title: this.$t('dialog.delete.title'),
         message: this.$t('dialog.delete.message'),
+        ok: { color: 'primary' },
         cancel: true
       }).onOk(() => {
         this.$store.dispatch('system/DeleteUser', user.id).then(data => {

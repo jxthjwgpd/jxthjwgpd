@@ -68,12 +68,15 @@
                         outlined
                         dense
                         no-error-icon
-                        v-model.trim="form.pid"
+                        v-model.trim="pNodeName"
                         placeholder="请输入上级菜单"
                         class="q-mt-sm"
                       >
                         <template v-slot:append>
-                          <q-icon name="low_priority" />
+                          <q-icon
+                            name="low_priority"
+                            @click="fixed=!fixed"
+                          />
                         </template>
                       </q-input>
                     </div>
@@ -103,6 +106,12 @@
                       >
                         <template v-slot:prepend>
                           <q-icon :name="form.icon" />
+                        </template>
+                        <template v-slot:append>
+                          <q-icon
+                            name="low_priority"
+                            @click="fixed1=!fixed1"
+                          />
                         </template>
                       </q-input>
                     </div>
@@ -254,6 +263,131 @@
         </q-table>
       </div> -->
     </div>
+    <q-dialog v-model="fixed">
+      <q-card
+        class="my-dialog"
+        style="min-width:320px;"
+      >
+        <q-toolbar>
+          <q-toolbar-title>上级菜单</q-toolbar-title>
+          <q-btn
+            flat
+            round
+            dense
+            icon="close"
+            v-close-popup
+          />
+        </q-toolbar>
+        <q-separator />
+        <q-card-section style="height: 36vh;">
+          <q-scroll-area class="fit">
+            <q-tree
+              :nodes="treeData"
+              node-key="id"
+              label-key="name"
+              selected-color="primary"
+              :selected.sync="menuId"
+            />
+          </q-scroll-area>
+        </q-card-section>
+        <q-separator />
+
+        <q-card-actions
+          align="right"
+          class="q-dialog-footer"
+        >
+          <q-btn
+            :label="$q.lang.label.ok"
+            color="primary"
+            type="submit"
+            @click="getNode(menuId)"
+            v-close-popup
+          />
+          <q-btn
+            :label="$q.lang.label.clear"
+            @click="clearNode()"
+            v-close-popup
+          />
+          <q-btn
+            :label="$q.lang.label.cancel"
+            v-close-popup
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+    <q-dialog v-model="fixed1">
+      <q-card
+        class="my-dialog"
+        style="min-width:760px;"
+      >
+        <q-toolbar>
+          <q-toolbar-title>图标选择</q-toolbar-title>
+          <q-btn
+            flat
+            round
+            dense
+            icon="close"
+            v-close-popup
+          />
+        </q-toolbar>
+        <q-separator />
+        <q-card-section style="height: 38vh; row column">
+          <q-scroll-area
+            class="fit"
+            ref="scrollArea"
+          >
+            <div class="col q-col-gutter-xs">
+              <q-btn
+                flat
+                v-for="icon in displayedIcons"
+                :key="icon.name"
+                :icon="icon.name"
+                :color="`${(iconSelected && iconSelected===icon.name)?'primary':null}`"
+                @click="iconSelected=icon.name"
+              />
+            </div>
+          </q-scroll-area>
+        </q-card-section>
+        <q-separator />
+
+        <q-card-section class="q-pa-sm flex flex-center">
+          <q-pagination
+            v-model="pagination.page"
+            :max="pagination.totalPages"
+            :input="true"
+          >
+          </q-pagination>
+        </q-card-section>
+        <q-card-actions class="q-dialog-footer">
+          <q-chip
+            square
+            color="primary"
+            text-color="white"
+            :icon="iconSelected"
+            v-show="iconSelected"
+          >
+            {{iconSelected}}
+          </q-chip>
+          <q-space />
+          <q-btn
+            :label="$q.lang.label.ok"
+            color="primary"
+            type="submit"
+            @click="getIcon()"
+            v-close-popup
+          />
+          <q-btn
+            :label="$q.lang.label.clear"
+            @click="clearIcon()"
+            v-close-popup
+          />
+          <q-btn
+            :label="$q.lang.label.cancel"
+            v-close-popup
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
@@ -271,25 +405,145 @@ export default {
       treeData: [],
       selected: null,
       menuTypeOptions: [
-        { label: '菜单', value: '1' },
-        { label: '权限', value: '2' }
+        { label: '菜单', value: '1' }
+        // { label: '权限', value: '2' }
       ],
       form: {
         sort: 10,
         opened: '0',
-        isShow: '1'
+        isShow: '1',
+        menuType: '1'
       },
-      smd5: null
+      menuId: null,
+      pNodeId: null,
+      pNodeName: null,
+      node: null,
+      parentNode: null,
+      smd5: null,
+      fixed: false,
+      fixed1: false,
+      iconsList: [],
+      iconSelected: null,
+      pagination: {
+        page: 1,
+        itemsPerPage: 96,
+        totalPages: 0
+      }
+    }
+  },
+  beforeMount () {
+    if (this.pagination) {
+      this.$emit('update:pagination', { ...this.computedPagination })
     }
   },
   mounted () {
     this.onRefresh()
+
+    this.__loadIconSet('material-icons')
+
+    this.__updatePagination()
+  },
+  computed: {
+    filteredIcons () {
+      let icons = this.iconsList
+      if (icons) {
+        if (this.tags !== void 0 && this.tags !== '' && this.tags !== null && this.tags.length > 0) {
+          icons = icons.filter(icon => {
+            const t = icon.tags.filter(tag => this.tags.includes(tag))
+            if (t.length > 0) {
+              return icon
+            }
+          })
+        }
+        if (this.filter !== void 0 && this.filter !== '' && this.filter !== null) {
+          icons = icons.filter(icon => icon.name.includes(this.filter))
+        }
+      }
+      return icons
+    },
+    displayedIcons () {
+      let icons = []
+      if (this.iconsList) {
+        icons = this.filteredIcons
+        // should the icons be paged?
+        if (this.pagination && this.pagination.itemsPerPage !== 0) {
+          icons = icons.slice(this.firstItemIndex, this.lastItemIndex)
+        }
+      }
+      return icons
+    },
+    computedPagination () {
+      return this.__fixPagination({
+        ...this.pagination
+      })
+    },
+    // index of first item on a page
+    firstItemIndex () {
+      const { page, itemsPerPage } = this.computedPagination
+      return (page - 1) * itemsPerPage
+    },
+
+    // index of last item on a page
+    lastItemIndex () {
+      const { page, itemsPerPage } = this.computedPagination
+      return page * itemsPerPage
+    },
+
+    // returns true if on first page
+    isFirstPage () {
+      return this.computedPagination.page === 1
+    },
+
+    // the number of pages available based on itemsPerPage
+    pagesNumber () {
+      return this.computedPagination.itemsPerPage === 0
+        ? 1
+        : Math.max(
+          1,
+          Math.ceil(this.filteredIcons.length / this.computedPagination.itemsPerPage)
+        )
+    },
+
+    // returns true if on last page
+    isLastPage () {
+      return this.lastItemIndex === 0
+        ? true
+        : this.computedPagination.page >= this.pagesNumber
+    }
   },
   watch: {
     'selected' () {
       if (this.selected) {
         this.onRefeshMenuDetail()
       }
+    },
+    'pNodeId' () {
+      if (this.pNodeId) {
+        this.getNode(this.pNodeId)
+      }
+    },
+    'iconsList' (val) {
+      if (this.iconsList !== void 0 && this.iconsList.length > 0) {
+        this.__updatePagination()
+        this.$nextTick(() => {
+          // whenever the icon set changes, it resets pagination page to page 1
+          this.__setPagination({ page: 1 })
+        })
+        // scroll to top of QScrollArea, if applicable
+        // this.$refs.scrollArea.setScrollPosition(0)
+      }
+    },
+    'pagination' (newVal, oldVal) {
+      if (!this.__samePagination(oldVal, newVal)) {
+        this.__updatePagination()
+      }
+    },
+    'pagination.itemsPerPage' () {
+      this.__updatePagination()
+    },
+
+    'pagination.page' () {
+      this.__updatePagination()
     }
   },
   methods: {
@@ -316,6 +570,7 @@ export default {
         const { code, data } = response.data
         if (code === '200' && data.menu) {
           this.form = data.menu
+          this.pNodeId = data.menu.pid
         }
       }).catch(error => {
         console.error(error)
@@ -323,6 +578,148 @@ export default {
       setTimeout(() => {
         this.loading = false
       }, 200)
+    },
+    getNode (id) {
+      if (!id) return
+      this.menuId = id
+      this.node = null
+      this.parentNode = null
+      this.pNodeId = null
+      this.pNodeName = null
+      const { node } = this.getParent(this.treeData, id)
+      if (node) {
+        this.pNodeId = node.id
+        this.pNodeName = node.name
+      }
+    },
+    clearNode () {
+      this.node = null
+      this.parentNode = null
+      this.pNodeId = '0'
+      this.pNodeName = null
+    },
+    getParent (list, id) {
+      if (list && list.length > 0) {
+        for (var i = 0; i < list.length; i++) {
+          if (this.node) {
+            break
+          }
+          let item = list[i]
+          if (!item || !item.id) {
+            continue
+          }
+          if (item.id === id) {
+            this.node = item
+            break
+          } else {
+            if (item.children && item.children.length > 0) {
+              this.parentNode = item
+              this.getParent(item.children, id)
+            } else {
+              continue
+            }
+          }
+        }
+      }
+      if (!this.node) {
+        this.parentNode = null
+      }
+      return {
+        parentNode: this.parentNode,
+        node: this.node
+      }
+    },
+    // icon
+    __loadIconSet (iconSet) {
+      if (iconSet) {
+        this.loading = true
+        // detect if UMD version is installed
+        if (window.IconPicker) {
+          const name = iconSet.replace(/-([a-z])/g, g => g[1].toUpperCase())
+          if (window.IconPicker.iconSet && window.IconPicker.iconSet[name]) {
+            const iconsSet = window.IconPicker.iconSet[name]
+            this.iconsList = iconsSet.icons
+          } else {
+            /* eslint-disable */
+            console.error('IconPicker: no icon set loaded called ' + iconSet + '\'')
+            console.error('Be sure to load the UMD version of the icon set in a script tag before using QIconPicker UMD version')
+            /* eslint-enable */
+          }
+        } else {
+          try {
+            const iconsSet = require('assets/icon-set/' + iconSet + '.js').default
+            this.iconsList = iconsSet.icons
+          } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error('IconPicker: cannot find icon set found called ' + iconSet + '\'')
+          }
+        }
+        this.loading = false
+      }
+    },
+    __fixPagination (p) {
+      if (p.page < 1) {
+        p.page = 1
+      }
+      if (p.itemsPerPage === void 0 || p.itemsPerPage < 1) {
+        p.itemsPerPage = 0 // all
+      }
+      return p
+    },
+    // returns true if the pagination is the same,
+    // otherwise returns false if it has changed
+    __samePagination (oldPag, newPag) {
+      // eslint-disable-next-line no-unused-vars
+      for (const prop in newPag) {
+        if (newPag[prop] !== oldPag[prop]) {
+          return false
+        }
+      }
+      return true
+    },
+
+    __setPagination (val) {
+      const newPagination = this.__fixPagination({
+        ...this.computedPagination,
+        ...val
+      })
+
+      // if (this.pagination) {
+      //   this.$emit('update:pagination', newPagination)
+      // } else {
+      this.pagination = newPagination
+      // }
+    },
+
+    __updatePagination () {
+      if (this.pagination !== void 0) {
+        this.__setPagination({ total: this.filteredIcons.length, totalPages: this.pagesNumber })
+      }
+    },
+
+    // public function - goes to previous page
+    prevPage () {
+      const { page } = this.computedPagination
+      if (page > 1) {
+        this.__setPagination({ page: page - 1 })
+      }
+    },
+
+    // public function - goes to next page
+    nextPage () {
+      const { page, itemsPerPage } = this.computedPagination
+      if (this.lastItemIndex > 0 && page * itemsPerPage < this.filteredIcons.length) {
+        this.__setPagination({ page: page + 1 })
+      }
+    },
+    getIcon () {
+      if (this.iconSelected) {
+        this.form.icon = this.iconSelected
+      }
+    },
+    clearIcon () {
+      this.form.icon = null
+      this.iconSelected = null
     }
   }
 }
