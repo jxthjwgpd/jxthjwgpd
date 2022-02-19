@@ -66,6 +66,28 @@ const routes = [
           { path: 'metrics', meta: { sidebar: true, auth: true }, component: () => import('pages/system/Metrics.vue') },
           { path: 'menus', meta: { sidebar: true, auth: true }, component: () => import('pages/system/MenuList.vue') }
         ]
+      },
+      {
+        path: 'goods',
+        component: () => import('layouts/BlankLayout.vue'),
+        children: [
+          { path: '', meta: { sidebar: true, auth: true }, component: () => import('pages/Error404.vue') },
+          { path: 'brand', meta: { sidebar: true, auth: true }, component: () => import('pages/Error404.vue') }
+        ]
+      },
+      {
+        path: 'order',
+        component: () => import('layouts/BlankLayout.vue'),
+        children: [
+          { path: '', meta: { sidebar: true, auth: true }, component: () => import('pages/Error404.vue') }
+        ]
+      },
+      {
+        path: 'account',
+        component: () => import('layouts/BlankLayout.vue'),
+        children: [
+          { path: '', meta: { sidebar: true, auth: true }, component: () => import('pages/Error404.vue') }
+        ]
       }
     ]
   }
