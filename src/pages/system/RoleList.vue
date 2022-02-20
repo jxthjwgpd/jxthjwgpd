@@ -103,7 +103,7 @@
                   @click="onRoleEdit(props.row)"
                 >编辑</a>
                 <router-link
-                  :to="`roles/${props.row.id}/menu`"
+                  :to="`roles/menu/${props.row.id}`"
                   class="text-primary"
                 >权限配置</router-link>
                 <a
