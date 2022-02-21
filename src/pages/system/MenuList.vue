@@ -113,7 +113,7 @@
                           </template>
                           <template v-slot:append>
                             <q-icon
-                              name="low_priority"
+                              name="art_track"
                               @click="fixed1=!fixed1"
                             />
                           </template>

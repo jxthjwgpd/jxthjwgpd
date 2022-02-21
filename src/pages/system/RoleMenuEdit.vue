@@ -36,7 +36,7 @@
       >
         <q-form class="my-form">
           <div class="row">
-            <div class="col-4 q-label">
+            <div class="col-2 q-label">
               <label for="roleName">
                 角色名
               </label>
@@ -46,7 +46,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-4 q-label">
+            <div class="col-2 q-label">
               <label for="remark">
                 备注
               </label>
@@ -56,7 +56,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-4 q-label">
+            <div class="col-2 q-label">
               <label for="created">
                 创建时间
               </label>
@@ -66,7 +66,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-4 q-label">
+            <div class="col-2 q-label">
               <label for="menu">
                 设置权限
               </label>
@@ -84,7 +84,7 @@
             </div>
           </div>
           <div class="row q-mt-lg">
-            <div class="col offset-4">
+            <div class="col offset-2">
               <q-btn
                 color="primary"
                 label="保存设置"
