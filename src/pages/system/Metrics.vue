@@ -16,30 +16,29 @@
       </div>
     </div>
 
-    <div
-      class="my-page-body q-pa-sm"
-      style="max-width: 1024px; margin-left: auto; margin-right: auto; "
-    >
-      <div class="row q-col-gutter-md">
-        <div class="col-12 col-sm-6 col-md-4 col-lg-3 ">
-          <Health />
-        </div>
-        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-          <CpuCount />
-          <q-separator />
-          <CpuUsage />
+    <div class="my-page-body q-pa-sm">
+      <div class="container">
+        <div class="row q-col-gutter-md">
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3 ">
+            <Health />
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <CpuCount />
+            <q-separator />
+            <CpuUsage />
 
-        </div>
-        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-          <StartTime />
-          <q-separator />
-          <Uptime />
-        </div>
-        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-          <JvmMoneyUsed />
-        </div>
-        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-          <Tangdao />
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <StartTime />
+            <q-separator />
+            <Uptime />
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <JvmMoneyUsed />
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <Tangdao />
+          </div>
         </div>
       </div>
     </div>

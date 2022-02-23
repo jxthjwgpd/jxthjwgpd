@@ -1,6 +1,6 @@
 <template>
   <q-page class="my-page">
-    <!-- <div class="row items-center justify-between">
+    <div class="row items-center justify-between">
       <div class="my-page-header q-pb-none">
         <q-breadcrumbs align="left">
           <q-breadcrumbs-el
@@ -14,260 +14,228 @@
           <q-breadcrumbs-el label="菜单管理" />
         </q-breadcrumbs>
       </div>
-    </div> -->
+    </div>
 
-    <div class="my-page-body-none">
-      <div class="menu-f">
-        <div class="menu-f-sider">
-          <div class="menu-f-sider-header row items-center justify-center">
-            <q-btn
-              label="新增菜单"
-              color="primary"
-              size="12px"
-            />
-          </div>
-          <div class="menu-f-sider-body">
-            <q-scroll-area class="fit">
-              <q-tree
-                :nodes="treeData"
-                node-key="id"
-                label-key="name"
-                selected-color="primary"
-                :selected.sync="selected"
-                default-expand-all
-                no-connectors
-              />
-            </q-scroll-area>
-          </div>
-        </div>
-        <div class="menu-f-body">
-          <div class="menu-f-body-header row items-center justify-center q-pl-md">
-            <q-chip
-              v-show="loading"
-              size="12px"
-              color="primary"
-              text-color="white"
+    <div class="my-page-body q-pa-sm">
+      <div class="container">
+        <q-toolbar class="q-pl-none">
+          <q-btn
+            color="primary"
+            size="12"
+          >新建菜单</q-btn>
+        </q-toolbar>
+        <div class="row q-col-gutter-md">
+          <div class="col-12 col-sm-3 col-lg-3">
+            <q-card
+              flat
+              class="fit"
             >
-              <label class="q-mr-sm">正在编辑</label>
-              <q-spinner-dots size="1.5em" />
-            </q-chip>
-            <div v-show="!loading">菜单管理</div>
+              <q-scroll-area class="fit">
+                <q-tree
+                  class="q-mt-sm"
+                  :nodes="treeData"
+                  node-key="id"
+                  label-key="name"
+                  selected-color="primary"
+                  :selected.sync="selected"
+                  default-expand-all
+                  no-connectors
+                />
+              </q-scroll-area>
+            </q-card>
           </div>
-          <div class="menu-f-body-content">
-            <div class=" q-pt-lg container">
-              <q-card flat>
-                <q-card-section>
-                  <q-icon name="last_page" /> 表单信息
+          <div class="col-12 col-sm-9 col-lg-9">
+            <q-card
+              flat
+              class="fit"
+            >
+              <q-card-section>
+                <q-icon name="content_paste" /> {{menuTitle || '未选择'}}
+              </q-card-section>
+              <q-separator />
+              <q-form
+                class="my-form "
+                @submit="onSubmit"
+              >
+                <q-card-section class="q-pa-xl">
+                  <div class="row q-col-gutter-md">
+                    <div class="col-12 col-lg-4">
+                      <label for="username"> 上级菜单 </label>
+                      <q-input
+                        outlined
+                        dense
+                        no-error-icon
+                        v-model.trim="pNodeName"
+                        placeholder="请输入上级菜单"
+                        class="q-mt-sm"
+                      >
+                        <template v-slot:append>
+                          <q-icon
+                            name="low_priority"
+                            @click="fixed=!fixed"
+                          />
+                        </template>
+                      </q-input>
+                    </div>
+                    <div class="col-12 col-lg-2">
+                      <label for="username"> 菜单类型 </label>
+                      <q-select
+                        outlined
+                        dense
+                        options-dense
+                        v-model="form.menuType"
+                        :options="menuTypeOptions"
+                        emit-value
+                        map-options
+                        class="q-mt-sm"
+                      />
+                    </div>
+                    <div class="col-12 col-lg-6">
+                      <label for="username"> 菜单名称 </label>
+                      <q-input
+                        outlined
+                        dense
+                        no-error-icon
+                        v-model.trim="form.menuName"
+                        placeholder="请输入菜单名称"
+                        :rules="[ val => val && val.length > 0 || '请设置菜单名称']"
+                        class="q-mt-sm"
+                      >
+                        <template v-slot:prepend>
+                          <q-icon :name="form.icon" />
+                        </template>
+                        <template v-slot:append>
+                          <q-icon
+                            name="art_track"
+                            @click="fixed1=!fixed1"
+                          />
+                        </template>
+                      </q-input>
+                    </div>
+                    <div class="col-12 col-lg-12">
+                      <label for="username"> 菜单地址 </label>
+                      <q-input
+                        outlined
+                        dense
+                        no-error-icon
+                        v-model.trim="form.menuPath"
+                        placeholder="请输入菜单地址"
+                        class="q-mt-sm"
+                      />
+                    </div>
+                    <div class="col-12 col-lg-6">
+                      <label for="username"> 权限代码 </label>
+                      <q-input
+                        outlined
+                        dense
+                        no-error-icon
+                        v-model.trim="form.permission"
+                        placeholder="请输入权限代码"
+                        class="q-mt-sm"
+                      />
+                    </div>
+                    <div class="col-12 col-lg-6">
+                      <label for="username"> 菜单排序 </label>
+                      <q-input
+                        outlined
+                        dense
+                        no-error-icon
+                        v-model.trim="form.sort"
+                        placeholder="请输入菜单排序"
+                        class="q-mt-sm"
+                        type="number"
+                      />
+                    </div>
+                    <div class="col-12 col-lg-6">
+                      <label for="username"> 徽章提示 </label>
+                      <q-input
+                        outlined
+                        dense
+                        no-error-icon
+                        v-model.trim="form.badge"
+                        placeholder="请输入提示内容"
+                        class="q-mt-sm"
+                      />
+                    </div>
+                  </div>
+                  <div class="row q-mt-md">
+                    <div class="col-12">
+                      <label for="username"> 展开 </label>
+                      <div class="q-mt-sm q-gutter-sm">
+                        <q-radio
+                          v-model="form.opened"
+                          val="1"
+                          label="是"
+                          dense
+                        />
+                        <q-radio
+                          v-model="form.opened"
+                          val="0"
+                          label="否"
+                          dense
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row q-mt-md">
+                    <div class="col-12">
+                      <label for="username"> 显示 </label>
+                      <div class="q-mt-sm q-gutter-sm">
+                        <q-radio
+                          v-model="form.isShow"
+                          val="1"
+                          label="是"
+                          dense
+                        />
+                        <q-radio
+                          v-model="form.isShow"
+                          val="0"
+                          label="否"
+                          dense
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row q-mt-md">
+                    <div class="col-12">
+                      <label for="username"> 备注 </label>
+                      <q-input
+                        dense
+                        outlined
+                        no-error-icon
+                        v-model="form.remark"
+                        autogrow
+                        :input-style="{ minHeight: '60px' }"
+                        class="q-mt-sm"
+                      />
+                    </div>
+                  </div>
                 </q-card-section>
                 <q-separator />
-                <q-form
-                  class="my-form "
-                  @submit="onSubmit"
-                >
-                  <q-card-section class="q-pa-xl">
-                    <div class="row q-col-gutter-md">
-                      <div class="col-12 col-lg-4">
-                        <label for="username"> 上级菜单 </label>
-                        <q-input
-                          outlined
-                          dense
-                          no-error-icon
-                          v-model.trim="pNodeName"
-                          placeholder="请输入上级菜单"
-                          class="q-mt-sm"
-                        >
-                          <template v-slot:append>
-                            <q-icon
-                              name="low_priority"
-                              @click="fixed=!fixed"
-                            />
-                          </template>
-                        </q-input>
-                      </div>
-                      <div class="col-12 col-lg-2">
-                        <label for="username"> 菜单类型 </label>
-                        <q-select
-                          outlined
-                          dense
-                          options-dense
-                          v-model="form.menuType"
-                          :options="menuTypeOptions"
-                          emit-value
-                          map-options
-                          class="q-mt-sm"
-                        />
-                      </div>
-                      <div class="col-12 col-lg-6">
-                        <label for="username"> 菜单名称 </label>
-                        <q-input
-                          outlined
-                          dense
-                          no-error-icon
-                          v-model.trim="form.menuName"
-                          placeholder="请输入菜单名称"
-                          :rules="[ val => val && val.length > 0 || '请设置菜单名称']"
-                          class="q-mt-sm"
-                        >
-                          <template v-slot:prepend>
-                            <q-icon :name="form.icon" />
-                          </template>
-                          <template v-slot:append>
-                            <q-icon
-                              name="art_track"
-                              @click="fixed1=!fixed1"
-                            />
-                          </template>
-                        </q-input>
-                      </div>
-                      <div class="col-12 col-lg-12">
-                        <label for="username"> 菜单地址 </label>
-                        <q-input
-                          outlined
-                          dense
-                          no-error-icon
-                          v-model.trim="form.menuPath"
-                          placeholder="请输入菜单地址"
-                          class="q-mt-sm"
-                        />
-                      </div>
-                      <div class="col-12 col-lg-6">
-                        <label for="username"> 权限代码 </label>
-                        <q-input
-                          outlined
-                          dense
-                          no-error-icon
-                          v-model.trim="form.permission"
-                          placeholder="请输入权限代码"
-                          class="q-mt-sm"
-                        />
-                      </div>
-                      <div class="col-12 col-lg-6">
-                        <label for="username"> 菜单排序 </label>
-                        <q-input
-                          outlined
-                          dense
-                          no-error-icon
-                          v-model.trim="form.sort"
-                          placeholder="请输入菜单排序"
-                          class="q-mt-sm"
-                          type="number"
-                        />
-                      </div>
-                      <div class="col-12 col-lg-6">
-                        <label for="username"> 徽章提示 </label>
-                        <q-input
-                          outlined
-                          dense
-                          no-error-icon
-                          v-model.trim="form.badge"
-                          placeholder="请输入提示内容"
-                          class="q-mt-sm"
-                        />
-                      </div>
-                    </div>
-                    <div class="row q-mt-md">
-                      <div class="col-12">
-                        <label for="username"> 展开 </label>
-                        <div class="q-mt-sm q-gutter-sm">
-                          <q-radio
-                            v-model="form.opened"
-                            val="1"
-                            label="是"
-                            dense
-                          />
-                          <q-radio
-                            v-model="form.opened"
-                            val="0"
-                            label="否"
-                            dense
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row q-mt-md">
-                      <div class="col-12">
-                        <label for="username"> 显示 </label>
-                        <div class="q-mt-sm q-gutter-sm">
-                          <q-radio
-                            v-model="form.isShow"
-                            val="1"
-                            label="是"
-                            dense
-                          />
-                          <q-radio
-                            v-model="form.isShow"
-                            val="0"
-                            label="否"
-                            dense
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row q-mt-md">
-                      <div class="col-12">
-                        <label for="username"> 备注 </label>
-                        <q-input
-                          dense
-                          outlined
-                          no-error-icon
-                          v-model="form.remark"
-                          autogrow
-                          :input-style="{ minHeight: '60px' }"
-                          class="q-mt-sm"
-                        />
-                      </div>
-                    </div>
-                  </q-card-section>
-                  <q-separator />
-                  <q-card-actions class="q-pa-xl q-mb-lg">
-                    <q-btn
-                      color="primary"
-                      class="wd-80"
-                      type="submit"
-                    >保存</q-btn>
-                    <q-btn class="wd-80">重置</q-btn>
-                    <q-space />
-                    <q-btn
-                      color="negative"
-                      class="wd-80"
-                    >删除</q-btn>
-                  </q-card-actions>
-                </q-form>
-              </q-card>
-            </div>
+                <q-card-actions class="q-pa-xl">
+                  <q-btn
+                    color="primary"
+                    class="wd-80"
+                    type="submit"
+                  >保存</q-btn>
+                  <q-btn class="wd-80">重置</q-btn>
+                  <q-space />
+                  <q-btn
+                    color="negative"
+                    class="wd-80"
+                  >删除</q-btn>
+                </q-card-actions>
+              </q-form>
+              <q-inner-loading :showing="loading">
+                <q-spinner-hourglass
+                  size="sm"
+                  color="primary"
+                />
+              </q-inner-loading>
+            </q-card>
           </div>
         </div>
       </div>
-
-      <!-- <div class="my-table">
-        <q-table
-          :data="data"
-          :columns="columns"
-          row-key="id"
-          :pagination.sync="pagination"
-          :loading="loading"
-          @request="onRequest"
-          binary-state-sort
-          square
-        >
-
-          <template v-slot:top-left>
-
-          </template>
-
-          <template v-slot:no-data="{ message }">
-            <div class="full-width row flex-center q-gutter-sm q-pa-lg">
-              <span>
-                {{ message }}
-              </span>
-            </div>
-          </template>
-
-          <template v-slot:body="props">
-            <MenuTreeItem :lists="props" />
-          </template>
-        </q-table>
-      </div> -->
     </div>
     <q-dialog v-model="fixed">
       <q-card
@@ -399,12 +367,8 @@
 
 <script>
 import axios from 'axios'
-// import MenuTreeItem from './MenuTreeItem.vue'
 export default {
   name: 'MenuList',
-  // components: {
-  //   MenuTreeItem
-  // },
   data () {
     return {
       loading: false,
@@ -427,6 +391,7 @@ export default {
         icon: null,
         badge: null
       },
+      menuTitle: null,
       menuId: null,
       pNodeId: null,
       pNodeName: null,
@@ -585,6 +550,7 @@ export default {
           this.form = data.menu
           this.pNodeId = data.menu.pid
           this.iconSelected = data.menu.icon
+          this.menuTitle = data.menu.menuName
         }
       }).catch(error => {
         console.error(error)
@@ -761,38 +727,3 @@ export default {
   }
 }
 </script>
-<style lang="sass" scoped>
-.menu-f
-  position: relative
-  &-sider
-    &-header
-      border-right: 1px solid #eee
-      border-bottom: 1px solid #eee
-      position: fixed
-      top: 50px
-      width: 260px
-      height: 48px
-      background: #fff
-    &-body
-      border-right: 1px solid #eee
-      position: fixed
-      top: 98px
-      bottom: 0
-      width: 260px
-      background: #fff
-  &-body
-    position: absolute
-    top: 0
-    left: 260px
-    right: 0
-    bottom: 0
-    &-header
-      height: 48px
-      background: #fff
-    &-content
-      position: absolute
-      top: 48px
-      left: 0
-      right: 0
-      bottom: 0
-</style>

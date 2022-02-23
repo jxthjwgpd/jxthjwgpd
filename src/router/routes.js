@@ -88,10 +88,6 @@ const routes = [
         children: [
           { path: '', meta: { sidebar: true, auth: true }, component: () => import('pages/Error404.vue') }
         ]
-      },
-      {
-        path: 'menuTree',
-        component: () => import('pages/system/MenuTree.vue')
       }
     ]
   }
