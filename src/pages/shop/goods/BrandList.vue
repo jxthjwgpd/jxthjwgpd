@@ -16,20 +16,6 @@
       </div>
     </div>
     <div class="my-page-body my-table">
-      <div class="my-tabs">
-        <q-tabs
-          narrow-indicator
-          align="left"
-          class="text-grey"
-          active-color="primary"
-          indicator-color="primary"
-        >
-          <q-route-tab to="/goods">用户列表</q-route-tab>
-          <q-route-tab to="/goods">角色组</q-route-tab>
-          <q-route-tab to="/goods">权限策略</q-route-tab>
-          <q-route-tab to="/goods">操作日志</q-route-tab>
-        </q-tabs>
-      </div>
       <q-table
         :data="data"
         :columns="columns"
@@ -186,7 +172,7 @@ export default {
         rowsNumber: 10
       },
       columns: [
-        { name: 'username', label: '用户账号', align: 'left', field: 'username', sortable: true, style: 'width: 200px' },
+        { name: 'brandName', label: '品牌名', align: 'left', field: 'brandName', sortable: true, style: 'width: 200px' },
         { name: 'roleName', label: '角色组', align: 'left', field: 'roleName', style: 'width: 200px' },
         { name: 'lastLoginIp', label: '最后登录信息', align: 'left', field: 'lastLoginIp', style: 'width: 200px' },
         { name: 'status', label: '状态', align: 'center', field: 'status', sortable: true, style: 'width: 100px' },
@@ -226,7 +212,7 @@ export default {
       const { page, rowsPerPage, sortBy, descending } = props.pagination
       const filter = props.filter
       this.loading = true
-      await axios.get('/admin/users', { params: { current: page, size: rowsPerPage, username: filter } }).then(response => {
+      await axios.get('/goods/brands', { params: { current: page, size: rowsPerPage, username: filter } }).then(response => {
         const { code, data } = response.data
         if (code === '200' && data) {
           this.pagination.page = data.current

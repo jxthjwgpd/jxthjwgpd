@@ -30,13 +30,17 @@ const routes = [
         children: [
           { path: '', redirect: { path: 'overview' } },
           { path: 'overview', meta: { sidebar: true, auth: true }, component: () => import('pages/system/Overview.vue') },
+          { path: 'dashboard/analysis', meta: { sidebar: true, auth: true }, component: () => import('pages/system/Overview.vue') },
+          { path: 'dashboard/monitor', meta: { sidebar: true, auth: true }, component: () => import('pages/ComeSoon.vue') },
+          { path: 'dashboard/workplace', meta: { sidebar: true, auth: true }, component: () => import('pages/ComeSoon.vue') },
           {
             path: 'form',
             component: () => import('layouts/BlankLayout.vue'),
             children: [
               { path: '', redirect: { path: 'basic-form' } },
               { path: 'basic-form', meta: { sidebar: true, auth: true }, component: () => import('pages/form/BasicForm.vue') },
-              { path: 'step-form', meta: { sidebar: true, auth: true }, component: () => import('pages/form/StepForm.vue') }
+              { path: 'step-form', meta: { sidebar: true, auth: true }, component: () => import('pages/form/StepForm.vue') },
+              { path: 'advanced-form', meta: { sidebar: true, auth: true }, component: () => import('pages/ComeSoon.vue') }
             ]
           },
           {

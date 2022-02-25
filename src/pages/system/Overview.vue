@@ -20,12 +20,9 @@
       <div class="col-md-8 col-12">
         <q-card flat>
           <q-card-section class="text-subitle2 row q-pa-none">
-            <q-parallax
-              :height="200"
-              :speed="0.5"
-            >
+            <q-parallax :height="400">
               <template v-slot:media>
-                <img src="https://cdn.quasar.dev/img/parallax1.jpg">
+                <img src="statics/index.jpg">
               </template>
 
               <h1 class="text-white">Docks</h1>
