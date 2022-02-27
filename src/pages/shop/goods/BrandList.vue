@@ -16,6 +16,18 @@
       </div>
     </div>
     <div class="my-page-body my-table">
+      <div class="my-tabs">
+        <q-tabs
+          narrow-indicator
+          align="left"
+          class="text-grey"
+          active-color="primary"
+          indicator-color="primary"
+        >
+          <q-route-tab to="/goods/brand">品牌列表</q-route-tab>
+          <q-route-tab to="/goods/brand/form">新增品牌</q-route-tab>
+        </q-tabs>
+      </div>
       <q-table
         :data="data"
         :columns="columns"
@@ -27,26 +39,6 @@
         binary-state-sort
         square
       >
-        <template v-slot:top-left>
-          <q-btn
-            label="新建"
-            color="primary"
-            @click="fixed=!fixed"
-          />
-        </template>
-        <template v-slot:top-right>
-          <q-input
-            dense
-            debounce="300"
-            v-model="username"
-            placeholder="请输入用户名"
-          >
-            <template v-slot:append>
-              <q-icon name="search" />
-            </template>
-          </q-input>
-        </template>
-
         <template v-slot:no-data="{ message }">
           <div class="full-width row flex-center q-gutter-sm q-pa-lg">
             <span>
@@ -212,7 +204,7 @@ export default {
       const { page, rowsPerPage, sortBy, descending } = props.pagination
       const filter = props.filter
       this.loading = true
-      await axios.get('/goods/brands', { params: { current: page, size: rowsPerPage, username: filter } }).then(response => {
+      await axios.get('/admin/goods/brands', { params: { current: page, size: rowsPerPage, username: filter } }).then(response => {
         const { code, data } = response.data
         if (code === '200' && data) {
           this.pagination.page = data.current

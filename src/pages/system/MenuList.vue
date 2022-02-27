@@ -565,11 +565,14 @@ export default {
       delete this.form.pids
       this.form.pid = this.pNodeId
       this.form.icon = this.iconSelected
-      console.log(this.form)
       await axios.post('/admin/menus', this.form).then(response => {
         const { code, message, data } = response.data
         if (code === '200' && data) {
-          console.log(data)
+          this.$q.notify({
+            type: 'positive',
+            message: '保存成功！'
+          })
+          this.onRequest()
         } else {
           this.$q.notify({
             message

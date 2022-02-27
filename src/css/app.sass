@@ -39,6 +39,11 @@ body.body--light
   .container 
     max-width: 1340px  
 
+.svg-icon
+  &-primary
+    color: red
+  &-2x
+
 .my-page
   &-header
     width: 100%
@@ -134,6 +139,7 @@ body.body--light
     &__bottom--animated
       left: -5px
       bottom: 16px !important
+      z-index: 10
       & .q-field__messages
         & div
           width: max-content
@@ -141,6 +147,14 @@ body.body--light
           background: $negative
           color: #fff
           padding: 5px
+  & .my-uploader
+    & .q-uploader
+      // max-height: 200px
+      &__header
+        background: #fff
+      &__list
+        padding: 0
+        min-height: 0
 .my-tabs
   background: $light
   margin-bottom: 10px

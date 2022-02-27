@@ -76,7 +76,9 @@ const routes = [
         component: () => import('layouts/BlankLayout.vue'),
         children: [
           { path: '', redirect: { path: 'brand' } },
-          { path: 'brand', meta: { sidebar: true, auth: true }, component: () => import('pages/shop/goods/BrandList.vue') }
+          { path: 'brand', meta: { sidebar: true, auth: true }, component: () => import('pages/shop/goods/BrandList.vue') },
+          { path: 'brand/form', meta: { sidebar: true, auth: true }, component: () => import('pages/shop/goods/BrandForm.vue') },
+          { path: 'brand/form/:id', meta: { sidebar: true, auth: true }, component: () => import('pages/shop/goods/BrandForm.vue') }
         ]
       },
       {
