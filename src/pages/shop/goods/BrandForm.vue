@@ -47,10 +47,11 @@
                   <label for="username"> 品牌 logo </label>
                   <div class="my-uploader">
                     <q-uploader
-                      url="http://localhost:4444/upload"
+                      url="http://localhost:4001/api/uploader"
                       style="max-width: 200px"
                       class="q-mt-md"
                       auto-upload
+                      max-files="1"
                     >
                       <template v-slot:header="scope">
                         <!-- <q-spinner
@@ -226,7 +227,8 @@ export default {
       loading: false,
       form: {
         id: this.$route.params.id,
-        brandRecommend: '0'
+        brandRecommend: '0',
+        content: ''
       }
     }
   },
