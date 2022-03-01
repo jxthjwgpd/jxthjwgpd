@@ -1,4 +1,3 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin")
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
 module.exports = function (ctx) {
@@ -97,19 +96,7 @@ module.exports = function (ctx) {
             formatter: require('eslint').CLIEngine.getFormatter('stylish')
           }
         })
-        const htmlWebpackPlugin = cfg.plugins.find(plugin => plugin.constructor === HtmlWebpackPlugin)
-        htmlWebpackPlugin.options.clientVersion = Math.floor(Date.now() / 1000)
 
-        // if (cfg.mode === 'production') {
-        //   cfg.externals = [
-        //     'quasar',
-        //     'vue',
-        //     'vuex',
-        //     'vue-router',
-        //     'vue-i18n',
-        //     'axios'
-        //   ]
-        // }
       }
     },
 
@@ -133,6 +120,10 @@ module.exports = function (ctx) {
     // animations: 'all', // --- includes all animations
     // https://quasar.dev/options/animations
     animations: ['fadeIn', 'fadeOut'],
+
+    htmlVariables: {
+      clientVersion: Math.floor(Date.now() / 100000)
+    },
 
     // https://quasar.dev/quasar-cli/developing-ssr/configuring-ssr
     ssr: {

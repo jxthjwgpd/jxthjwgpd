@@ -43,33 +43,8 @@
           >
             <q-card-section class="q-pa-xl">
               <div class="row q-col-gutter-md">
-                <div class="col-12 ">
-                  <label for="username"> 品牌 logo </label>
-                  <div class="my-uploader">
-                    <q-uploader
-                      url="http://localhost:4001/api/uploader"
-                      style="max-width: 200px"
-                      class="q-mt-md"
-                      auto-upload
-                      max-files="1"
-                    >
-                      <template v-slot:header="scope">
-                        <!-- <q-spinner
-                          v-if="scope.isUploading"
-                          class="q-uploader__spinner"
-                        /> -->
-                        <q-img
-                          src="~assets/svg/Image.svg"
-                          v-if="scope.canAddFiles"
-                        >
-                          <q-uploader-add-trigger />
-                        </q-img>
-                      </template>
-                    </q-uploader>
-                  </div>
-                </div>
                 <div class="col-12">
-                  <label for="brandName"> 品牌名称 </label>
+                  <label for="brandName"> 品牌名称</label>
                   <q-input
                     outlined
                     dense
@@ -106,23 +81,63 @@
                 </div> -->
               </div>
               <div class="row q-col-gutter-md q-mt-xs">
+
+                <div class="col-12 col-md-8 col-lg-8">
+                  <label for="brandCover"> 封面 {{form.brandCover}}</label>
+                  <div class="q-mt-sm">
+                    <q-img
+                      :src="form.brandCover"
+                      v-show="form.brandCover"
+                    >
+                      <div class="absolute-bottom text-center">
+                        Caption
+                      </div>
+                      <!-- <template v-slot:error>
+                        <div class="absolute-full flex flex-center bg-negative text-white">
+                          Cannot load image
+                        </div>
+                      </template> -->
+                    </q-img>
+                    <q-uploader
+                      ref="brandCover"
+                      :url="`${baseUrl}/uploader`"
+                      style="width: 100%;"
+                      class="q-mt-sm"
+                      flat
+                      bordered
+                      @uploaded="uploadedCover"
+                    />
+                  </div>
+                </div>
                 <div class="col-12 col-md-4 col-lg-4">
-                  <label for="brandCover"> 封面 </label>
-                  <q-uploader
-                    url="http://localhost:4444/upload"
-                    style="width: 100%;"
-                    class="q-mt-sm"
-                  />
+                  <label for="brandCover"> 品牌 logo </label>
+                  <div class="q-mt-sm">
+                    <q-img
+                      :src="form.brandLogo"
+                      v-show="form.brandLogo"
+                    >
+                      <div class="absolute-bottom text-center">
+                        品牌 logo
+                      </div>
+                    </q-img>
+                    <q-uploader
+                      :url="`${baseUrl}/uploader`"
+                      style="width: 100%;"
+                      class="q-mt-sm"
+                      flat
+                      bordered
+                    />
+                  </div>
                 </div>
                 <div class="col-12">
-                  <label for="summary"> 品牌摘要 </label>
+                  <label for="summary"> 简介 </label>
                   <q-input
                     dense
                     outlined
                     no-error-icon
                     v-model="form.summary"
                     autogrow
-                    :input-style="{ minHeight: '45px' }"
+                    :input-style="{ minHeight: '65px' }"
                     class="q-mt-sm"
                   />
                 </div>
@@ -132,8 +147,6 @@
                     v-model="form.content"
                     min-height="15rem"
                     class="q-mt-sm"
-                    @paste.native="evt => pasteCapture(evt)"
-                    @drop.native="evt => dropCapture(evt)"
                   />
                   <!-- <q-input
                     dense
@@ -228,8 +241,12 @@ export default {
       form: {
         id: this.$route.params.id,
         brandRecommend: '0',
+        brandLogo: '',
+        brandCover: '',
         content: ''
-      }
+      },
+      fixed: false,
+      baseUrl: axios.defaults.baseURL
     }
   },
   mounted () {
@@ -251,6 +268,20 @@ export default {
       setTimeout(() => {
         this.loading = false
       }, 200)
+    },
+    uploadedCover (info) {
+      if (info.xhr && info.xhr.status === 200) {
+        const response = JSON.parse(info.xhr.response)
+        if (response && response.code === '200') {
+          this.$q.notify({
+            type: 'positive',
+            message: '上传成功！'
+          })
+          this.$refs.brandCover.reset()
+          console.log(response.data)
+          this.form.brandCover = this.baseUrl + response.data[0].fileUrl
+        }
+      }
     },
     onSubmit () {
 
