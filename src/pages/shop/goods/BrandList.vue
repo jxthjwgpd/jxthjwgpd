@@ -50,22 +50,30 @@
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td
-              key="username"
+              key="brandName"
               :props="props"
             >
               <router-link
-                :to="`users/${props.row.username}`"
+                :to="`/goods/brand/form/${props.row.id}`"
                 class="text-primary"
-              >{{ props.row.username }}</router-link>
+              >{{ props.row.brandName }}</router-link>
             </q-td>
             <q-td
-              key="roleName"
+              key="brandInitial"
               :props="props"
-            >{{ props.row.roleName|| '-' }}</q-td>
+            >{{ props.row.brandInitial|| '-' }}</q-td>
             <q-td
-              key="lastLoginIp"
+              key="summary"
               :props="props"
-            >{{ props.row.lastLoginIp }} <span v-show="props.row.lastLoginDate">（{{ props.row.lastLoginDate }}）</span></q-td>
+            >{{ props.row.summary }} </q-td>
+            <q-td
+              key="brandClass"
+              :props="props"
+            >{{ props.row.brandClass }} </q-td>
+            <q-td
+              key="brandRecommend"
+              :props="props"
+            >{{ props.row.brandRecommend }} </q-td>
             <q-td
               key="status"
               :props="props"
@@ -165,8 +173,10 @@ export default {
       },
       columns: [
         { name: 'brandName', label: '品牌名', align: 'left', field: 'brandName', sortable: true, style: 'width: 200px' },
-        { name: 'roleName', label: '角色组', align: 'left', field: 'roleName', style: 'width: 200px' },
-        { name: 'lastLoginIp', label: '最后登录信息', align: 'left', field: 'lastLoginIp', style: 'width: 200px' },
+        { name: 'brandInitial', label: '首字母', align: 'left', field: 'brandInitial', style: 'width: 200px' },
+        { name: 'summary', label: '摘要', align: 'left', field: 'summary', style: 'width: 200px' },
+        { name: 'brandClass', label: '类别', align: 'center', field: 'brandClass', sortable: true, style: 'width: 100px' },
+        { name: 'brandRecommend', label: '推荐', align: 'center', field: 'brandRecommend', sortable: true, style: 'width: 100px' },
         { name: 'status', label: '状态', align: 'center', field: 'status', sortable: true, style: 'width: 100px' },
         { name: 'created', label: '创建时间', align: 'center', field: 'created', style: 'width: 180px' },
         { name: 'action', label: '操作', field: 'action', align: 'center', style: 'width: 100px' }

@@ -25,7 +25,7 @@
           indicator-color="primary"
         >
           <q-route-tab to="/goods/brand">品牌列表</q-route-tab>
-          <q-route-tab :to="`/goods/brand/form`">新增品牌</q-route-tab>
+          <q-route-tab :to="`/goods/brand/form${form.id!=null?'/'+form.id:''}`">{{form.id!=null?'编辑':'新增'}}品牌</q-route-tab>
         </q-tabs>
       </div>
       <q-card
@@ -83,20 +83,16 @@
               <div class="row q-col-gutter-md q-mt-xs">
 
                 <div class="col-12 col-md-8 col-lg-8">
-                  <label for="brandCover"> 封面 {{form.brandCover}}</label>
+                  <label for="brandCover"> 封面</label>
                   <div class="q-mt-sm">
                     <q-img
-                      :src="form.brandCover"
-                      v-show="form.brandCover"
+                      :src="baseUrl+brandCoverUrl"
+                      height="280px"
+                      v-show="brandCoverUrl"
                     >
                       <div class="absolute-bottom text-center">
-                        Caption
+                        {{baseUrl+brandCoverUrl}}
                       </div>
-                      <!-- <template v-slot:error>
-                        <div class="absolute-full flex flex-center bg-negative text-white">
-                          Cannot load image
-                        </div>
-                      </template> -->
                     </q-img>
                     <q-uploader
                       ref="brandCover"
@@ -110,22 +106,25 @@
                   </div>
                 </div>
                 <div class="col-12 col-md-4 col-lg-4">
-                  <label for="brandCover"> 品牌 logo </label>
+                  <label for="brandLogo"> 品牌 logo </label>
                   <div class="q-mt-sm">
                     <q-img
-                      :src="form.brandLogo"
-                      v-show="form.brandLogo"
+                      :src="baseUrl+brandLogoUrl"
+                      height="280px"
+                      v-show="brandLogoUrl"
                     >
                       <div class="absolute-bottom text-center">
-                        品牌 logo
+                        {{baseUrl+brandLogoUrl}}
                       </div>
                     </q-img>
                     <q-uploader
+                      ref="brandLogo"
                       :url="`${baseUrl}/uploader`"
                       style="width: 100%;"
                       class="q-mt-sm"
                       flat
                       bordered
+                      @uploaded="uploadedLogo"
                     />
                   </div>
                 </div>
@@ -246,7 +245,9 @@ export default {
         content: ''
       },
       fixed: false,
-      baseUrl: axios.defaults.baseURL
+      baseUrl: axios.defaults.baseURL,
+      brandCoverUrl: '',
+      brandLogoUrl: ''
     }
   },
   mounted () {
@@ -260,7 +261,11 @@ export default {
       await axios.get('/admin/goods/brand-detail', { params: { id: this.form.id } }).then(response => {
         const { code, data } = response.data
         if (code === '200' && data) {
-          console.log(data)
+          this.form = data.goodsBrand
+          if (this.form) {
+            this.brandCoverUrl = this.form.brandCover
+            this.brandLogoUrl = this.form.brandLogo
+          }
         }
       }).catch(error => {
         console.error(error)
@@ -277,14 +282,47 @@ export default {
             type: 'positive',
             message: '上传成功！'
           })
+          this.brandCoverUrl = response.data[0].fileUrl
           this.$refs.brandCover.reset()
-          console.log(response.data)
-          this.form.brandCover = this.baseUrl + response.data[0].fileUrl
         }
       }
     },
-    onSubmit () {
-
+    uploadedLogo (info) {
+      if (info.xhr && info.xhr.status === 200) {
+        const response = JSON.parse(info.xhr.response)
+        if (response && response.code === '200') {
+          this.$q.notify({
+            type: 'positive',
+            message: '上传成功！'
+          })
+          this.brandLogoUrl = response.data[0].fileUrl
+          this.$refs.brandLogo.reset()
+        }
+      }
+    },
+    async onSubmit () {
+      this.loading = true
+      delete this.form.id
+      this.form.brandCover = this.brandCoverUrl
+      this.form.brandLogo = this.brandLogoUrl
+      await axios.post('/admin/goods/brands', this.form).then(response => {
+        const { code, message, data } = response.data
+        if (code === '200' && data) {
+          this.$q.notify({
+            type: 'positive',
+            message: '保存成功！'
+          })
+        } else {
+          this.$q.notify({
+            message
+          })
+        }
+      }).catch(error => {
+        console.error(error)
+      })
+      setTimeout(() => {
+        this.loading = false
+      }, 200)
     }
   }
 }
