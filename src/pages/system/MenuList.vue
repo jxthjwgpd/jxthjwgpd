@@ -18,12 +18,12 @@
 
     <div class="my-page-body q-pa-sm">
       <div class="container">
-        <q-toolbar class="q-pl-none">
+        <!-- <q-toolbar class="q-pl-none">
           <q-btn
             color="primary"
             size="12"
           >新建菜单</q-btn>
-        </q-toolbar>
+        </q-toolbar> -->
         <div class="row q-col-gutter-md">
           <div class="col-12 col-sm-3 col-lg-3">
             <q-card

@@ -64,6 +64,7 @@
                     no-error-icon
                     v-model.trim="form.brandInitial"
                     placeholder="请输入品牌首字母"
+                    :rules="[ val => val && val.length > 0 || '请设置品牌首字母']"
                     class="q-mt-sm"
                   >
                   </q-input>
@@ -85,13 +86,33 @@
                 <div class="col-12 col-md-8 col-lg-8">
                   <label for="brandCover"> 封面</label>
                   <div class="q-mt-sm">
-                    <q-img
+                    <q-uploader-file v-model="form.brandCover" />
+                    <!-- <q-img
                       :src="baseUrl+brandCoverUrl"
                       height="280px"
                       v-show="brandCoverUrl"
                     >
-                      <div class="absolute-bottom text-center">
-                        {{baseUrl+brandCoverUrl}}
+                      <div class="absolute-bottom row">
+                        <div>{{brandCoverUrl}}</div>
+                        <q-space />
+                        <div class="row self-center">
+                          <q-icon
+                            size="18px"
+                            name="remove_red_eye"
+                            @click="$q.dialog({message:'<img src='+baseUrl+brandCoverUrl+'/>',ok:false,html:true,style:'max-width:80%; width:80%;height:72%;'})"
+                          />
+                          <q-icon
+                            class="q-ml-sm"
+                            size="18px"
+                            name="delete"
+                            @click="brandCoverUrl=''"
+                          />
+                          <q-icon
+                            class="q-ml-sm"
+                            size="18px"
+                            name="restore"
+                          />
+                        </div>
                       </div>
                     </q-img>
                     <q-uploader
@@ -102,19 +123,39 @@
                       flat
                       bordered
                       @uploaded="uploadedCover"
-                    />
+                    />-->
                   </div>
                 </div>
                 <div class="col-12 col-md-4 col-lg-4">
                   <label for="brandLogo"> 品牌 logo </label>
                   <div class="q-mt-sm">
-                    <q-img
+                    <q-uploader-file v-model="form.brandLogo" />
+                    <!-- <q-img
                       :src="baseUrl+brandLogoUrl"
                       height="280px"
                       v-show="brandLogoUrl"
                     >
-                      <div class="absolute-bottom text-center">
-                        {{baseUrl+brandLogoUrl}}
+                      <div class="absolute-bottom row">
+                        <div>{{brandLogoUrl}}</div>
+                        <q-space />
+                        <div class="row self-center">
+                          <q-icon
+                            size="18px"
+                            name="remove_red_eye"
+                            @click="$q.dialog({message:'<img src='+baseUrl+brandLogoUrl+'/>',ok:false,html:true,style:'max-width:80%; width:80%;height:72%;'})"
+                          />
+                          <q-icon
+                            class="q-ml-sm"
+                            size="18px"
+                            name="delete"
+                            @click="brandLogoUrl=''"
+                          />
+                          <q-icon
+                            class="q-ml-sm"
+                            size="18px"
+                            name="restore"
+                          />
+                        </div>
                       </div>
                     </q-img>
                     <q-uploader
@@ -125,7 +166,7 @@
                       flat
                       bordered
                       @uploaded="uploadedLogo"
-                    />
+                    /> -->
                   </div>
                 </div>
                 <div class="col-12">
@@ -215,6 +256,8 @@
               <q-btn
                 color="negative"
                 class="wd-80"
+                v-if="form.id"
+                v-comdel="`/admin/goods/brand-delete`"
               >删除</q-btn>
             </q-card-actions>
           </q-form>
@@ -244,10 +287,7 @@ export default {
         brandCover: '',
         content: ''
       },
-      fixed: false,
-      baseUrl: axios.defaults.baseURL,
-      brandCoverUrl: '',
-      brandLogoUrl: ''
+      fixed: false
     }
   },
   mounted () {
@@ -274,37 +314,9 @@ export default {
         this.loading = false
       }, 200)
     },
-    uploadedCover (info) {
-      if (info.xhr && info.xhr.status === 200) {
-        const response = JSON.parse(info.xhr.response)
-        if (response && response.code === '200') {
-          this.$q.notify({
-            type: 'positive',
-            message: '上传成功！'
-          })
-          this.brandCoverUrl = response.data[0].fileUrl
-          this.$refs.brandCover.reset()
-        }
-      }
-    },
-    uploadedLogo (info) {
-      if (info.xhr && info.xhr.status === 200) {
-        const response = JSON.parse(info.xhr.response)
-        if (response && response.code === '200') {
-          this.$q.notify({
-            type: 'positive',
-            message: '上传成功！'
-          })
-          this.brandLogoUrl = response.data[0].fileUrl
-          this.$refs.brandLogo.reset()
-        }
-      }
-    },
     async onSubmit () {
       this.loading = true
       delete this.form.id
-      this.form.brandCover = this.brandCoverUrl
-      this.form.brandLogo = this.brandLogoUrl
       await axios.post('/admin/goods/brands', this.form).then(response => {
         const { code, message, data } = response.data
         if (code === '200' && data) {
@@ -312,6 +324,8 @@ export default {
             type: 'positive',
             message: '保存成功！'
           })
+
+          this.$router.go(-1)
         } else {
           this.$q.notify({
             message
@@ -323,6 +337,9 @@ export default {
       setTimeout(() => {
         this.loading = false
       }, 200)
+    },
+    onDelete () {
+      this.$store.dispatch('system/comdel', '/admin/goods/brand-delete', this)
     }
   }
 }

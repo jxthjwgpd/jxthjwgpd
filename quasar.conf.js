@@ -8,6 +8,7 @@ module.exports = function (ctx) {
     boot: [
       'i18n',
       'axios',
+      'server',
       'router-filters',
       'register-components'
     ],
