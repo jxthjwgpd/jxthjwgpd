@@ -12,8 +12,13 @@ const policyType = {
   '1': '系统策略',
   '2': '自定义策略'
 }
+const yesOrno = {
+  '1': '是',
+  '0': '否'
+}
 
 module.exports = {
   sysStatus,
-  policyType
+  policyType,
+  yesOrno
 }

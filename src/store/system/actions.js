@@ -34,31 +34,6 @@ export function comadd (url, config) {
   })
 }
 
-export function comdel (url, _that) {
-  console.log(_that)
-  _that.$q.dialog({
-    title: _that.$t('dialog.delete.title'),
-    message: _that.$t('dialog.delete.message'),
-    cancel: true
-  }).onOk(() => {
-    return axios.post(url, _that.form).then(response => {
-      const { code, message, data } = response.data
-      if (code === '200' && data) {
-        _that.$q.notify({
-          type: 'positive',
-          message: '删除成功！'
-        })
-        _that.$router.go(-1)
-      } else {
-        _that.$q.notify({
-          message
-        })
-      }
-    }).catch(error => {
-      return Promise.reject(error)
-    })
-  })
-}
 
 // ------ system ------
 export function DeleteUser ({ dispatch, state }, id) {

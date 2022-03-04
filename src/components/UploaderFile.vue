@@ -18,7 +18,7 @@
             class="q-ml-sm"
             size="18px"
             name="delete"
-            @click="fileUrl=''"
+            @click="onClear"
           />
           <q-icon
             class="q-ml-sm"
@@ -74,6 +74,15 @@ export default {
           this.$refs.uploaderRef.reset()
         }
       }
+    },
+    onClear () {
+      this.$q.dialog({
+        title: this.$t('dialog.clear.title'),
+        message: this.$t('dialog.clear.message'),
+        cancel: true
+      }).onOk(() => {
+        this.fileUrl = ''
+      })
     }
   }
 }

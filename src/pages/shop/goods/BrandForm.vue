@@ -32,10 +32,6 @@
         flat
         class="fit "
       >
-        <!-- <q-card-section>
-          <q-icon name="content_paste" /> 品牌管理
-        </q-card-section>
-        <q-separator /> -->
         <div class="container">
           <q-form
             class="my-form "
@@ -69,17 +65,6 @@
                   >
                   </q-input>
                 </div>
-                <!-- <div class="col-12 col-lg-12">
-                  <label for="username"> 品牌所属类别 </label>
-                  <q-input
-                    outlined
-                    dense
-                    no-error-icon
-                    v-model.trim="form.menuPath"
-                    placeholder="请输入菜单地址"
-                    class="q-mt-sm"
-                  />
-                </div> -->
               </div>
               <div class="row q-col-gutter-md q-mt-xs">
 
@@ -87,86 +72,12 @@
                   <label for="brandCover"> 封面</label>
                   <div class="q-mt-sm">
                     <q-uploader-file v-model="form.brandCover" />
-                    <!-- <q-img
-                      :src="baseUrl+brandCoverUrl"
-                      height="280px"
-                      v-show="brandCoverUrl"
-                    >
-                      <div class="absolute-bottom row">
-                        <div>{{brandCoverUrl}}</div>
-                        <q-space />
-                        <div class="row self-center">
-                          <q-icon
-                            size="18px"
-                            name="remove_red_eye"
-                            @click="$q.dialog({message:'<img src='+baseUrl+brandCoverUrl+'/>',ok:false,html:true,style:'max-width:80%; width:80%;height:72%;'})"
-                          />
-                          <q-icon
-                            class="q-ml-sm"
-                            size="18px"
-                            name="delete"
-                            @click="brandCoverUrl=''"
-                          />
-                          <q-icon
-                            class="q-ml-sm"
-                            size="18px"
-                            name="restore"
-                          />
-                        </div>
-                      </div>
-                    </q-img>
-                    <q-uploader
-                      ref="brandCover"
-                      :url="`${baseUrl}/uploader`"
-                      style="width: 100%;"
-                      class="q-mt-sm"
-                      flat
-                      bordered
-                      @uploaded="uploadedCover"
-                    />-->
                   </div>
                 </div>
                 <div class="col-12 col-md-4 col-lg-4">
                   <label for="brandLogo"> 品牌 logo </label>
                   <div class="q-mt-sm">
                     <q-uploader-file v-model="form.brandLogo" />
-                    <!-- <q-img
-                      :src="baseUrl+brandLogoUrl"
-                      height="280px"
-                      v-show="brandLogoUrl"
-                    >
-                      <div class="absolute-bottom row">
-                        <div>{{brandLogoUrl}}</div>
-                        <q-space />
-                        <div class="row self-center">
-                          <q-icon
-                            size="18px"
-                            name="remove_red_eye"
-                            @click="$q.dialog({message:'<img src='+baseUrl+brandLogoUrl+'/>',ok:false,html:true,style:'max-width:80%; width:80%;height:72%;'})"
-                          />
-                          <q-icon
-                            class="q-ml-sm"
-                            size="18px"
-                            name="delete"
-                            @click="brandLogoUrl=''"
-                          />
-                          <q-icon
-                            class="q-ml-sm"
-                            size="18px"
-                            name="restore"
-                          />
-                        </div>
-                      </div>
-                    </q-img>
-                    <q-uploader
-                      ref="brandLogo"
-                      :url="`${baseUrl}/uploader`"
-                      style="width: 100%;"
-                      class="q-mt-sm"
-                      flat
-                      bordered
-                      @uploaded="uploadedLogo"
-                    /> -->
                   </div>
                 </div>
                 <div class="col-12">
@@ -188,15 +99,6 @@
                     min-height="15rem"
                     class="q-mt-sm"
                   />
-                  <!-- <q-input
-                    dense
-                    outlined
-                    no-error-icon
-                    v-model="form.content"
-                    autogrow
-                    :input-style="{ minHeight: '300px' }"
-                    class="q-mt-sm"
-                  /> -->
                 </div>
                 <div class="col-12 col-md-4 col-lg-4">
                   <label for="sort"> 排序 </label>
@@ -229,20 +131,6 @@
                   </div>
                 </div>
               </div>
-              <!-- <div class="row q-mt-md">
-                <div class="col-12">
-                  <label for="username"> 备注 </label>
-                  <q-input
-                    dense
-                    outlined
-                    no-error-icon
-                    v-model="form.remark"
-                    autogrow
-                    :input-style="{ minHeight: '60px' }"
-                    class="q-mt-sm"
-                  />
-                </div>
-              </div> -->
             </q-card-section>
             <q-separator />
             <q-card-actions class="q-pa-xl">
@@ -251,13 +139,16 @@
                 class="wd-80"
                 type="submit"
               >保存</q-btn>
-              <q-btn class="wd-80">重置</q-btn>
+              <q-btn
+                class="wd-80"
+                type="reset"
+              >重置</q-btn>
               <q-space />
               <q-btn
                 color="negative"
                 class="wd-80"
                 v-if="form.id"
-                v-comdel="`/admin/goods/brand-delete`"
+                v-del="{id:form.id, url:'/admin/goods/brand-delete'}"
               >删除</q-btn>
             </q-card-actions>
           </q-form>
@@ -316,13 +207,14 @@ export default {
     },
     async onSubmit () {
       this.loading = true
-      delete this.form.id
-      await axios.post('/admin/goods/brands', this.form).then(response => {
+      delete this.form.created
+      delete this.form.status
+      await axios.post(`/admin/goods/brand${this.form.id ? '-update' : 's'}`, this.form).then(response => {
         const { code, message, data } = response.data
         if (code === '200' && data) {
           this.$q.notify({
             type: 'positive',
-            message: '保存成功！'
+            message: '保存成功.'
           })
 
           this.$router.go(-1)
@@ -337,9 +229,6 @@ export default {
       setTimeout(() => {
         this.loading = false
       }, 200)
-    },
-    onDelete () {
-      this.$store.dispatch('system/comdel', '/admin/goods/brand-delete', this)
     }
   }
 }

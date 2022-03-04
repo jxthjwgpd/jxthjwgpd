@@ -34,7 +34,6 @@
         row-key="id"
         :pagination.sync="pagination"
         :loading="loading"
-        :filter="username"
         @request="onRequest"
         binary-state-sort
         square
@@ -67,13 +66,11 @@
               :props="props"
             >{{ props.row.summary }} </q-td>
             <q-td
-              key="brandClass"
-              :props="props"
-            >{{ props.row.brandClass }} </q-td>
-            <q-td
               key="brandRecommend"
               :props="props"
-            >{{ props.row.brandRecommend }} </q-td>
+            >
+              <q-yes-or-no :value="props.row.brandRecommend" />
+            </q-td>
             <q-td
               key="status"
               :props="props"
@@ -89,81 +86,30 @@
               :props="props"
               class="q-gutter-xs action"
             >
+              <router-link
+                :to="`/goods/brand/form/${props.row.id}`"
+                class="text-primary"
+              >编辑</router-link>
               <a
                 class="text-primary"
                 href="javascript:;"
-                @click="onUserEdit(props.row)"
-                v-if="!props.row.isa"
-              >编辑</a>
-              <a
-                class="text-primary"
-                href="javascript:;"
-                @click="onUserRole(props.row)"
-                v-if="!props.row.isa"
-              >角色配置</a>
-              <a
-                class="text-primary"
-                href="javascript:;"
-                @click="onUserPolicy(props.row)"
-                v-if="!props.row.isa"
-              >授权</a>
-              <a
-                class="text-primary"
-                href="javascript:;"
-                @click="onUserDel(props.row)"
-                v-if="!props.row.isa"
+                v-del:list="{id:props.row.id, url:'/admin/goods/brand-delete'}"
               >删除</a>
-              <span
-                class="text-grey"
-                v-if="props.row.isa"
-              > 默认管理员</span>
             </q-td>
           </q-tr>
         </template>
       </q-table>
     </div>
-    <!-- <user-form
-      v-model="fixed"
-      v-on:refresh="onRefresh"
-    />
-    <user-edit
-      v-model="fixedEdit"
-      v-on:refresh="onRefresh"
-      :user="user"
-    />
-    <user-role-edit
-      v-model="fixedUserRoleEdit"
-      :user="user"
-      v-on:refresh="onRefresh"
-    />
-    <policy-selected
-      v-model="fixedPolicyEdit"
-      :id="user.id"
-      :label="user.username"
-      :data="userPolicyList"
-      url="/admin/users/policies"
-    /> -->
   </q-page>
 </template>
 
 <script>
-// import UserForm from './UserForm.vue'
-// import UserEdit from './UserEdit.vue'
-// import UserRoleEdit from './UserRoleEdit.vue'
-// import PolicySelected from './PolicySelected.vue'
 import axios from 'axios'
 export default {
   name: 'UserList',
-  components: {
-    // UserForm,
-    // UserEdit,
-    // UserRoleEdit,
-    // PolicySelected
-  },
   data () {
     return {
       loading: false,
-      username: '',
       pagination: {
         sortBy: '',
         descending: false,
@@ -172,23 +118,15 @@ export default {
         rowsNumber: 10
       },
       columns: [
-        { name: 'brandName', label: '品牌名', align: 'left', field: 'brandName', sortable: true, style: 'width: 200px' },
-        { name: 'brandInitial', label: '首字母', align: 'left', field: 'brandInitial', style: 'width: 200px' },
+        { name: 'brandName', label: '品牌名', align: 'left', field: 'brandName', sortable: true, style: 'width: 150px' },
+        { name: 'brandInitial', label: '首字母', align: 'left', field: 'brandInitial', style: 'width: 80px' },
         { name: 'summary', label: '摘要', align: 'left', field: 'summary', style: 'width: 200px' },
-        { name: 'brandClass', label: '类别', align: 'center', field: 'brandClass', sortable: true, style: 'width: 100px' },
-        { name: 'brandRecommend', label: '推荐', align: 'center', field: 'brandRecommend', sortable: true, style: 'width: 100px' },
-        { name: 'status', label: '状态', align: 'center', field: 'status', sortable: true, style: 'width: 100px' },
+        { name: 'brandRecommend', label: '推荐', align: 'left', field: 'brandRecommend', sortable: true, style: 'width: 80px' },
+        { name: 'status', label: '状态', align: 'left', field: 'status', sortable: true, style: 'width: 100px' },
         { name: 'created', label: '创建时间', align: 'center', field: 'created', style: 'width: 180px' },
         { name: 'action', label: '操作', field: 'action', align: 'center', style: 'width: 100px' }
       ],
-      user: {},
-      data: [],
-      selected: [],
-      fixed: false,
-      fixedEdit: false,
-      fixedUserRoleEdit: false,
-      fixedPolicyEdit: false,
-      userPolicyList: []
+      data: []
     }
   },
   mounted () {
@@ -197,10 +135,6 @@ export default {
       pagination: this.pagination,
       filter: undefined
     })
-    // test
-    // axios.get('/admin/users/log', { params: { current: 1, size: 10 } }).then(response => {
-    //   console.log(response)
-    // })
   },
   methods: {
     onRefresh () {
@@ -230,46 +164,7 @@ export default {
       })
       setTimeout(() => {
         this.loading = false
-      }, 1000)
-    },
-    onUserEdit (user) {
-      this.fixedEdit = !this.fixedEdit
-      this.user = user
-    },
-    async onUserRole (user) {
-      await this.$store.dispatch('system/UserRoleList', { username: user.username })
-      this.fixedUserRoleEdit = !this.fixedUserRoleEdit
-      this.user = user
-    },
-    async onUserPolicy (user) {
-      await axios.get('/admin/users/policies', { params: { userId: user.id } }).then(response => {
-        const { code, data } = response.data
-        if (code === '200' && data) {
-          this.userPolicyList = data.map(e => e.policyId)
-        }
-      }).catch(error => {
-        console.error(error)
-      })
-      setTimeout(() => {
-        this.loading = false
-      }, 1000)
-
-      this.fixedPolicyEdit = !this.fixedPolicyEdit
-      this.user = user
-    },
-    onUserDel (user) {
-      this.$q.dialog({
-        title: this.$t('dialog.delete.title'),
-        message: this.$t('dialog.delete.message'),
-        ok: { color: 'primary' },
-        cancel: true
-      }).onOk(() => {
-        this.$store.dispatch('system/DeleteUser', user.id).then(data => {
-          this.onRefresh()
-        }).catch(error => {
-          console.log(error)
-        })
-      })
+      }, 200)
     }
   }
 }
