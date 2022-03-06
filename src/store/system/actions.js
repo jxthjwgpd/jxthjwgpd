@@ -14,27 +14,6 @@ export function error ({ dispatch, state }, playload) {
   }
 }
 
-// ------ common ------
-export function comadd (url, config) {
-  return axios.post(url, config).then(response => {
-    const { code, message, data } = response.data
-    if (code === '200' && data) {
-      this.$q.notify({
-        type: 'positive',
-        message: '保存成功！'
-      })
-      this.$router.go(-1)
-    } else {
-      this.$q.notify({
-        message
-      })
-    }
-  }).catch(error => {
-    return Promise.reject(error)
-  })
-}
-
-
 // ------ system ------
 export function DeleteUser ({ dispatch, state }, id) {
   return axios.post('/admin/users/delete', { id }).then(response => {
