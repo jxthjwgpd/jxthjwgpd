@@ -23,9 +23,9 @@ export default {
                   type: 'positive',
                   message: vnode.context.$t('dialog.delete.success')
                 })
-                if (binding.arg === 'list' && vnode.context.onRefresh) {
+                if (binding.arg === 'refresh' && vnode.context.onRefresh) {
                   vnode.context.onRefresh()
-                } else {
+                } else if (binding.arg === 'goback') {
                   vnode.context.$router.go(-1)
                 }
               } else {

@@ -68,7 +68,7 @@ const routes = [
           { path: 'admin/policies', meta: { sidebar: true, auth: true }, component: () => import('pages/system/PolicyList.vue') },
           { path: 'admin/policies/:id', meta: { sidebar: true, auth: true }, component: () => import('pages/system/PolicyEdit.vue') },
           { path: 'metrics', meta: { sidebar: true, auth: true }, component: () => import('pages/system/Metrics.vue') },
-          { path: 'menus', meta: { sidebar: true, auth: true }, component: () => import('pages/system/MenuList.vue') }
+          { path: 'menus', meta: { sidebar: true, auth: true }, component: () => import('pages/system/MenuIndex.vue') }
         ]
       },
       {
@@ -78,7 +78,8 @@ const routes = [
           { path: '', redirect: { path: 'brand' } },
           { path: 'brand', meta: { sidebar: true, auth: true }, component: () => import('pages/shop/goods/BrandList.vue') },
           { path: 'brand/form', meta: { sidebar: true, auth: true }, component: () => import('pages/shop/goods/BrandForm.vue') },
-          { path: 'brand/form/:id', meta: { sidebar: true, auth: true }, component: () => import('pages/shop/goods/BrandForm.vue') }
+          { path: 'brand/form/:id', meta: { sidebar: true, auth: true }, component: () => import('pages/shop/goods/BrandForm.vue') },
+          { path: 'category', meta: { sidebar: true, auth: true }, component: () => import('pages/shop/goods/CategoryIndex.vue') }
         ]
       },
       {

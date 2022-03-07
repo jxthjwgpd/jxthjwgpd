@@ -148,7 +148,7 @@
                 color="negative"
                 class="wd-80"
                 v-if="form.id"
-                v-del="{id:form.id, url:'/admin/goods/brand-delete'}"
+                v-del:goback="{id:form.id, url:'/admin/goods/brand-delete'}"
               >删除</q-btn>
             </q-card-actions>
           </q-form>
@@ -177,8 +177,7 @@ export default {
         brandLogo: '',
         brandCover: '',
         content: ''
-      },
-      fixed: false
+      }
     }
   },
   mounted () {

@@ -93,7 +93,7 @@
               <a
                 class="text-primary"
                 href="javascript:;"
-                v-del:list="{id:props.row.id, url:'/admin/goods/brand-delete'}"
+                v-del:refresh="{id:props.row.id, url:'/admin/goods/brand-delete'}"
               >删除</a>
             </q-td>
           </q-tr>
