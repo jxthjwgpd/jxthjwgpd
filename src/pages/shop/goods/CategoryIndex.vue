@@ -200,7 +200,7 @@ export default {
   watch: {
     'selected' () {
       if (this.selected) {
-        this.onRefeshMenuDetail()
+        this.onRefeshCategoryDetail()
       }
     }
   },
@@ -222,7 +222,7 @@ export default {
         this.loading = false
       }, 200)
     },
-    async onRefeshMenuDetail () {
+    async onRefeshCategoryDetail () {
       this.loading = true
       await axios.get('/admin/goods/category-detail', { params: { id: this.selected } }).then(response => {
         const { code, data } = response.data
