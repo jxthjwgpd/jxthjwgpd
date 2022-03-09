@@ -79,7 +79,10 @@ const routes = [
           { path: 'brand', meta: { sidebar: true, auth: true }, component: () => import('pages/shop/goods/BrandList.vue') },
           { path: 'brand/form', meta: { sidebar: true, auth: true }, component: () => import('pages/shop/goods/BrandForm.vue') },
           { path: 'brand/form/:id', meta: { sidebar: true, auth: true }, component: () => import('pages/shop/goods/BrandForm.vue') },
-          { path: 'category', meta: { sidebar: true, auth: true }, component: () => import('pages/shop/goods/CategoryIndex.vue') }
+          { path: 'category', meta: { sidebar: true, auth: true }, component: () => import('pages/shop/goods/CategoryIndex.vue') },
+          { path: 'attribute', meta: { sidebar: true, auth: true }, component: () => import('pages/shop/goods/AttributeList.vue') },
+          { path: 'attribute/form', meta: { sidebar: true, auth: true }, component: () => import('pages/shop/goods/AttributeForm.vue') },
+          { path: 'attribute/form/:id', meta: { sidebar: true, auth: true }, component: () => import('pages/shop/goods/AttributeForm.vue') }
         ]
       },
       {

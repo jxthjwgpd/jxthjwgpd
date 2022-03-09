@@ -243,7 +243,6 @@ export default {
         id: null,
         pid: '0',
         content: ''
-
       }
     },
     async onSubmit () {
