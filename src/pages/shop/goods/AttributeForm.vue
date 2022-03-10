@@ -72,14 +72,14 @@
                           <th class="text-left wd-200">属性名称</th>
                           <th class="text-left wd-200">类型</th>
                           <th class="text-left wd-150">排序</th>
-                          <th class="text-left">属性选项</th>
+                          <th class="text-left">属性选项（选择类型后点击单元格）</th>
                           <th class="text-left wd-80">操作</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr
-                          v-for="item in attrData"
-                          :key="item.index"
+                          v-for="(item,index) in attrData"
+                          :key="index"
                         >
                           <td>
                             <q-input
@@ -91,12 +91,14 @@
                             />
                           </td>
                           <td>
-                            <q-input
+                            <q-select
                               outlined
                               dense
-                              no-error-icon
-                              v-model.trim="item.attrName"
-                              placeholder="请输入排序号"
+                              options-dense
+                              v-model="item.attrInputType"
+                              :options="attrInputTypeOptions"
+                              emit-value
+                              map-options
                             />
                           </td>
                           <td>
@@ -104,16 +106,42 @@
                               outlined
                               dense
                               no-error-icon
-                              v-model.trim="item.attrName"
+                              v-model.trim="item.sort"
                               placeholder="请输入排序号"
                             />
                           </td>
-                          <td>4</td>
                           <td>
+                            {{item.attrValues}}
+                            {{item.attrInputType===0?item.attrValues=null:null}}
+                            <q-popup-edit
+                              v-if="item.attrInputType!==0"
+                              buttons
+                              v-model="item.attrValues"
+                            >
+                              <q-input
+                                type="textarea"
+                                v-model="item.attrValues"
+                                autofocus
+                                counter
+                                @keyup.enter.stop
+                              />
+                              <div style="font-size:12px;">
+                                回车换行或逗号分隔属性
+                              </div>
+                            </q-popup-edit>
+                          </td>
+                          <td class="q-gutter-xs action">
                             <a
+                              v-if="item.id"
                               class="text-primary"
                               href="javascript:;"
-                              v-del:refresh="{id:0, url:'/admin/goods/attribute-delete'}"
+                              v-del:refresh="{id:item.id, url:'/admin/goods/attribute-delete'}"
+                            >删除</a>
+                            <a
+                              v-else
+                              class="text-primary"
+                              href="javascript:;"
+                              @click="onRemoveRow(index)"
                             >删除</a>
                           </td>
                         </tr>
@@ -123,6 +151,7 @@
                       label="新增一行"
                       color="primary"
                       class="q-mt-md"
+                      @click="onAddRow"
                     />
                   </div>
                 </div>
@@ -170,7 +199,13 @@ export default {
       form: {
         id: this.$route.params.id
       },
-      attrData: []
+      attrInputTypeOptions: [
+        { label: '手动输入', value: 0 },
+        { label: '单选', value: 1 },
+        { label: '复选', value: 2 }
+      ],
+      attrData: [],
+      attr: { id: null, attrName: null, typeId: this.$route.params.id, attrInputType: 0, attrValues: null, sort: '0' }
     }
   },
   mounted () {
@@ -185,19 +220,7 @@ export default {
         const { code, data } = response.data
         if (code === '200' && data) {
           this.form = data.goodsType
-        }
-      }).catch(error => {
-        console.error(error)
-      })
-      await axios.get('/admin/goods/attributes', { params: { typeId: this.form.id } }).then(response => {
-        const { code, data } = response.data
-        if (code === '200' && data) {
-          this.attrData = data
-        }
-        if (this.attrData && this.attrData.length === 0) {
-          this.attrData = [{
-            id: 0
-          }]
+          this.attrData = data.goodsAttributes
         }
       }).catch(error => {
         console.error(error)
@@ -210,14 +233,20 @@ export default {
       this.loading = true
       delete this.form.created
       delete this.form.status
-      await axios.post(`/admin/goods/type${this.form.id ? '-update' : 's'}`, this.form).then(response => {
+      this.attrData.filter(e => e.attrValues).forEach(e => {
+        e.attrValues = e.attrValues.replace(/\r\n/g, ',').replace(/\r/g, ',').replace(/\n/g, ',').replace(/,{2,}/g, ',')
+      })
+      const goodsTypeVo = {
+        goodsType: this.form,
+        goodsAttributes: this.attrData
+      }
+      await axios.post(`/admin/goods/type${this.form.id ? '-update' : 's'}`, goodsTypeVo).then(response => {
         const { code, message, data } = response.data
         if (code === '200' && data) {
           this.$q.notify({
             type: 'positive',
             message: '保存成功.'
           })
-
           this.$router.go(-1)
         } else {
           this.$q.notify({
@@ -230,6 +259,15 @@ export default {
       setTimeout(() => {
         this.loading = false
       }, 200)
+    },
+    onAddRow () {
+      const _attr = { ...this.attr }
+      this.attrData.push(_attr)
+    },
+    onRemoveRow (index) {
+      if (index) {
+        this.attrData.splice(index, 1)
+      }
     }
   }
 }
