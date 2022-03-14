@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @click="fixed=true">
     <q-input
       outlined
       dense

@@ -24,7 +24,7 @@
           active-color="primary"
           indicator-color="primary"
         >
-          <q-route-tab to="/goods/attribute">属性分类列表</q-route-tab>
+          <q-route-tab to="/goods/attribute">属性列表</q-route-tab>
           <q-route-tab :to="`/goods/attribute/form${form.id!=null?'/'+form.id:''}`">{{form.id!=null?'编辑':'新增'}}属性</q-route-tab>
         </q-tabs>
       </div>
