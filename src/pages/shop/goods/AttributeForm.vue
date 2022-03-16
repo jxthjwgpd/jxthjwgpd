@@ -34,7 +34,7 @@
       >
         <div class="container">
           <q-form
-            class="my-form "
+            class="my-form gutter"
             @submit="onSubmit"
           >
             <q-card-section class="q-pa-xl">

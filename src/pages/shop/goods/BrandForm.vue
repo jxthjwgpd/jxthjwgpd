@@ -34,7 +34,7 @@
       >
         <div class="container">
           <q-form
-            class="my-form "
+            class="my-form gutter"
             @submit="onSubmit"
           >
             <q-card-section class="q-pa-xl">
@@ -52,7 +52,7 @@
                   >
                   </q-input>
                 </div>
-                <div class="col-12 col-md-4 col-lg-4  q-pt-none">
+                <div class="col-12 col-md-4 col-lg-4">
                   <label for="brandInitial"> 品牌首字母 </label>
                   <q-input
                     outlined
