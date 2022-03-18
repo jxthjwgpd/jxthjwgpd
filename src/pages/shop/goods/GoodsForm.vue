@@ -52,7 +52,7 @@
                   :done="step > 1"
                 >
                   <div class="row q-col-gutter-md">
-                    <div class="col-12">
+                    <div class="col-12 col-md-8 col-lg-8">
                       <label for="brandName"> 商品名称</label>
                       <q-input
                         outlined
@@ -64,6 +64,14 @@
                         class="q-mt-sm"
                       >
                       </q-input>
+                    </div>
+                    <div class="col-12  col-md-4 col-lg-4">
+                      <label for="brandInitial"> 商品类型 </label>
+                      <q-dialog-tree-select
+                        title="商品类型"
+                        v-model="form.type"
+                        url="/admin/goods/category-tree"
+                      />
                     </div>
                     <div class="col-12">
                       <label for="keywords"> 商品关键字</label>
@@ -89,18 +97,13 @@
                           v-model.trim="form.goodsSummary"
                           placeholder="请输入商品简介"
                           class="q-mt-sm"
+                          autogrow
+                          :input-style="{ minHeight: '60px' }"
                         >
                         </q-input>
                       </div>
                     </div>
-                    <div class="col-12">
-                      <label for="brandInitial"> 商品类型 </label>
-                      <q-dialog-tree-select
-                        title="商品类型"
-                        v-model="form.type"
-                        url="/admin/goods/category-tree"
-                      />
-                    </div>
+
                     <div class="col-12 col-md-4 col-lg-4">
                       <label for="brandCover"> 商品品牌</label>
                       <div class="q-mt-sm">
@@ -112,6 +115,7 @@
                           option-label="brandName"
                           option-value="id"
                           :options="brandOptions"
+                          clearable
                         >
                           <template v-slot:no-option>
                             <q-item>
@@ -124,24 +128,6 @@
                       </div>
                     </div>
 
-                  </div>
-                  <div class="row q-col-gutter-md q-mt-xs">
-                    <div class="col-12 col-md-4 col-lg-4">
-                      <label for="weight"> 供货商</label>
-                      <div class="q-mt-sm">
-                        <q-input
-                          outlined
-                          dense
-                          no-error-icon
-                          v-model.trim="form.weight"
-                          placeholder="请输入商品重量"
-                          class="q-mt-sm"
-                        >
-                        </q-input>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row q-col-gutter-md q-mt-xs">
                     <div class="col-12 col-md-4 col-lg-4">
                       <label for="weight"> 商户号</label>
                       <div class="q-mt-sm">
@@ -156,58 +142,8 @@
                         </q-input>
                       </div>
                     </div>
-                  </div>
-                  <div class="row q-col-gutter-md q-mt-xs">
                     <div class="col-12 col-md-4 col-lg-4">
-                      <label for="weight"> 销量</label>
-                      <div class="q-mt-sm">
-                        <q-input
-                          outlined
-                          dense
-                          no-error-icon
-                          v-model.trim="form.weight"
-                          placeholder="请输入商品重量"
-                          class="q-mt-sm"
-                        >
-                        </q-input>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row q-col-gutter-md q-mt-xs">
-                    <div class="col-12 col-md-4 col-lg-4">
-                      <label for="volume"> 库存量</label>
-                      <div class="q-mt-sm">
-                        <q-input
-                          outlined
-                          dense
-                          no-error-icon
-                          v-model.trim="form.storeCount"
-                          placeholder="请输入商品体积"
-                          class="q-mt-sm"
-                        >
-                        </q-input>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row q-col-gutter-md q-mt-xs">
-                    <div class="col-12 col-md-4 col-lg-4">
-                      <label for="volume"> 评论量</label>
-                      <div class="q-mt-sm">
-                        <q-input
-                          outlined
-                          dense
-                          no-error-icon
-                          v-model.trim="form.storeCount"
-                          placeholder="请输入商品体积"
-                          class="q-mt-sm"
-                        >
-                        </q-input>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row q-col-gutter-md q-mt-xs">
-                    <div class="col-12 col-md-4 col-lg-4">
-                      <label for="weight"> 点击量</label>
+                      <label for="weight"> 供货商</label>
                       <div class="q-mt-sm">
                         <q-input
                           outlined
@@ -236,8 +172,6 @@
                         </q-input>
                       </div>
                     </div>
-                  </div>
-                  <div class="row q-col-gutter-md q-mt-xs">
                     <div class="col-12 col-md-4 col-lg-4">
                       <label for="spu"> SPU</label>
                       <div class="q-mt-sm">
@@ -252,8 +186,6 @@
                         </q-input>
                       </div>
                     </div>
-                  </div>
-                  <div class="row q-col-gutter-md q-mt-xs">
                     <div class="col-12 col-md-4 col-lg-4">
                       <label for="sku"> SKU</label>
                       <div class="q-mt-sm">
@@ -284,8 +216,6 @@
                         </q-input>
                       </div>
                     </div>
-                  </div>
-                  <div class="row q-col-gutter-md q-mt-xs">
                     <div class="col-12 col-md-4 col-lg-4">
                       <label for="volume"> 商品体积</label>
                       <div class="q-mt-sm">
@@ -301,6 +231,69 @@
                       </div>
                     </div>
                   </div>
+                  <!-- <div class="row q-col-gutter-md q-mt-xs">
+                    <div class="col-12 col-md-4 col-lg-4">
+                      <label for="volume"> 评论量</label>
+                      <div class="q-mt-sm">
+                        <q-input
+                          outlined
+                          dense
+                          no-error-icon
+                          v-model.trim="form.storeCount"
+                          placeholder="请输入商品体积"
+                          class="q-mt-sm"
+                        >
+                        </q-input>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-4 col-lg-4">
+                      <label for="weight"> 点击量</label>
+                      <div class="q-mt-sm">
+                        <q-input
+                          outlined
+                          dense
+                          no-error-icon
+                          v-model.trim="form.weight"
+                          placeholder="请输入商品重量"
+                          class="q-mt-sm"
+                        >
+                        </q-input>
+                      </div>
+                    </div>
+                  </div> -->
+                  <!-- <div class="row q-col-gutter-md q-mt-xs">
+                    <div class="col-12 col-md-4 col-lg-4">
+                      <label for="weight"> 销量</label>
+                      <div class="q-mt-sm">
+                        <q-input
+                          outlined
+                          dense
+                          no-error-icon
+                          v-model.trim="form.weight"
+                          placeholder="请输入商品重量"
+                          class="q-mt-sm"
+                        >
+                        </q-input>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row q-col-gutter-md q-mt-xs">
+                    <div class="col-12 col-md-4 col-lg-4">
+                      <label for="volume"> 库存量</label>
+                      <div class="q-mt-sm">
+                        <q-input
+                          outlined
+                          dense
+                          no-error-icon
+                          v-model.trim="form.storeCount"
+                          placeholder="请输入商品体积"
+                          class="q-mt-sm"
+                        >
+                        </q-input>
+                      </div>
+                    </div>
+                  </div> -->
+
                   <div class="row q-col-gutter-md q-mt-xs">
                     <div class="col-12 col-md-4 col-lg-4">
                       <label for="volume"> 商品排序</label>
@@ -317,7 +310,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="row q-col-gutter-md q-mt-xs">
+                  <!-- <div class="row q-col-gutter-md q-mt-xs">
                     <div class="col-12 col-md-4 col-lg-4">
                       <label for="volume"> 是否新品</label>
                       <div class="q-mt-sm q-gutter-sm">
@@ -446,7 +439,7 @@
                   <div class="row q-col-gutter-md q-mt-xs">
                   </div>
                   <div class="row q-col-gutter-md q-mt-xs">
-                  </div>
+                  </div> -->
                 </q-step>
 
                 <q-step
@@ -455,7 +448,90 @@
                   icon="create_new_folder"
                   :done="step > 2"
                 >
-                  An ad group contains one or more ads which target a shared set of keywords.
+                  <div class="row q-col-gutter-md">
+                    <div class="col-12 col-md-4 col-lg-4">
+                      <label for="ate"> 商品属性</label>
+                      <div class="q-mt-sm">
+                        <q-select
+                          outlined
+                          dense
+                          no-error-icon
+                          v-model="form.goodsType"
+                          option-label="typeName"
+                          option-value="id"
+                          :options="typeOptions"
+                          clearable
+                          @input="onChangeGoodsType"
+                        >
+                          <template v-slot:no-option>
+                            <q-item>
+                              <q-item-section class="text-grey">
+                                No results
+                              </q-item-section>
+                            </q-item>
+                          </template>
+                        </q-select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="q-mt-md">
+                    <q-markup-table
+                      separator="cell"
+                      flat
+                      bordered
+                      v-if="goodsTypeData.length>0"
+                    >
+                      <thead>
+                        <tr>
+                          <th class="text-right wd-150">属性名称</th>
+                          <th class="text-left">内容</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          v-for="(item,index) in goodsTypeData"
+                          :key="index"
+                        >
+                          <td class="text-right">{{item.attrName}}</td>
+                          <td class="text-left">
+                            <template v-if="item.attrType==='0'">
+                              <q-input
+                                outlined
+                                dense
+                                no-error-icon
+                                v-model.trim="form.goodsSummary"
+                                placeholder="请输入属性值"
+                                autogrow
+                              >
+                              </q-input>
+                            </template>
+                            <template v-else-if="item.attrType==='1' && item.attrValues">
+                              <q-radio
+                                dense
+                                v-model="form.shape"
+                                v-for="item in item.attrValues.split(',')"
+                                :key="item"
+                                :val="item"
+                                :label="item"
+                                class="q-mr-md"
+                              />
+                            </template>
+                            <template v-else-if="item.attrType==='2' && item.attrValues">
+                              <q-checkbox
+                                dense
+                                v-model="form.atrs"
+                                v-for="item in item.attrValues.split(',')"
+                                :key="item"
+                                :val="item"
+                                :label="item"
+                                class="q-mr-md"
+                              />
+                            </template>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </q-markup-table>
+                  </div>
                 </q-step>
 
                 <q-step
@@ -464,63 +540,46 @@
                   icon="assignment"
                   :done="step > 3"
                 >
+                  <div class="row">
+                    <div class="col-12">
+                      <label for="volume"> 商品图片</label>
+                      <div class="q-mt-sm">
+                        图片选择器
+                      </div>
+                    </div>
+                  </div>
                   <div class="row q-col-gutter-md q-mt-xs">
-                    <div class="col-12 col-md-4 col-lg-4">
-                      <label for="volume"> 商品详细描述</label>
-                      <div class="q-mt-sm">
-                        <q-input
-                          outlined
-                          dense
-                          no-error-icon
-                          v-model.trim="form.storeCount"
-                          placeholder="请输入商品体积"
-                          class="q-mt-sm"
-                        >
-                        </q-input>
-                      </div>
-                    </div>
-                    <div class="col-12 col-md-4 col-lg-4">
-                      <label for="volume"> 商品手机端描述</label>
-                      <div class="q-mt-sm">
-                        <q-input
-                          outlined
-                          dense
-                          no-error-icon
-                          v-model.trim="form.storeCount"
-                          placeholder="请输入商品体积"
-                          class="q-mt-sm"
-                        >
-                        </q-input>
-                      </div>
-                    </div>
-                    <div class="col-12 col-md-4 col-lg-4">
-                      <label for="volume"> 商品原始图</label>
-                      <div class="q-mt-sm">
-                        <q-input
-                          outlined
-                          dense
-                          no-error-icon
-                          v-model.trim="form.storeCount"
-                          placeholder="请输入商品体积"
-                          class="q-mt-sm"
-                        >
-                        </q-input>
-                      </div>
-                    </div>
                     <div class="col-12 col-md-4 col-lg-4">
                       <label for="volume"> 视频</label>
                       <div class="q-mt-sm">
-                        <q-input
-                          outlined
-                          dense
-                          no-error-icon
-                          v-model.trim="form.storeCount"
-                          placeholder="请输入商品体积"
-                          class="q-mt-sm"
-                        >
-                        </q-input>
+                        视频媒体选择器
                       </div>
                     </div>
+                  </div>
+                  <div class="row q-col-gutter-md q-mt-xs">
+                    <div class="col-12">
+                      <label for="volume"> 商品详细描述</label>
+                      <div class="q-mt-sm">
+                        <q-editor
+                          v-model="form.content"
+                          min-height="25rem"
+                          class="q-mt-sm"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row q-col-gutter-md q-mt-xs">
+                    <div class="col-12 col-md-4 col-lg-4">
+                      <label for="volume"> 商品手机端描述</label>
+                      <div class="q-mt-sm">
+                        <q-editor
+                          v-model="form.content"
+                          min-height="30rem"
+                          class="q-mt-sm"
+                        />
+                      </div>
+                    </div>
+
                   </div>
                 </q-step>
 
@@ -577,7 +636,7 @@
                 </template>
               </q-stepper>
             </q-card-section>
-            <q-card-section class="q-pa-xl">
+            <!-- <q-card-section class="q-pa-xl">
               <div class="row q-col-gutter-md q-mt-xs">
                 <div class="col-12 col-md-4 col-lg-4">
                   <label for="volume"> 是否虚拟商品</label>
@@ -762,8 +821,8 @@
                   </div>
                 </div>
               </div>
-            </q-card-section>
-            <q-separator />
+            </q-card-section> -->
+            <!-- <q-separator />
             <q-card-actions class="q-pa-xl">
               <q-btn
                 color="primary"
@@ -781,7 +840,7 @@
                 v-if="form.id"
                 v-del:goback="{id:form.id, url:'/admin/goods/brand-delete'}"
               >删除</q-btn>
-            </q-card-actions>
+            </q-card-actions> -->
           </q-form>
         </div>
         <q-inner-loading :showing="loading">
@@ -802,9 +861,13 @@ export default {
   data () {
     return {
       loading: false,
-      step: 1,
+      step: 3,
       brandOptions: [],
+      typeOptions: [],
+      goodsTypeData: [],
       form: {
+        atrs: [],
+        content: ''
       }
     }
   },
@@ -825,9 +888,36 @@ export default {
       }).catch(error => {
         console.error(error)
       })
+      await axios.get('/admin/goods/type-list', {}).then(response => {
+        const { code, data } = response.data
+        if (code === '200' && data) {
+          this.typeOptions = data
+        }
+      }).catch(error => {
+        console.error(error)
+      })
       setTimeout(() => {
         this.loading = false
       }, 200)
+    },
+    async onChangeGoodsType (value) {
+      if (value && value.id) {
+        this.loading = true
+        await axios.get('/admin/goods/type-detail', { params: { id: value.id } }).then(response => {
+          const { code, data } = response.data
+          if (code === '200' && data) {
+            this.goodsTypeData = data.goodsAttributes
+            console.log(this.goodsTypeData)
+          }
+        }).catch(error => {
+          console.error(error)
+        })
+        setTimeout(() => {
+          this.loading = false
+        }, 200)
+      } else {
+        this.goodsTypeData = []
+      }
     },
     onSubmit (evt) {
 
