@@ -544,7 +544,20 @@
                     <div class="col-12">
                       <label for="volume"> 商品图片</label>
                       <div class="q-mt-sm">
-                        图片选择器
+                        <q-uploader-file2
+                          v-model="imagesUrl"
+                          :maxFiles="9"
+                          :multiple="true"
+                        />
+                        <!-- <q-uploader
+                          ref="uploaderRef"
+                          :url="`${baseUrl}/uploader`"
+                          flat
+                          bordered
+                          multiple
+                          max-files="9"
+                        >
+                        </q-uploader> -->
                       </div>
                     </div>
                   </div>
@@ -552,7 +565,13 @@
                     <div class="col-12 col-md-4 col-lg-4">
                       <label for="volume"> 视频</label>
                       <div class="q-mt-sm">
-                        视频媒体选择器
+                        <q-uploader
+                          ref="uploaderRef"
+                          :url="`${baseUrl}/uploader`"
+                          flat
+                          bordered
+                        >
+                        </q-uploader>
                       </div>
                     </div>
                   </div>
@@ -860,6 +879,7 @@ export default {
   name: 'GoodsForm',
   data () {
     return {
+      baseUrl: axios.defaults.baseURL,
       loading: false,
       step: 3,
       brandOptions: [],
@@ -867,6 +887,7 @@ export default {
       goodsTypeData: [],
       form: {
         atrs: [],
+        imagesUrl: [],
         content: ''
       }
     }

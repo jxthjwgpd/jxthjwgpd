@@ -7,7 +7,7 @@
       <q-card-section horizontal>
         <q-img
           class="col-6"
-          src="statics/index.jpg"
+          src="https://placeimg.com/1024/768/nature"
           v-if="$q.screen.gt.xs"
         >
           <div class="absolute-bottom-left text-subtitle2 text-center">

@@ -99,6 +99,11 @@
             </div>
           </q-slide-transition>
         </q-card>
+        <q-card flat>
+          <q-card-section>
+            <q-dialog-image-select />
+          </q-card-section>
+        </q-card>
       </div>
       <div :class="`col-md-4 col-12 ${$q.screen.gt.sm?'q-pl-md':'q-mt-md'}`">
         <q-card flat>
