@@ -545,33 +545,25 @@
                       <label for="volume"> 商品图片</label>
                       <div class="q-mt-sm">
                         <q-uploader-file2
-                          v-model="imagesUrl"
+                          v-model="form.imagesUrl"
                           :maxFiles="9"
                           :multiple="true"
                         />
-                        <!-- <q-uploader
-                          ref="uploaderRef"
-                          :url="`${baseUrl}/uploader`"
-                          flat
-                          bordered
-                          multiple
-                          max-files="9"
-                        >
-                        </q-uploader> -->
                       </div>
                     </div>
                   </div>
                   <div class="row q-col-gutter-md q-mt-xs">
-                    <div class="col-12 col-md-4 col-lg-4">
+                    <div class="col-12">
                       <label for="volume"> 视频</label>
                       <div class="q-mt-sm">
-                        <q-uploader
-                          ref="uploaderRef"
-                          :url="`${baseUrl}/uploader`"
-                          flat
-                          bordered
-                        >
-                        </q-uploader>
+                        <!-- <q-video
+                          :ratio="16/9"
+                          src="statics/san.mp4"
+                        /> -->
+                        <q-uploader-file2
+                          v-model="form.imagesUrl1"
+                          file-type="video"
+                        />
                       </div>
                     </div>
                   </div>
@@ -887,7 +879,8 @@ export default {
       goodsTypeData: [],
       form: {
         atrs: [],
-        imagesUrl: [],
+        imagesUrl: ['/userfiles/fileupload/202009/2.jpg'],
+        imagesUrl1: ['/userfiles/fileupload/202009/san.mp4'],
         content: ''
       }
     }
