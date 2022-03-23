@@ -556,13 +556,13 @@
                     <div class="col-12">
                       <label for="volume"> 视频</label>
                       <div class="q-mt-sm">
-                        <!-- <q-video
-                          :ratio="16/9"
-                          src="statics/san.mp4"
-                        /> -->
-                        <q-uploader-file2
+                        <!-- <q-uploader-file2
                           v-model="form.imagesUrl1"
                           file-type="video"
+                        /> -->
+                        <q-video
+                          :ratio="16/9"
+                          src="http://127.0.0.1:4001/userfiles/fileupload/202009/san.mp4?source=preview"
                         />
                       </div>
                     </div>
