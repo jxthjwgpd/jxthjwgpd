@@ -79,18 +79,37 @@
             </div>
           </template>
         </q-img>
-        <q-video
-          :ratio="16/9"
-          :src="`${baseUrl+fileUrl}?source=preview`"
-          v-if="fileType==='video'"
-        >
-
-        </q-video>
+        <div v-if="fileType==='video'">
+          <q-video
+            :ratio="16/9"
+            :src="`${baseUrl+fileUrl}?source=preview`"
+          />
+          <div class="row justify-center q-mt-md">
+            <q-btn-group push>
+              <q-btn
+                push
+                color="primary"
+                icon="cloud_upload"
+                label="上传视频"
+                @click="uploader=!uploader"
+              />
+              <q-btn
+                push
+                color="primary"
+                icon="delete"
+                label="删除"
+                @click="deleteUrl(index)"
+              />
+            </q-btn-group>
+          </div>
+        </div>
       </div>
-      <div
-        class="col-3"
-        v-if="fileUrls.length === 0 || maxFiles>1"
-      >
+    </div>
+    <div
+      class="q-col-gutter-md row items-start q-mt-sm"
+      v-if="fileUrls.length === 0 || maxFiles>1"
+    >
+      <div class="col-6 col-sm-6 col-md-3">
         <div
           class="my-dropzone dropzone-default"
           @click="uploader=!uploader"
