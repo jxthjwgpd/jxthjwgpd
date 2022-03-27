@@ -690,7 +690,7 @@
                         <q-markup-table>
                           <thead>
                             <tr>
-                              <th class="text-left wd-200">属性名称</th>
+                              <th class="text-left wd-200">规格名称</th>
                               <th class="text-left wd-200">类型</th>
                               <th class="text-left wd-150">排序</th>
                               <th class="text-left">属性选项（选择类型后点击单元格）</th>
@@ -699,7 +699,7 @@
                           </thead>
                           <tbody>
                             <tr
-                              v-for="(item,index) in attrData"
+                              v-for="(item,index) in specData"
                               :key="index"
                             >
                               <td>
@@ -707,7 +707,7 @@
                                   outlined
                                   dense
                                   no-error-icon
-                                  v-model.trim="item.attrName"
+                                  v-model.trim="item.specName"
                                   placeholder="请输入属性名称"
                                 />
                               </td>
@@ -716,8 +716,8 @@
                                   outlined
                                   dense
                                   options-dense
-                                  v-model="item.attrType"
-                                  :options="attrTypeOptions"
+                                  v-model="item.specType"
+                                  :options="specTypeOptions"
                                   emit-value
                                   map-options
                                 />
@@ -732,16 +732,15 @@
                                 />
                               </td>
                               <td>
-                                {{item.attrValues}}
-                                {{item.attrType===0?item.attrValues=null:null}}
+                                {{item.specValues}}
+                                {{item.specType===0?item.specValues=null:null}}
                                 <q-popup-edit
-                                  v-if="item.attrType!==0"
                                   buttons
-                                  v-model="item.attrValues"
+                                  v-model="item.specValues"
                                 >
                                   <q-input
                                     type="textarea"
-                                    v-model="item.attrValues"
+                                    v-model="item.specValues"
                                     autofocus
                                     counter
                                     @keyup.enter.stop
@@ -771,9 +770,82 @@
                         <q-btn
                           label="新增一行"
                           color="primary"
-                          class="q-mt-md"
+                          class="q-mt-md q-mb-md"
                           @click="onAddRow"
                         />
+                        <q-markup-table>
+                          <thead>
+                            <tr>
+                              <th class="text-left wd-200">商品规格</th>
+                              <th class="text-left wd-80">销售价格</th>
+                              <th class="text-left wd-80">市场价格</th>
+                              <th class="text-left wd-80">库存</th>
+                              <th class="text-left wd-80">体积</th>
+                              <th class="text-left wd-80">重量</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr
+                              v-for="(item,index) in specData"
+                              :key="index"
+                            >
+                              <td>
+                                <q-input
+                                  outlined
+                                  dense
+                                  no-error-icon
+                                  v-model.trim="item.sort"
+                                  type="number"
+                                />
+                              </td>
+                              <td>
+                                <q-input
+                                  outlined
+                                  dense
+                                  no-error-icon
+                                  v-model.trim="item.sort"
+                                  type="number"
+                                />
+                              </td>
+                              <td>
+                                <q-input
+                                  outlined
+                                  dense
+                                  no-error-icon
+                                  v-model.trim="item.sort"
+                                  type="number"
+                                />
+                              </td>
+                              <td>
+                                <q-input
+                                  outlined
+                                  dense
+                                  no-error-icon
+                                  v-model.trim="item.sort"
+                                  type="number"
+                                />
+                              </td>
+                              <td>
+                                <q-input
+                                  outlined
+                                  dense
+                                  no-error-icon
+                                  v-model.trim="item.sort"
+                                  type="number"
+                                />
+                              </td>
+                              <td>
+                                <q-input
+                                  outlined
+                                  dense
+                                  no-error-icon
+                                  v-model.trim="item.sort"
+                                  type="number"
+                                />
+                              </td>
+                            </tr>
+                          </tbody>
+                        </q-markup-table>
                       </div>
                     </div>
                   </div>
@@ -1020,7 +1092,13 @@ export default {
         imagesUrl1: ['/userfiles/fileupload/202009/san.mp4'],
         content: ''
       },
-      attrData: []
+      specTypeOptions: [
+        { label: '文本', value: 0 },
+        { label: '颜色', value: 1 },
+        { label: '图片', value: 2 }
+      ],
+      specData: [],
+      spec: { id: null, specName: null, specId: this.$route.params.id, specType: 0, specValues: null, sort: '0' }
     }
   },
   mounted () {
@@ -1072,8 +1150,11 @@ export default {
       }
     },
     onAddRow () {
-      const _attr = { ...this.attr }
-      this.attrData.push(_attr)
+      const _spec = { ...this.spec }
+      this.specData.push(_spec)
+    },
+    onRemoveRow (index) {
+      this.specData.splice(index, 1)
     },
     onSubmit (evt) {
 
