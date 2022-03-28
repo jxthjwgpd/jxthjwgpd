@@ -733,7 +733,7 @@
                               </td>
                               <td>
                                 {{item.specValues}}
-                                {{item.specType===0?item.specValues=null:null}}
+                                <!-- {{item.specType===0?item.specValues=null:null}} -->
                                 <q-popup-edit
                                   buttons
                                   v-model="item.specValues"
@@ -773,30 +773,54 @@
                           class="q-mt-md q-mb-md"
                           @click="onAddRow"
                         />
-                        <q-markup-table>
+                        <q-markup-table separator="cell">
                           <thead>
                             <tr>
-                              <th class="text-left wd-200">商品规格</th>
-                              <th class="text-left wd-80">销售价格</th>
-                              <th class="text-left wd-80">市场价格</th>
-                              <th class="text-left wd-80">库存</th>
-                              <th class="text-left wd-80">体积</th>
-                              <th class="text-left wd-80">重量</th>
+                              <th
+                                class="text-center"
+                                :colspan="specData.length"
+                              >商品规格</th>
+                              <th
+                                class="text-center wd-100"
+                                rowspan="2"
+                              >销售价格</th>
+                              <th
+                                class="text-center wd-100"
+                                rowspan="2"
+                              >市场价格</th>
+                              <th
+                                class="text-center wd-100"
+                                rowspan="2"
+                              > 库存</th>
+                              <th
+                                class="text-center wd-100"
+                                rowspan="2"
+                              >体积</th>
+                              <th
+                                class="text-center wd-100"
+                                rowspan="2"
+                              >重量</th>
+                            </tr>
+                            <tr>
+                              <td
+                                v-for="(item,index) in specData"
+                                :key="index"
+                                class="text-center"
+                              >
+                                {{item.specName}}
+                              </td>
                             </tr>
                           </thead>
                           <tbody>
-                            <tr
-                              v-for="(item,index) in specData"
+                            <!-- <tr
+                              v-for="(item,index) in specData1"
                               :key="index"
                             >
-                              <td>
-                                <q-input
-                                  outlined
-                                  dense
-                                  no-error-icon
-                                  v-model.trim="item.sort"
-                                  type="number"
-                                />
+                              <td
+                                v-for="(item1,index1) in specData"
+                                :key="index1"
+                              >
+                                {{index1}}
                               </td>
                               <td>
                                 <q-input
@@ -843,7 +867,7 @@
                                   type="number"
                                 />
                               </td>
-                            </tr>
+                            </tr> -->
                           </tbody>
                         </q-markup-table>
                       </div>
