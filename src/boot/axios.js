@@ -7,14 +7,11 @@ export default ({ app, router, Vue }) => {
         const { code, message } = response.data
         if (code === '401' || code === '1007') {
             console.warn(message + '[' + code + ']')
-            Vue.prototype.$q.dialog({
-                title: '提示',
-                message: message + '[' + code + ']',
-                ok: '确认',
-                cancel: false,
-                persistent: true
-            }).onOk(() => {
-                // router.push({ path: '/user/login', query: { 'redirect': router.history.current.path } })
+            Vue.prototype.$q.notify({
+                message: message + '[' + code + '].',
+                color: 'negative',
+                icon: 'report_problem',
+                timeout: Math.random() * 5000 + 3000
             })
             return Promise.reject(null)
         }

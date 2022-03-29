@@ -28,11 +28,17 @@ const gettingComponent = [
     ]
   },
   {
-    id: 'admin',
-    name: '管理员',
-    icon: 'group',
+    id: 'image',
+    name: '上传图片',
+    icon: 'image',
+    path: '/component/form1'
+  },
+  {
+    id: 'sku',
+    name: 'SKU',
+    icon: 'blur_linear',
     badge: 'New',
-    path: '/component/form/basic-form'
+    path: '/component/form/sku'
   },
   {
     id: 'form',

@@ -13,19 +13,6 @@
           />
           <q-breadcrumbs-el label="操作日志" />
         </q-breadcrumbs>
-        <div class="my-page-header-subtitle">
-          <router-link
-            to="/system/admin/users"
-            class="my-page-header-goback"
-          >
-            <q-icon
-              name="arrow_back"
-              size="sm"
-              class="text-bold text-dark"
-            />
-          </router-link>
-          日志列表
-        </div>
       </div>
     </div>
 

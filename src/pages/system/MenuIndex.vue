@@ -572,8 +572,8 @@ export default {
     async onSubmit () {
       this.loading = true
       delete this.form.status
-      delete this.form.pids
-      this.form.pid = this.pNodeId
+      delete this.form.created
+      // this.form.pid = this.pNodeId
       this.form.icon = this.iconSelected
       await axios.post('/admin/menus', this.form).then(response => {
         const { code, message, data } = response.data

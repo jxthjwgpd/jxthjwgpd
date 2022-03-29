@@ -8,28 +8,27 @@
             to="/"
           />
           <q-breadcrumbs-el
-            label="系统设置"
+            label="系统权限"
             to="/system"
           />
-          <q-breadcrumbs-el label="权限策略" />
+          <q-breadcrumbs-el label="策略管理" />
         </q-breadcrumbs>
-        <div class="my-page-header-subtitle">
-          <router-link
-            to="/system/admin/users"
-            class="my-page-header-goback"
-          >
-            <q-icon
-              name="arrow_back"
-              size="sm"
-              class="text-bold text-dark"
-            />
-          </router-link>
-          策略管理
-        </div>
       </div>
     </div>
 
     <div class="my-page-body">
+      <div class="my-tabs">
+        <q-tabs
+          narrow-indicator
+          align="left"
+          class="text-grey"
+          active-color="primary"
+          indicator-color="primary"
+        >
+          <q-route-tab to="/system/policies">策略列表</q-route-tab>
+          <q-route-tab to="/system/policies/form">新增策略</q-route-tab>
+        </q-tabs>
+      </div>
       <div class="my-table">
         <q-table
           :data="data"
@@ -42,26 +41,6 @@
           binary-state-sort
           square
         >
-          <template v-slot:top-left>
-            <q-btn
-              label="新建"
-              color="primary"
-              @click="fixed=!fixed"
-            />
-          </template>
-
-          <template v-slot:top-right>
-            <q-input
-              dense
-              debounce="300"
-              v-model="policyName"
-              placeholder="请输入策略名称"
-            >
-              <template v-slot:append>
-                <q-icon name="search" />
-              </template>
-            </q-input>
-          </template>
 
           <template v-slot:no-data="{ message }">
             <div class="full-width row flex-center q-gutter-sm q-pa-lg">
@@ -129,14 +108,7 @@
         </q-table>
       </div>
     </div>
-    <policy-form
-      v-model="fixed"
-      v-on:refresh="onRefresh"
-    />
-    <q-dialog
-      v-model="fixedEdit"
-      position="right"
-    >
+    <q-dialog v-model="fixedEdit">
       <q-card
         flat
         bordered
@@ -163,7 +135,6 @@
 </template>
 
 <script>
-import PolicyForm from './PolicyForm.vue'
 import axios from 'axios'
 import { codemirror } from 'vue-codemirror'
 import 'codemirror/lib/codemirror.css'
@@ -175,8 +146,7 @@ import json from '../../assets/json.js'
 export default {
   name: 'PolicyList',
   components: {
-    codemirror,
-    PolicyForm
+    codemirror
   },
   data () {
     return {

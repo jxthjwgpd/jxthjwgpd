@@ -38,9 +38,10 @@ const routes = [
             component: () => import('layouts/BlankLayout.vue'),
             children: [
               { path: '', redirect: { path: 'basic-form' } },
-              { path: 'basic-form', meta: { sidebar: true, auth: true }, component: () => import('pages/form/BasicForm.vue') },
-              { path: 'step-form', meta: { sidebar: true, auth: true }, component: () => import('pages/form/StepForm.vue') },
-              { path: 'advanced-form', meta: { sidebar: true, auth: true }, component: () => import('pages/ComeSoon.vue') }
+              { path: 'basic-form', meta: { sidebar: true, auth: false }, component: () => import('pages/form/BasicForm.vue') },
+              { path: 'step-form', meta: { sidebar: true, auth: false }, component: () => import('pages/form/StepForm.vue') },
+              { path: 'advanced-form', meta: { sidebar: true, auth: false }, component: () => import('pages/ComeSoon.vue') },
+              { path: 'sku', meta: { sidebar: true, auth: false }, component: () => import('pages/form/SKU.vue') }
             ]
           },
           {
@@ -58,15 +59,16 @@ const routes = [
         path: 'system',
         component: () => import('layouts/BlankLayout.vue'),
         children: [
-          { path: '', redirect: { path: 'admin/users' } },
-          { path: 'admin', redirect: { path: 'admin/users' } },
-          { path: 'admin/users', meta: { sidebar: true, auth: true }, component: () => import('pages/system/UserList.vue') },
-          { path: 'admin/users/log', meta: { sidebar: true, auth: true }, component: () => import('pages/system/LogList.vue') },
-          { path: 'admin/users/:username', meta: { sidebar: true, auth: true }, component: () => import('pages/system/UserDetail.vue') },
-          { path: 'admin/roles', meta: { sidebar: true, auth: true }, component: () => import('pages/system/RoleList.vue') },
-          { path: 'admin/roles/menu/:id', meta: { sidebar: true, auth: true }, component: () => import('pages/system/RoleMenuEdit.vue') },
-          { path: 'admin/policies', meta: { sidebar: true, auth: true }, component: () => import('pages/system/PolicyList.vue') },
-          { path: 'admin/policies/:id', meta: { sidebar: true, auth: true }, component: () => import('pages/system/PolicyEdit.vue') },
+          { path: '', redirect: { path: 'users' } },
+          // { path: 'admin', redirect: { path: 'admin/users' } },
+          { path: 'users', meta: { sidebar: true, auth: true }, component: () => import('pages/system/UserList.vue') },
+          { path: 'logs', meta: { sidebar: true, auth: true }, component: () => import('pages/system/LogList.vue') },
+          { path: 'users/:username', meta: { sidebar: true, auth: true }, component: () => import('pages/system/UserDetail.vue') },
+          { path: 'roles', meta: { sidebar: true, auth: true }, component: () => import('pages/system/RoleList.vue') },
+          { path: 'roles/menu/:id', meta: { sidebar: true, auth: true }, component: () => import('pages/system/RoleMenuEdit.vue') },
+          { path: 'policies', meta: { sidebar: true, auth: true }, component: () => import('pages/system/PolicyList.vue') },
+          { path: 'policies/form', meta: { sidebar: true, auth: true }, component: () => import('pages/system/PolicyForm.vue') },
+          { path: 'policies/form/:id', meta: { sidebar: true, auth: true }, component: () => import('pages/system/PolicyForm.vue') },
           { path: 'metrics', meta: { sidebar: true, auth: true }, component: () => import('pages/system/Metrics.vue') },
           { path: 'menus', meta: { sidebar: true, auth: true }, component: () => import('pages/system/MenuIndex.vue') }
         ]
