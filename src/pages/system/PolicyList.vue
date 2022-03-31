@@ -88,14 +88,14 @@
                 class="q-gutter-xs action"
               >
                 <router-link
-                  :to="`policies/${props.row.id}`"
+                  :to="`policies/form/${props.row.id}`"
                   class="text-primary"
                   v-if="props.row.policyType==='2'"
                 >编辑</router-link>
                 <a
                   class="text-primary"
                   href="javascript:;"
-                  @click="onDel(props.row)"
+                  v-del:refresh="{id:props.row.id, url:'/admin/policy-delete'}"
                   v-if="props.row.policyType==='2'"
                 >删除</a>
                 <span
@@ -224,28 +224,6 @@ export default {
       this.fixedEdit = !this.fixedEdit
       this.policy = policy
       this.policy.content = this.prettify(policy.content)
-    },
-    onSubmit () {
-
-    },
-    onDel (policy) {
-      this.$q.dialog({
-        title: this.$t('dialog.delete.title'),
-        message: this.$t('dialog.delete.message'),
-        cancel: true
-      }).onOk(() => {
-        this.loading = true
-        axios.post('/admin/policies/delete', { id: policy.id }).then(response => {
-          const { code, data } = response.data
-          if (code === '200' && data) {
-            this.onRefresh()
-          }
-          this.loading = false
-        }).catch(error => {
-          console.error(error)
-          this.loading = false
-        })
-      })
     }
   }
 }

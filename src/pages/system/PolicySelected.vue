@@ -195,7 +195,7 @@ export default {
       const params = {
         policyName: this.policyName
       }
-      await axios.get('/admin/policies/list', params).then(response => {
+      await axios.get('/admin/policy-list', params).then(response => {
         const { code, data } = response.data
         if (code === '200' && data) {
           this.policyList = data

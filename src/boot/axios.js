@@ -8,7 +8,7 @@ export default ({ app, router, Vue }) => {
         if (code === '401' || code === '1007') {
             console.warn(message + '[' + code + ']')
             Vue.prototype.$q.notify({
-                message: message + '[' + code + '].',
+                message: message + '[' + code + ']，请重新登录.',
                 color: 'negative',
                 icon: 'report_problem',
                 timeout: Math.random() * 5000 + 3000

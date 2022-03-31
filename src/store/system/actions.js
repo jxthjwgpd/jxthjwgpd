@@ -15,19 +15,6 @@ export function error ({ dispatch, state }, playload) {
 }
 
 // ------ system ------
-export function DeleteUser ({ dispatch, state }, id) {
-  return axios.post('/admin/users/delete', { id }).then(response => {
-    const { code, data } = response.data
-    if (code === '200' && data) {
-      return data
-    } else {
-      dispatch('error', { ...response.data })
-    }
-  }).catch(error => {
-    return Promise.reject(error)
-  })
-}
-
 export function UserDetail ({ dispatch, state }, username) {
   return axios.get('/admin/users/detail', { params: { username } }).then(response => {
     const { code, data } = response.data
@@ -74,19 +61,6 @@ export function DeleteUserRole ({ dispatch }, { id, username }) {
     const { code, data } = response.data
     if (code === '200' && data) {
       dispatch('UserRoleList', { username })
-    } else {
-      dispatch('error', { ...response.data })
-    }
-  }).catch(error => {
-    return Promise.reject(error)
-  })
-}
-
-export function DeleteRole ({ dispatch, state }, id) {
-  return axios.post('/admin/roles/delete', { id }).then(response => {
-    const { code, data } = response.data
-    if (code === '200' && data) {
-      return data
     } else {
       dispatch('error', { ...response.data })
     }

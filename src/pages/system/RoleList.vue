@@ -8,28 +8,27 @@
             to="/"
           />
           <q-breadcrumbs-el
-            label="系统设置"
+            label="系统权限"
             to="/system"
           />
-          <q-breadcrumbs-el label="角色组" />
+          <q-breadcrumbs-el label="角色管理" />
         </q-breadcrumbs>
-        <div class="my-page-header-subtitle">
-          <router-link
-            to="/system/admin/users"
-            class="my-page-header-goback"
-          >
-            <q-icon
-              name="arrow_back"
-              size="sm"
-              class="text-bold text-dark"
-            />
-          </router-link>
-          角色组管理
-        </div>
       </div>
     </div>
 
     <div class="my-page-body">
+      <div class="my-tabs">
+        <q-tabs
+          narrow-indicator
+          align="left"
+          class="text-grey"
+          active-color="primary"
+          indicator-color="primary"
+        >
+          <q-route-tab to="/system/roles">角色列表</q-route-tab>
+          <q-route-tab to="/system/roles/form">新增角色</q-route-tab>
+        </q-tabs>
+      </div>
       <div class="my-table">
         <q-table
           :data="data"
@@ -42,7 +41,7 @@
           binary-state-sort
           square
         >
-          <template v-slot:top-left>
+          <!-- <template v-slot:top-left>
             <q-btn
               label="新建"
               color="primary"
@@ -61,7 +60,7 @@
                 <q-icon name="search" />
               </template>
             </q-input>
-          </template>
+          </template> -->
 
           <template v-slot:no-data="{ message }">
             <div class="full-width row flex-center q-gutter-sm q-pa-lg">
@@ -76,7 +75,12 @@
               <q-td
                 key="roleName"
                 :props="props"
-              >{{ props.row.roleName|| '-' }}</q-td>
+              >
+                <router-link
+                  :to="`roles/form/${props.row.id}`"
+                  class="text-primary"
+                >{{ props.row.roleName|| '-' }}</router-link>
+              </q-td>
               <q-td
                 key="remark"
                 :props="props"
@@ -97,24 +101,19 @@
                 :props="props"
                 class="q-gutter-xs action"
               >
-                <a
-                  class="text-primary"
-                  href="javascript:;"
-                  @click="onRoleEdit(props.row)"
-                >编辑</a>
                 <router-link
-                  :to="`roles/menu/${props.row.id}`"
+                  :to="`roles/form/${props.row.id}`"
                   class="text-primary"
-                >权限配置</router-link>
+                >编辑</router-link>
                 <a
                   class="text-primary"
                   href="javascript:;"
                   @click="onRolePolicy(props.row)"
-                >授权</a>
+                >添加授权</a>
                 <a
                   class="text-primary"
                   href="javascript:;"
-                  @click="onRoleDel(props.row)"
+                  v-del:refresh="{id:props.row.id, url:'/admin/role-delete'}"
                 >删除</a>
               </q-td>
             </q-tr>
@@ -122,7 +121,7 @@
         </q-table>
       </div>
     </div>
-    <role-form
+    <!-- <role-form
       v-model="fixed"
       v-on:refresh="onRefresh"
     />
@@ -130,27 +129,27 @@
       v-model="fixedEdit"
       v-on:refresh="onRefresh"
       :role="role"
-    />
+    /> -->
     <policy-selected
       v-model="fixedPolicyEdit"
       :id="role.id"
       :label="role.roleName"
       :data="rolePolicyList"
-      url="/admin/roles/policies"
+      url="/admin/role-policies"
     />
   </q-page>
 </template>
 
 <script>
-import RoleForm from './RoleForm.vue'
-import RoleEdit from './RoleEdit.vue'
+// import RoleForm from './RoleForm.vue'
+// import RoleEdit from './RoleEdit.vue'
 import PolicySelected from './PolicySelected.vue'
 import axios from 'axios'
 export default {
   name: 'RoleList',
   components: {
-    RoleForm,
-    RoleEdit,
+    // RoleForm,
+    // RoleEdit,
     PolicySelected
   },
   data () {
@@ -166,7 +165,7 @@ export default {
       },
       columns: [
         { name: 'roleName', label: '角色名', align: 'left', field: 'roleName', style: 'width: 200px' },
-        { name: 'remark', label: '说明', align: 'left', field: 'remark' },
+        { name: 'remark', label: '备注', align: 'left', field: 'remark' },
         { name: 'status', label: '状态', align: 'center', field: 'status', sortable: true, style: 'width: 100px' },
         { name: 'created', label: '创建时间', align: 'center', field: 'created', style: 'width: 180px' },
         { name: 'action', label: '操作', field: 'action', align: 'center', style: 'width: 100px' }
@@ -217,7 +216,7 @@ export default {
       this.role = role
     },
     async onRolePolicy (role) {
-      await axios.get('/admin/roles/policies', { params: { roleId: role.id } }).then(response => {
+      await axios.get('/admin/role-policies', { params: { roleId: role.id } }).then(response => {
         const { code, data } = response.data
         if (code === '200' && data) {
           this.rolePolicyList = data.map(e => e.policyId)
@@ -231,19 +230,6 @@ export default {
 
       this.fixedPolicyEdit = !this.fixedPolicyEdit
       this.role = role
-    },
-    onRoleDel (role) {
-      this.$q.dialog({
-        title: this.$t('dialog.delete.title'),
-        message: this.$t('dialog.delete.message'),
-        cancel: true
-      }).onOk(() => {
-        this.$store.dispatch('system/DeleteRole', role.id).then(data => {
-          this.onRefresh()
-        }).catch(error => {
-          console.log(error)
-        })
-      })
     }
   }
 }

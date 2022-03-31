@@ -540,7 +540,7 @@ export default {
     },
     async onRequest () {
       this.loading = true
-      await axios.get('/admin/menus/tree', {}).then(response => {
+      await axios.get('/admin/menu-tree', {}).then(response => {
         const { code, data } = response.data
         if (code === '200' && data) {
           this.treeData = data
@@ -554,7 +554,7 @@ export default {
     },
     async onRefeshMenuDetail () {
       this.loading = true
-      await axios.get('/admin/menus/detail', { params: { id: this.selected } }).then(response => {
+      await axios.get('/admin/menu-detail', { params: { id: this.selected } }).then(response => {
         const { code, data } = response.data
         if (code === '200' && data.menu) {
           this.form = data.menu

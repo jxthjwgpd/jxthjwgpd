@@ -52,10 +52,10 @@ export function navs ({ commit }) {
   commit('GLOBALLOADING', true)
   commit('AUTHORITY', { menu })
 
-  axios.get('/admin/authority').then(response => {
-    const { code, data: { menuList, permList } } = response.data
-    if (code === '200' && menuList) {
-      commit('AUTHORITY', { menu, menuList, permList })
+  axios.get('/admin/nav-menu-tree').then(response => {
+    const { code, data } = response.data
+    if (code === '200' && data) {
+      commit('AUTHORITY', { menu, data })
     }
     commit('GLOBALLOADING', false)
   }).catch(() => {

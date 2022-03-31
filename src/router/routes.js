@@ -62,13 +62,15 @@ const routes = [
           { path: '', redirect: { path: 'users' } },
           // { path: 'admin', redirect: { path: 'admin/users' } },
           { path: 'users', meta: { sidebar: true, auth: true }, component: () => import('pages/system/UserList.vue') },
-          { path: 'logs', meta: { sidebar: true, auth: true }, component: () => import('pages/system/LogList.vue') },
-          { path: 'users/:username', meta: { sidebar: true, auth: true }, component: () => import('pages/system/UserDetail.vue') },
+          { path: 'users/form', meta: { sidebar: true, auth: true }, component: () => import('pages/system/UserForm.vue') },
+          { path: 'users/form/:id', meta: { sidebar: true, auth: true }, component: () => import('pages/system/UserForm.vue') },
           { path: 'roles', meta: { sidebar: true, auth: true }, component: () => import('pages/system/RoleList.vue') },
-          { path: 'roles/menu/:id', meta: { sidebar: true, auth: true }, component: () => import('pages/system/RoleMenuEdit.vue') },
+          { path: 'roles/form', meta: { sidebar: true, auth: true }, component: () => import('pages/system/RoleForm.vue') },
+          { path: 'roles/form/:id', meta: { sidebar: true, auth: true }, component: () => import('pages/system/RoleForm.vue') },
           { path: 'policies', meta: { sidebar: true, auth: true }, component: () => import('pages/system/PolicyList.vue') },
           { path: 'policies/form', meta: { sidebar: true, auth: true }, component: () => import('pages/system/PolicyForm.vue') },
           { path: 'policies/form/:id', meta: { sidebar: true, auth: true }, component: () => import('pages/system/PolicyForm.vue') },
+          { path: 'logs', meta: { sidebar: true, auth: true }, component: () => import('pages/system/LogList.vue') },
           { path: 'metrics', meta: { sidebar: true, auth: true }, component: () => import('pages/system/Metrics.vue') },
           { path: 'menus', meta: { sidebar: true, auth: true }, component: () => import('pages/system/MenuIndex.vue') }
         ]

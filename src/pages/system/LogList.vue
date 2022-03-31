@@ -191,7 +191,7 @@ export default {
       const { page, rowsPerPage, sortBy, descending } = props.pagination
       const filter = props.filter
       this.loading = true
-      await axios.get('/admin/users/log', { params: { current: page, size: rowsPerPage, roleName: filter } }).then(response => {
+      await axios.get('/admin/user-logs', { params: { current: page, size: rowsPerPage, roleName: filter } }).then(response => {
         const { code, data } = response.data
         if (code === '200' && data) {
           this.pagination.page = data.current

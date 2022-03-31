@@ -40,12 +40,12 @@
             <q-card-section class="q-pa-xl">
               <div class="row q-col-gutter-md">
                 <div class="col-12 col-md-4 col-lg-4">
-                  <label for="brandName"> 策略名称</label>
+                  <label for="policyName"> 策略名称</label>
                   <q-input
                     outlined
                     dense
                     no-error-icon
-                    v-model.trim="form.brandName"
+                    v-model.trim="form.policyName"
                     placeholder="请输入策略名称"
                     :rules="[ val => val && val.length > 0 || '请设置策略名称']"
                     class="q-mt-sm"
@@ -53,17 +53,34 @@
                   </q-input>
                 </div>
                 <div class="col-12">
-                  <label for="brandInitial"> 策略描述 </label>
+                  <label for="policyNameCn"> 策略描述 </label>
                   <q-input
                     outlined
                     dense
                     no-error-icon
-                    v-model.trim="form.brandInitial"
-                    placeholder="请输入品牌首字母"
-                    :rules="[ val => val && val.length > 0 || '请设置品牌首字母']"
+                    v-model.trim="form.policyNameCn"
+                    placeholder="请输入策略描述"
                     class="q-mt-sm"
                   >
                   </q-input>
+                </div>
+                <div class="col-12">
+                  <label for="roleNameCn"> 策略类型 </label>
+                  <div class="q-gutter-sm q-mt-xs">
+                    <q-radio
+                      v-model="form.policyType"
+                      val="1"
+                      label="系统策略"
+                      dense
+                      disable
+                    />
+                    <q-radio
+                      v-model="form.policyType"
+                      val="2"
+                      label="自定义策略"
+                      dense
+                    />
+                  </div>
                 </div>
               </div>
               <div class="row q-col-gutter-md q-mt-xs">
@@ -98,12 +115,12 @@
                   </q-card>
                 </div>
                 <div class="col-12">
-                  <label for="summary"> 简介 </label>
+                  <label for="remark"> 备注 </label>
                   <q-input
                     dense
                     outlined
                     no-error-icon
-                    v-model="form.summary"
+                    v-model="form.remark"
                     autogrow
                     :input-style="{ minHeight: '65px' }"
                     class="q-mt-sm"
@@ -127,7 +144,7 @@
                 color="negative"
                 class="wd-80"
                 v-if="form.id"
-                v-del:goback="{id:form.id, url:'/admin/system/policies-delete'}"
+                v-del:goback="{id:form.id, url:'/admin/policy-delete'}"
               >删除</q-btn>
             </q-card-actions>
           </q-form>
@@ -169,11 +186,9 @@ export default {
       },
       form: {
         id: this.$route.params.id,
-        brandRecommend: '0',
-        brandLogo: '',
-        brandCover: '',
-        content: ''
+        policyType: '2'
       },
+      oldPolicyName: null,
       policyContent: null
     }
   },
@@ -183,18 +198,16 @@ export default {
     }
   },
   methods: {
-    rettify: json.prettify,
+    prettify: json.prettify,
     minify: json.minify,
     async onRequest () {
       this.loading = true
-      await axios.get('/admin/goods/brand-detail', { params: { id: this.form.id } }).then(response => {
+      await axios.get('/admin/policy-detail', { params: { id: this.form.id } }).then(response => {
         const { code, data } = response.data
         if (code === '200' && data) {
-          this.form = data.goodsBrand
-          if (this.form) {
-            this.brandCoverUrl = this.form.brandCover
-            this.brandLogoUrl = this.form.brandLogo
-          }
+          this.form = data.policy
+          this.oldPolicyName = data.policy.policyName
+          this.policyContent = this.prettify(data.policy.content)
         }
       }).catch(error => {
         console.error(error)
@@ -207,7 +220,9 @@ export default {
       this.loading = true
       delete this.form.created
       delete this.form.status
-      await axios.post(`/admin/goods/brand${this.form.id ? '-update' : 's'}`, this.form).then(response => {
+      this.form.oldPolicyName = this.oldPolicyName
+      this.form.content = this.minify(this.policyContent)
+      await axios.post(`/admin/polic${this.form.id ? 'y-update' : 'ies'}`, this.form).then(response => {
         const { code, message, data } = response.data
         if (code === '200' && data) {
           this.$q.notify({
