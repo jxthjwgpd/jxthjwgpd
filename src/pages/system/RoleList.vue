@@ -82,6 +82,11 @@
                 >{{ props.row.roleName|| '-' }}</router-link>
               </q-td>
               <q-td
+                key="roleNameCn"
+                :props="props"
+                class="text--line2-f"
+              >{{ props.row.roleNameCn }}</q-td>
+              <q-td
                 key="remark"
                 :props="props"
                 class="text--line2-f"
@@ -109,7 +114,7 @@
                   class="text-primary"
                   href="javascript:;"
                   @click="onRolePolicy(props.row)"
-                >添加授权</a>
+                >授权</a>
                 <a
                   class="text-primary"
                   href="javascript:;"
@@ -164,7 +169,8 @@ export default {
         rowsNumber: 10
       },
       columns: [
-        { name: 'roleName', label: '角色名', align: 'left', field: 'roleName', style: 'width: 200px' },
+        { name: 'roleName', label: '角色名称', align: 'left', field: 'roleName', style: 'width: 200px' },
+        { name: 'roleNameCn', label: '说明', align: 'left', field: 'roleNameCn' },
         { name: 'remark', label: '备注', align: 'left', field: 'remark' },
         { name: 'status', label: '状态', align: 'center', field: 'status', sortable: true, style: 'width: 100px' },
         { name: 'created', label: '创建时间', align: 'center', field: 'created', style: 'width: 180px' },

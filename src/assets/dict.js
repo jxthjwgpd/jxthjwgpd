@@ -12,6 +12,10 @@ const policyType = {
   '1': '系统策略',
   '2': '自定义策略'
 }
+const roleType = {
+  '1': '员工',
+  '2': '会员'
+}
 const yesOrno = {
   '1': '是',
   '0': '否'
@@ -20,5 +24,6 @@ const yesOrno = {
 module.exports = {
   sysStatus,
   policyType,
+  roleType,
   yesOrno
 }

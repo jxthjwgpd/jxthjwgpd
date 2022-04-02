@@ -65,19 +65,6 @@
                   </q-input>
                 </div>
                 <div class="col-12">
-                  <label for="remark"> 备注 </label>
-                  <div class="q-mt-sm">
-                    <q-input
-                      dense
-                      outlined
-                      no-error-icon
-                      v-model="form.remark"
-                      autogrow
-                      :input-style="{ minHeight: '60px' }"
-                    />
-                  </div>
-                </div>
-                <div class="col-12">
                   <label for="roleType"> 角色类型 </label>
                   <div class="q-gutter-sm q-mt-xs">
                     <q-radio
@@ -102,6 +89,19 @@
                       :ticked.sync="ticked"
                       :expanded.sync="expanded"
                       default-expand-all
+                    />
+                  </div>
+                </div>
+                <div class="col-12">
+                  <label for="remark"> 备注 </label>
+                  <div class="q-mt-sm">
+                    <q-input
+                      dense
+                      outlined
+                      no-error-icon
+                      v-model="form.remark"
+                      autogrow
+                      :input-style="{ minHeight: '60px' }"
                     />
                   </div>
                 </div>

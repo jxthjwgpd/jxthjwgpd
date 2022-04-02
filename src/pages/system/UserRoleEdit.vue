@@ -105,7 +105,7 @@ export default {
   methods: {
     async onSubmit () {
       this.loading = true
-      await axios.post('/admin/users/role', this.form).then(response => {
+      await axios.post('/admin/user-role', this.form).then(response => {
         const { code, message, data } = response.data
         if (code === '200' && data) {
           // this.$store.dispatch('system/UserRoleList', { userId: this.user.id })

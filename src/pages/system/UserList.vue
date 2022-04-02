@@ -8,10 +8,10 @@
             to="/"
           />
           <q-breadcrumbs-el
-            label="系统设置"
+            label="系统权限"
             to="/system"
           />
-          <q-breadcrumbs-el label="管理员" />
+          <q-breadcrumbs-el label="用户管理" />
         </q-breadcrumbs>
       </div>
     </div>
@@ -24,10 +24,8 @@
           active-color="primary"
           indicator-color="primary"
         >
-          <q-route-tab to="/system/admin/users">用户列表</q-route-tab>
-          <q-route-tab to="/system/admin/roles">角色组</q-route-tab>
-          <q-route-tab to="/system/admin/policies">权限策略</q-route-tab>
-          <q-route-tab to="/system/admin/users/log">操作日志</q-route-tab>
+          <q-route-tab to="/system/users">用户列表</q-route-tab>
+          <q-route-tab to="/system/users/form">新增用户</q-route-tab>
         </q-tabs>
       </div>
       <q-table
@@ -41,7 +39,7 @@
         binary-state-sort
         square
       >
-        <template v-slot:top-left>
+        <!-- <template v-slot:top-left>
           <q-btn
             label="新建"
             color="primary"
@@ -59,7 +57,7 @@
               <q-icon name="search" />
             </template>
           </q-input>
-        </template>
+        </template> -->
 
         <template v-slot:no-data="{ message }">
           <div class="full-width row flex-center q-gutter-sm q-pa-lg">
@@ -114,7 +112,7 @@
                 href="javascript:;"
                 @click="onUserRole(props.row)"
                 v-if="!props.row.isa"
-              >角色配置</a>
+              >角色</a>
               <a
                 class="text-primary"
                 href="javascript:;"
@@ -124,7 +122,7 @@
               <a
                 class="text-primary"
                 href="javascript:;"
-                @click="onUserDel(props.row)"
+                v-del:refresh="{id:props.row.id, url:'/admin/user-delete'}"
                 v-if="!props.row.isa"
               >删除</a>
               <span
@@ -136,7 +134,7 @@
         </template>
       </q-table>
     </div>
-    <user-form
+    <!-- <user-form
       v-model="fixed"
       v-on:refresh="onRefresh"
     />
@@ -144,35 +142,43 @@
       v-model="fixedEdit"
       v-on:refresh="onRefresh"
       :user="user"
-    />
-    <user-role-edit
-      v-model="fixedUserRoleEdit"
+    /> -->
+    <!-- <user-role-edit
+      v-model="fixedRoleEdit"
       :user="user"
       v-on:refresh="onRefresh"
+    /> -->
+    <role-selected
+      v-model="fixedRoleEdit"
+      :id="user.id"
+      :label="user.username"
+      :data="userRoleList"
+      url="/admin/user-roles"
     />
     <policy-selected
       v-model="fixedPolicyEdit"
       :id="user.id"
       :label="user.username"
       :data="userPolicyList"
-      url="/admin/users/policies"
+      url="/admin/user-policies"
     />
   </q-page>
 </template>
 
 <script>
-import UserForm from './UserForm.vue'
-import UserEdit from './UserEdit.vue'
-import UserRoleEdit from './UserRoleEdit.vue'
+// import UserForm from './UserForm.vue'
+// import UserEdit from './UserEdit.vue'
+// import UserRoleEdit from './UserRoleEdit.vue'
 import PolicySelected from './PolicySelected.vue'
+import RoleSelected from './RoleSelected.vue'
 import axios from 'axios'
 export default {
   name: 'UserList',
   components: {
-    UserForm,
-    UserEdit,
-    UserRoleEdit,
-    PolicySelected
+    // UserForm,
+    // UserEdit,
+    PolicySelected,
+    RoleSelected
   },
   data () {
     return {
@@ -193,14 +199,13 @@ export default {
         { name: 'created', label: '创建时间', align: 'center', field: 'created', style: 'width: 180px' },
         { name: 'action', label: '操作', field: 'action', align: 'center', style: 'width: 100px' }
       ],
-      user: {},
       data: [],
       selected: [],
-      fixed: false,
-      fixedEdit: false,
-      fixedUserRoleEdit: false,
+      fixedRoleEdit: false,
       fixedPolicyEdit: false,
-      userPolicyList: []
+      userPolicyList: [],
+      userRoleList: [],
+      user: {}
     }
   },
   mounted () {
@@ -244,17 +249,23 @@ export default {
         this.loading = false
       }, 1000)
     },
-    onUserEdit (user) {
-      this.fixedEdit = !this.fixedEdit
-      this.user = user
-    },
     async onUserRole (user) {
-      await this.$store.dispatch('system/UserRoleList', { username: user.username })
-      this.fixedUserRoleEdit = !this.fixedUserRoleEdit
+      await axios.get('/admin/user-roles', { params: { userId: user.id } }).then(response => {
+        const { code, data } = response.data
+        if (code === '200' && data) {
+          this.userRoleList = data.map(e => e.roleId)
+        }
+      }).catch(error => {
+        console.error(error)
+      })
+      setTimeout(() => {
+        this.loading = false
+      }, 1000)
+      this.fixedRoleEdit = !this.fixedRoleEdit
       this.user = user
     },
     async onUserPolicy (user) {
-      await axios.get('/admin/users/policies', { params: { userId: user.id } }).then(response => {
+      await axios.get('/admin/user-policies', { params: { userId: user.id } }).then(response => {
         const { code, data } = response.data
         if (code === '200' && data) {
           this.userPolicyList = data.map(e => e.policyId)
@@ -268,20 +279,6 @@ export default {
 
       this.fixedPolicyEdit = !this.fixedPolicyEdit
       this.user = user
-    },
-    onUserDel (user) {
-      this.$q.dialog({
-        title: this.$t('dialog.delete.title'),
-        message: this.$t('dialog.delete.message'),
-        ok: { color: 'primary' },
-        cancel: true
-      }).onOk(() => {
-        this.$store.dispatch('system/DeleteUser', user.id).then(data => {
-          this.onRefresh()
-        }).catch(error => {
-          console.log(error)
-        })
-      })
     }
   }
 }
