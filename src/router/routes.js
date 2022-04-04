@@ -29,8 +29,8 @@ const routes = [
         component: () => import('layouts/BlankLayout.vue'),
         children: [
           { path: '', redirect: { path: 'overview' } },
-          { path: 'overview', meta: { sidebar: true, auth: true }, component: () => import('pages/system/Overview.vue') },
-          { path: 'dashboard/analysis', meta: { sidebar: true, auth: true }, component: () => import('pages/system/Overview.vue') },
+          { path: 'overview', meta: { sidebar: true, auth: true }, component: () => import('pages/system/Overview2.vue') },
+          { path: 'dashboard/analysis', meta: { sidebar: true, auth: true }, component: () => import('pages/ComeSoon.vue') },
           { path: 'dashboard/monitor', meta: { sidebar: true, auth: true }, component: () => import('pages/ComeSoon.vue') },
           { path: 'dashboard/workplace', meta: { sidebar: true, auth: true }, component: () => import('pages/ComeSoon.vue') },
           {
@@ -59,8 +59,8 @@ const routes = [
         path: 'system',
         component: () => import('layouts/BlankLayout.vue'),
         children: [
-          { path: '', redirect: { path: 'users' } },
-          // { path: 'admin', redirect: { path: 'admin/users' } },
+          { path: '', redirect: { path: 'overview' } },
+          { path: 'overview', meta: { sidebar: true, auth: true }, component: () => import('pages/system/Overview.vue') },
           { path: 'users', meta: { sidebar: true, auth: true }, component: () => import('pages/system/UserList.vue') },
           { path: 'users/form', meta: { sidebar: true, auth: true }, component: () => import('pages/system/UserForm.vue') },
           { path: 'users/form/:id', meta: { sidebar: true, auth: true }, component: () => import('pages/system/UserForm.vue') },
