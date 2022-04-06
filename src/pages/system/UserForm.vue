@@ -319,7 +319,7 @@
                       v-else
                     />
                     <q-btn
-                      v-if="step > 1"
+                      v-if="step > 1 && step < 3"
                       @click="$refs.stepper.previous()"
                       label="返回"
                       class="wd-80 q-ml-sm"
