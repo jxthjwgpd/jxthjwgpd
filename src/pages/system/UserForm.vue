@@ -294,8 +294,16 @@
                 >
                   <div class="row q-col-gutter-md">
                     <div class="col-12">
-                      <label for="volume"> 商品规格多规格</label>
-                      <div class="q-mt-sm">
+                      <label for=""> 用户权限 </label>
+                      <div
+                        class="q-mt-sm"
+                        style="max-width:300px"
+                      >
+                        <q-tree
+                          :nodes="treeData"
+                          node-key="id"
+                          label-key="name"
+                        />
                       </div>
                     </div>
                   </div>
@@ -309,10 +317,10 @@
                       color="primary"
                       label="下一步"
                       class="wd-80"
-                      v-if="step===2"
+                      v-if="step > 1 && step < 4"
                     />
                     <q-btn
-                      @click="$refs.stepper.next()"
+                      @click="step === 4 ? $router.push({path:'/system/users'}):$refs.stepper.next()"
                       color="primary"
                       :label="step === 4 ? '完成' : '下一步'"
                       class="wd-80"
@@ -350,12 +358,13 @@ export default {
     return {
       baseUrl: axios.defaults.baseURL,
       loading: false,
-      step: 3,
+      step: 1,
       cpassword: null,
       roleList: [],
       roleType,
+      treeData: [],
       form: {
-        id: '1303974267116953602',
+        id: this.$route.params.id,
         userType: '1',
         roleIds: []
       }
@@ -367,25 +376,35 @@ export default {
     }
   },
   mounted () {
-    this.onRequest()
+
   },
   watch: {
     step () {
       if (this.step === 3) {
         this.onRoleList()
+      } else if (this.step === 4) {
+        this.onMenuTreeList()
       }
     }
   },
   methods: {
-    async onRequest () {
-      this.loading = true
-      this.onRoleList()
-      setTimeout(() => {
-        this.loading = false
-      }, 200)
+    async onMenuTreeList () {
+      if (this.form.id) {
+        this.loading = true
+        await axios.get('/admin/user-menu-tree', { params: { userId: this.form.id } }).then(response => {
+          const { code, data } = response.data
+          if (code === '200' && data) {
+            this.treeData = data.menuList
+          }
+        }).catch(error => {
+          console.error(error)
+        })
+        setTimeout(() => {
+          this.loading = false
+        }, 200)
+      }
     },
     async onRoleList () {
-      this.loading = true
       const params = {}
       await axios.get('/admin/role-list', params).then(response => {
         const { code, data } = response.data
@@ -395,9 +414,6 @@ export default {
       }).catch(error => {
         console.error(error)
       })
-      setTimeout(() => {
-        this.loading = false
-      }, 200)
     },
     clearSelected (id) {
       this.form.roleIds.splice(this.form.roleIds.indexOf(id), 1)
@@ -409,6 +425,25 @@ export default {
       console.log(this.form)
       if (this.step === 2) {
         await axios.post(`/admin/user${this.form.id ? '-update' : 's'}`, this.form).then(response => {
+          const { code, message, data } = response.data
+          if (code === '200' && data) {
+            this.$refs.stepper.next()
+            console.log(data)
+            this.form.id = data.userId
+          } else {
+            this.$q.notify({
+              message
+            })
+          }
+        }).catch(error => {
+          console.error(error)
+        })
+      } else if (this.step === 3) {
+        const params = {
+          userId: this.form.id,
+          roleIds: this.form.roleIds
+        }
+        await axios.post(`/admin/user-roles`, params).then(response => {
           const { code, message, data } = response.data
           if (code === '200' && data) {
             this.$refs.stepper.next()
