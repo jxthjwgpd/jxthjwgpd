@@ -168,8 +168,8 @@ export default {
         rowsNumber: 10
       },
       columns: [
-        { name: 'policyName', label: '策略名称', align: 'left', field: 'policyName', style: 'width: 280px' },
-        { name: 'policyNameCn', label: '说明', align: 'left', field: 'policyNameCn' },
+        { name: 'policyName', label: '策略', align: 'left', field: 'policyName', style: 'width: 280px' },
+        { name: 'policyNameCn', label: '策略名称', align: 'left', field: 'policyNameCn' },
         { name: 'policyType', label: '策略类型', align: 'left', field: 'policyType', style: 'width: 100px' },
         { name: 'status', label: '状态', align: 'center', field: 'status', sortable: true, style: 'width: 100px' },
         { name: 'created', label: '创建时间', align: 'center', field: 'created', style: 'width: 180px' },

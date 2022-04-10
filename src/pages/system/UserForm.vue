@@ -81,26 +81,26 @@
                 >
                   <div class="row q-col-gutter-md">
                     <div class="col-12 col-md-4 col-lg-4">
-                      <label for="username"> 登录名</label>
+                      <label for="username"> 登录账号</label>
                       <q-input
                         outlined
                         dense
                         no-error-icon
                         v-model.trim="form.username"
-                        placeholder="请输入登录名"
-                        :rules="[ val => val && val.length > 0 || '请设置登录名']"
+                        placeholder="请输入登录账号"
+                        :rules="[ val => val && val.length > 0 || '请设置登录账号']"
                         class="q-mt-sm"
                       >
                       </q-input>
                     </div>
                     <div class="col-12 col-md-4 col-lg-4">
-                      <label for="nickname"> 昵称</label>
+                      <label for="nickname"> 用户昵称</label>
                       <q-input
                         outlined
                         dense
                         no-error-icon
                         v-model.trim="form.nickname"
-                        placeholder="请输入昵称"
+                        placeholder="请输入用户昵称"
                         class="q-mt-sm"
                       >
                       </q-input>
@@ -375,9 +375,6 @@ export default {
       return this.roleList.filter(e => this.form.roleIds.find(a => a === e.id))
     }
   },
-  mounted () {
-
-  },
   watch: {
     step () {
       if (this.step === 3) {
@@ -428,7 +425,6 @@ export default {
           const { code, message, data } = response.data
           if (code === '200' && data) {
             this.$refs.stepper.next()
-            console.log(data)
             this.form.id = data.userId
           } else {
             this.$q.notify({
@@ -463,7 +459,3 @@ export default {
   }
 }
 </script>
-
-<style lang="sass" scoped>
-
-</style>

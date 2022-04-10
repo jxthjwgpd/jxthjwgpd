@@ -74,10 +74,14 @@
               :props="props"
             >
               <router-link
-                :to="`users/${props.row.username}`"
+                :to="`users/edit/${props.row.id}`"
                 class="text-primary"
               >{{ props.row.username }}</router-link>
             </q-td>
+            <q-td
+              key="nickname"
+              :props="props"
+            >{{ props.row.nickname|| '-' }}</q-td>
             <q-td
               key="roleName"
               :props="props"
@@ -101,12 +105,11 @@
               :props="props"
               class="q-gutter-xs action"
             >
-              <a
+              <router-link
+                :to="`users/edit/${props.row.id}`"
                 class="text-primary"
-                href="javascript:;"
-                @click="onUserEdit(props.row)"
                 v-if="!props.row.isa"
-              >编辑</a>
+              >编辑</router-link>
               <a
                 class="text-primary"
                 href="javascript:;"
@@ -192,7 +195,8 @@ export default {
         rowsNumber: 10
       },
       columns: [
-        { name: 'username', label: '用户账号', align: 'left', field: 'username', sortable: true, style: 'width: 200px' },
+        { name: 'username', label: '登录账号', align: 'left', field: 'username', sortable: true, style: 'width: 200px' },
+        { name: 'nickname', label: '用户昵称', align: 'left', field: 'nickname', style: 'width: 200px' },
         { name: 'roleName', label: '角色组', align: 'left', field: 'roleName', style: 'width: 200px' },
         { name: 'lastLoginIp', label: '最后登录信息', align: 'left', field: 'lastLoginIp', style: 'width: 200px' },
         { name: 'status', label: '状态', align: 'center', field: 'status', sortable: true, style: 'width: 100px' },

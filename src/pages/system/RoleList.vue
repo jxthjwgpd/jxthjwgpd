@@ -169,8 +169,8 @@ export default {
         rowsNumber: 10
       },
       columns: [
-        { name: 'roleName', label: '角色名称', align: 'left', field: 'roleName', style: 'width: 200px' },
-        { name: 'roleNameCn', label: '说明', align: 'left', field: 'roleNameCn' },
+        { name: 'roleName', label: '角色', align: 'left', field: 'roleName', style: 'width: 200px' },
+        { name: 'roleNameCn', label: '角色名称', align: 'left', field: 'roleNameCn' },
         { name: 'remark', label: '备注', align: 'left', field: 'remark' },
         { name: 'status', label: '状态', align: 'center', field: 'status', sortable: true, style: 'width: 100px' },
         { name: 'created', label: '创建时间', align: 'center', field: 'created', style: 'width: 180px' },

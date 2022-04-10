@@ -3,13 +3,10 @@ import Vuex from 'vuex'
 
 // import example from './module-example'
 import session from './session'
-import system from './system'
-
 Vue.use(Vuex)
 
 const modules = {
-  session,
-  system
+  session
 }
 
 /*

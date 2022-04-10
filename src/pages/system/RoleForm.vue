@@ -40,26 +40,26 @@
             <q-card-section class="q-pa-xl">
               <div class="row q-col-gutter-md">
                 <div class="col-12 col-md-4 col-lg-4">
-                  <label for="roleName"> 角色名</label>
+                  <label for="roleName"> 角色</label>
                   <q-input
                     outlined
                     dense
                     no-error-icon
                     v-model.trim="form.roleName"
-                    placeholder="请输入角色名称"
-                    :rules="[ val => val && val.length > 0 || '请设置角色名称']"
+                    placeholder="请输入角色"
+                    :rules="[ val => val && val.length > 0 || '请设置角色']"
                     class="q-mt-sm"
                   >
                   </q-input>
                 </div>
                 <div class="col-12">
-                  <label for="roleNameCn"> 角色描述 </label>
+                  <label for="roleNameCn"> 角色名称 </label>
                   <q-input
                     outlined
                     dense
                     no-error-icon
                     v-model.trim="form.roleNameCn"
-                    placeholder="请输入策略描述"
+                    placeholder="请输入角色名称"
                     class="q-mt-sm"
                   >
                   </q-input>

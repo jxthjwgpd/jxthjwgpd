@@ -40,26 +40,26 @@
             <q-card-section class="q-pa-xl">
               <div class="row q-col-gutter-md">
                 <div class="col-12 col-md-4 col-lg-4">
-                  <label for="policyName"> 策略名称</label>
+                  <label for="policyName"> 策略</label>
                   <q-input
                     outlined
                     dense
                     no-error-icon
                     v-model.trim="form.policyName"
-                    placeholder="请输入策略名称"
-                    :rules="[ val => val && val.length > 0 || '请设置策略名称']"
+                    placeholder="请输入策略"
+                    :rules="[ val => val && val.length > 0 || '请设置策略']"
                     class="q-mt-sm"
                   >
                   </q-input>
                 </div>
                 <div class="col-12">
-                  <label for="policyNameCn"> 策略描述 </label>
+                  <label for="policyNameCn"> 策略名称 </label>
                   <q-input
                     outlined
                     dense
                     no-error-icon
                     v-model.trim="form.policyNameCn"
-                    placeholder="请输入策略描述"
+                    placeholder="请输入策略名称"
                     class="q-mt-sm"
                   >
                   </q-input>
