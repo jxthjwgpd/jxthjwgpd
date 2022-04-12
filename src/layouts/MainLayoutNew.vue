@@ -111,7 +111,7 @@ export default {
     }
   },
   watch: {
-    $route: 'SidebarMenuDataMethod',
+    $route: 'sidebarMenuDataMethod',
     'sidebarLeftOpen' (val) {
       if (this.sidebarVisibility) {
         this.$refs.pageSidebar.setAttribute('style', 'width: ' + (val ? this.sidebar : this.sidebarMinimize) + 'px')
@@ -129,11 +129,11 @@ export default {
       }
     },
     menuData () {
-      this.SidebarMenuDataMethod(this.$route)
+      this.sidebarMenuDataMethod(this.$route)
     }
   },
   methods: {
-    SidebarMenuDataMethod (route) {
+    sidebarMenuDataMethod (route) {
       this.sidebarVisibility = route.meta.sidebar
       if (this.sidebarVisibility) {
         const { path } = route.matched[1]
@@ -141,7 +141,7 @@ export default {
       }
     },
     async onRequest () {
-      await this.$store.dispatch('session/navs', this.$route.meta)
+      await this.$store.dispatch('session/menus', this.$route)
     }
   }
 }

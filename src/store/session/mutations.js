@@ -25,7 +25,7 @@ export const GLOBALLOADING = (state, payload) => {
   state.global.loading = payload
 }
 
-export const AUTHORITY = (state, { menu, data }) => {
+export const MENULIST = (state, { menu, data }) => {
   if (data !== void 0) {
     state.global.menuList = menu.concat(data)
   }

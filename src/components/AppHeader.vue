@@ -129,13 +129,13 @@
           </q-menu>
 
         </q-tab>
-        <q-tab
+        <!-- <q-tab
           name="emoji_food_beverage"
           icon="emoji_food_beverage"
           v-if="$q.screen.gt.xs"
           @click="toolbar=!toolbar"
         >
-        </q-tab>
+        </q-tab> -->
         <q-btn-dropdown
           flat
           no-caps
@@ -193,25 +193,25 @@
             </div>
           </div>
         </q-btn-dropdown>
-        <q-tab
+        <!-- <q-tab
           name="menu"
           :icon="`${!right?'menu':'close'}`"
           v-if="$q.screen.gt.xs"
           @click="right = !right"
         >
-        </q-tab>
+        </q-tab> -->
       </q-tabs>
     </q-toolbar>
 
-    <q-drawer
+    <!-- <q-drawer
       v-model="right"
       side="right"
       overlay
       bordered
     >
       <q-settings />
-    </q-drawer>
-    <q-dialog v-model="toolbar">
+    </q-drawer> -->
+    <!-- <q-dialog v-model="toolbar">
       <q-card class="wd-500">
         <img src="statics/index.jpg">
 
@@ -259,7 +259,7 @@
           </q-item>
         </q-list>
       </q-card>
-    </q-dialog>
+    </q-dialog> -->
   </q-header>
 </template>
 

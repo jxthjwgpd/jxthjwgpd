@@ -59,34 +59,63 @@
                         <q-chip
                           square
                           removable
-                          v-for="i in 4"
-                          :key="i"
+                          v-for="(iem,index) in item.itemValues"
+                          :key="index"
                         >
-                          文本{{i}}
+                          文本{{index}}
+                        </q-chip>
+                        <q-chip
+                          square
+                          color="primary"
+                          text-color="white"
+                          clickable
+                        >
+                          新增
                         </q-chip>
                       </div>
                       <div v-else-if="item.specType===1">
                         <q-chip
                           square
                           removable
-                          v-for="i in 4"
-                          :key="i"
-                          color="deep-orange"
+                          clickable
+                          v-for="(iem,index) in item.itemValues"
+                          :key="index"
+                          style="width:120px"
+                          @remove="item.itemValues.splice(index,1)"
                         >
-                          颜色{{i}} {{item.itemValue}}
-                          <q-popup-proxy>
-                            <q-color v-model="item.itemValue" />
-                          </q-popup-proxy>
+                          <q-avatar :style="`background:${iem.color}`">
+                            <q-popup-proxy>
+                              <q-color v-model="iem.color" />
+                            </q-popup-proxy>
+                          </q-avatar>
+                          {{iem.color||'选择颜色'}}
+                        </q-chip>
+                        <q-chip
+                          square
+                          color="primary"
+                          text-color="white"
+                          clickable
+                          @click="item.itemValues.push({value:'#eee'})"
+                        >
+                          新增
                         </q-chip>
                       </div>
                       <div v-else-if="item.specType===2">
                         <q-chip
                           square
                           removable
-                          v-for="i in 4"
-                          :key="i"
+                          v-for="(iem,index) in item.itemValues"
+                          :key="index"
                         >
-                          图片{{i}}
+                          图片{{index}}
+                        </q-chip>
+                        <q-chip
+                          square
+                          color="primary"
+                          text-color="white"
+                          clickable
+                        >
+                          新增
                         </q-chip>
                       </div>
                     </td>
@@ -104,7 +133,7 @@
                       <a
                         class="text-primary"
                         href="javascript:;"
-                        @click="onRemoveRow(index)"
+                        @click="specData.splice(index, 1)"
                       >删除</a>
                     </td>
                   </tr>
@@ -240,7 +269,7 @@ export default {
       ],
       specData: [],
       specValueData: [],
-      spec: { id: null, specName: null, specId: this.$route.params.id, specType: 0, itemValue: '#fff', sort: '0' }
+      spec: { id: null, specName: null, specId: this.$route.params.id, specType: 0, itemValues: [], sort: '0' }
     }
   },
   mounted () {
@@ -252,9 +281,6 @@ export default {
     onAddRow () {
       const _spec = { ...this.spec }
       this.specData.push(_spec)
-    },
-    onRemoveRow (index) {
-      this.specData.splice(index, 1)
     },
     onSubmit (evt) {
 

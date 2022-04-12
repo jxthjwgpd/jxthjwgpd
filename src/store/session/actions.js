@@ -17,7 +17,7 @@ export function login ({ commit, dispatch, getters }, form) {
       commit('LOGIN', data.username)
       commit('TOKEN', data.access_token, '24h')
 
-      dispatch('navs')
+      dispatch('menus')
       return data
     }
     return Promise.reject(response.data)
@@ -48,14 +48,15 @@ export function logout ({ commit }) {
   commit('LOGOUT')
 }
 
-export function navs ({ commit }) {
+export function menus ({ commit }, route) {
+  // const { meta: { auth } } = route
   commit('GLOBALLOADING', true)
-  commit('AUTHORITY', { menu })
-
+  commit('MENULIST', { menu })
+  // if (auth) {
   axios.get('/admin/nav-menu-tree').then(response => {
     const { code, data } = response.data
     if (code === '200' && data) {
-      commit('AUTHORITY', { menu, data })
+      commit('MENULIST', { menu, data })
     }
     commit('GLOBALLOADING', false)
   }).catch(() => {

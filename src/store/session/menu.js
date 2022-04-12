@@ -36,7 +36,7 @@ const gettingComponent = [
   {
     id: 'sku',
     name: 'SKU',
-    icon: 'blur_linear',
+    icon: 'settings',
     badge: 'New',
     path: '/component/form/sku'
   },

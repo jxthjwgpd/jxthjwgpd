@@ -38,9 +38,9 @@ const routes = [
             component: () => import('layouts/BlankLayout.vue'),
             children: [
               { path: '', redirect: { path: 'basic-form' } },
-              { path: 'basic-form', meta: { sidebar: true, auth: false }, component: () => import('pages/form/BasicForm.vue') },
-              { path: 'step-form', meta: { sidebar: true, auth: false }, component: () => import('pages/form/StepForm.vue') },
-              { path: 'advanced-form', meta: { sidebar: true, auth: false }, component: () => import('pages/ComeSoon.vue') },
+              { path: 'basic-form', meta: { sidebar: true, auth: true }, component: () => import('pages/form/BasicForm.vue') },
+              { path: 'step-form', meta: { sidebar: true, auth: true }, component: () => import('pages/form/StepForm.vue') },
+              { path: 'advanced-form', meta: { sidebar: true, auth: true }, component: () => import('pages/ComeSoon.vue') },
               { path: 'sku', meta: { sidebar: true, auth: false }, component: () => import('pages/form/SKU.vue') }
             ]
           },
