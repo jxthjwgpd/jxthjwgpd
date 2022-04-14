@@ -22,6 +22,7 @@
         <div class="row q-col-gutter-md">
           <div class="col-12">
             <div class="q-mt-sm">
+              {{specData}}
               <q-markup-table>
                 <thead>
                   <tr>
@@ -55,65 +56,39 @@
                       />
                     </td>
                     <td>
-                      <div v-if="item.specType===0">
+                      <!-- <div v-if="item.specType===0"> -->
+                      <div>
                         <q-chip
                           square
                           removable
-                          v-for="(iem,index) in item.itemValues"
-                          :key="index"
+                          v-for="(iem,ii) in item.itemValues"
+                          :key="ii"
+                          @remove="item.itemValues.splice(ii,1)"
                         >
-                          文本{{index}}
-                        </q-chip>
-                        <q-chip
-                          square
-                          color="primary"
-                          text-color="white"
-                          clickable
-                        >
-                          新增
-                        </q-chip>
-                      </div>
-                      <div v-else-if="item.specType===1">
-                        <q-chip
-                          square
-                          removable
-                          clickable
-                          v-for="(iem,index) in item.itemValues"
-                          :key="index"
-                          style="width:120px"
-                          @remove="item.itemValues.splice(index,1)"
-                        >
-                          <q-avatar :style="`background:${iem.color}`">
+                          <q-avatar
+                            :style="`background:${iem.value||'#000'}`"
+                            v-if="item.specType===1"
+                          >
                             <q-popup-proxy>
-                              <q-color v-model="iem.color" />
+                              <q-color v-model="iem.value" />
                             </q-popup-proxy>
                           </q-avatar>
-                          {{iem.color||'选择颜色'}}
+                          <q-icon
+                            v-if="item.specType===2"
+                            :name="iem.value||'image'"
+                          />
+                          <input
+                            type="text"
+                            style="border:0; width:100px; background:initial;"
+                            v-model="iem.label"
+                          />
                         </q-chip>
                         <q-chip
                           square
                           color="primary"
                           text-color="white"
                           clickable
-                          @click="item.itemValues.push({value:'#eee'})"
-                        >
-                          新增
-                        </q-chip>
-                      </div>
-                      <div v-else-if="item.specType===2">
-                        <q-chip
-                          square
-                          removable
-                          v-for="(iem,index) in item.itemValues"
-                          :key="index"
-                        >
-                          图片{{index}}
-                        </q-chip>
-                        <q-chip
-                          square
-                          color="primary"
-                          text-color="white"
-                          clickable
+                          @click="item.itemValues.push({ value: '' })"
                         >
                           新增
                         </q-chip>
@@ -123,12 +98,10 @@
                       <a
                         class="text-primary"
                         href="javascript:;"
-                        @click="onRemoveRow(index)"
                       >下移</a>
                       <a
                         class="text-primary"
                         href="javascript:;"
-                        @click="onRemoveRow(index)"
                       >上移</a>
                       <a
                         class="text-primary"
@@ -253,6 +226,7 @@
         </div>
       </div>
     </div>
+    {{specValueData}}
   </q-page>
 </template>
 
@@ -268,8 +242,7 @@ export default {
         { label: '图片', value: 2 }
       ],
       specData: [],
-      specValueData: [],
-      spec: { id: null, specName: null, specId: this.$route.params.id, specType: 0, itemValues: [], sort: '0' }
+      specValueData: []
     }
   },
   mounted () {
@@ -279,8 +252,7 @@ export default {
   },
   methods: {
     onAddRow () {
-      const _spec = { ...this.spec }
-      this.specData.push(_spec)
+      this.specData.push({ id: null, specName: null, specId: this.$route.params.id, specType: 0, itemValues: [], sort: '0' })
     },
     onSubmit (evt) {
 
@@ -288,10 +260,16 @@ export default {
     onOpecDataSyn () {
       let tempArrays = []
       this.specData.map((item, index) => {
-        if (item.specValues) {
-          tempArrays.push(item.specValues.split('\n'))
-        }
+        let tas = []
+        item.itemValues.map(e => {
+          if (e) {
+            console.log(e)
+            tas.push(e.value)
+          }
+        })
+        tempArrays.push(tas)
       })
+      console.log(tempArrays)
       this.specValueData = this.doExchange(tempArrays)
     },
     doExchange (doubleArrays) {
