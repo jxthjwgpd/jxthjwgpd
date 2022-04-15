@@ -68,16 +68,28 @@
               </div>
               <div class="row q-col-gutter-md q-mt-xs">
 
-                <div class="col-12 col-md-8 col-lg-8">
-                  <label for="brandCover"> 封面</label>
-                  <div class="q-mt-sm">
-                    <q-uploader-file v-model="form.brandCover" />
+                <div class="col-12">
+                  <label for="brandLogo"> 品牌 logo </label>
+                  <div
+                    class="q-mt-sm"
+                    style="width:300px"
+                  >
+                    <q-uploader-file
+                      v-model="form.brandLogo"
+                      :maxFiles="1"
+                    />
                   </div>
                 </div>
-                <div class="col-12 col-md-4 col-lg-4">
-                  <label for="brandLogo"> 品牌 logo </label>
-                  <div class="q-mt-sm">
-                    <q-uploader-file v-model="form.brandLogo" />
+                <div class="col-12">
+                  <label for="brandCover"> 封面</label>
+                  <div
+                    class="q-mt-sm"
+                    style="width:540px"
+                  >
+                    <q-uploader-file
+                      v-model="form.brandCover"
+                      :maxFiles="1"
+                    />
                   </div>
                 </div>
                 <div class="col-12">
@@ -192,10 +204,13 @@ export default {
         const { code, data } = response.data
         if (code === '200' && data) {
           this.form = data.goodsBrand
-          if (this.form) {
-            this.brandCoverUrl = this.form.brandCover
-            this.brandLogoUrl = this.form.brandLogo
-          }
+          // if (this.form.brandCover) {
+          //   this.brandCover[0] = this.form.brandCover
+          // }
+          // if (this.form.brandLogo) {
+          //   this.brandLogo[0] = this.form.brandLogo
+          // }
+          // console.log(this.brandCover)
         }
       }).catch(error => {
         console.error(error)
@@ -215,7 +230,6 @@ export default {
             type: 'positive',
             message: '保存成功.'
           })
-
           this.$router.go(-1)
         } else {
           this.$q.notify({

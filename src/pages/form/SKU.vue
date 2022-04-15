@@ -29,7 +29,10 @@
                     <th class="text-left wd-200">规格名称</th>
                     <th class="text-center wd-200">类型</th>
                     <th class="text-left">属性选项</th>
-                    <th class="text-left wd-150">操作</th>
+                    <th
+                      class="text-left wd-80"
+                      v-if="specData.length>1"
+                    >操作</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -53,17 +56,18 @@
                         toggle-color="primary"
                         flat
                         :options="specTypeOptions"
+                        @click="onSpectype(index, item.specType)"
                       />
                     </td>
                     <td>
                       <!-- <div v-if="item.specType===0"> -->
-                      <div>
+                      <div style="width: 120px">
                         <q-chip
                           square
                           removable
                           v-for="(iem,ii) in item.itemValues"
                           :key="ii"
-                          @remove="item.itemValues.splice(ii,1)"
+                          @remove="item.itemValues.splice(ii, 1)"
                         >
                           <q-avatar
                             :style="`background:${iem.value||'#000'}`"
@@ -79,7 +83,7 @@
                           />
                           <input
                             type="text"
-                            style="border:0; width:100px; background:initial;"
+                            style="border:0; background:initial;width:80%"
                             v-model="iem.label"
                           />
                         </q-chip>
@@ -88,21 +92,16 @@
                           color="primary"
                           text-color="white"
                           clickable
-                          @click="item.itemValues.push({ value: '' })"
+                          @click="onAddItem(index, item.specType)"
                         >
                           新增
                         </q-chip>
                       </div>
                     </td>
-                    <td class="q-gutter-xs action">
-                      <a
-                        class="text-primary"
-                        href="javascript:;"
-                      >下移</a>
-                      <a
-                        class="text-primary"
-                        href="javascript:;"
-                      >上移</a>
+                    <td
+                      class="action"
+                      v-if="specData.length>1"
+                    >
                       <a
                         class="text-primary"
                         href="javascript:;"
@@ -168,8 +167,9 @@
                     :key="index"
                   >
                     <td
-                      v-for="(ff,dd) in item.split(',')"
+                      v-for="(ff,dd) in item.split('_')"
                       :key="dd"
+                      class="text-center wd-100"
                     >
                       {{ff}}
                     </td>
@@ -251,8 +251,27 @@ export default {
     }
   },
   methods: {
+    onSpectype (index, specType) {
+      this.specData[index].itemValues.map(e => {
+        if (specType === 1) {
+          e.value = '#000000'
+        } else {
+          e.value = ''
+        }
+      })
+    },
     onAddRow () {
       this.specData.push({ id: null, specName: null, specId: this.$route.params.id, specType: 0, itemValues: [], sort: '0' })
+    },
+    onAddItem (index, specType) {
+      // item.itemValues.push({ value: item.itemValues.length, label:'' })
+      if (specType === 1) {
+        this.specData[index].itemValues.push({ value: '#000000', label: '黑色' })
+      } else if (specType === 2) {
+        this.specData[index].itemValues.push({ value: '', label: '' })
+      } else {
+        this.specData[index].itemValues.push({ value: '', label: '' })
+      }
     },
     onSubmit (evt) {
 
@@ -260,16 +279,12 @@ export default {
     onOpecDataSyn () {
       let tempArrays = []
       this.specData.map((item, index) => {
-        let tas = []
+        let ivs = []
         item.itemValues.map(e => {
-          if (e) {
-            console.log(e)
-            tas.push(e.value)
-          }
+          ivs.push(e.label)
         })
-        tempArrays.push(tas)
+        tempArrays[index] = ivs
       })
-      console.log(tempArrays)
       this.specValueData = this.doExchange(tempArrays)
     },
     doExchange (doubleArrays) {
@@ -282,7 +297,7 @@ export default {
         var index = 0
         for (var i = 0; i < len1; i++) {
           for (var j = 0; j < len2; j++) {
-            temp[index] = doubleArrays[0][i] + ',' + doubleArrays[1][j]
+            temp[index] = doubleArrays[0][i] + '_' + doubleArrays[1][j]
             index++
           }
         }

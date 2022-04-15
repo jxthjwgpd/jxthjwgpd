@@ -98,15 +98,21 @@
                         class="q-mt-sm"
                       />
                     </div>
-                    <div class="col-12 col-md-8 col-lg-8">
+                    <div class="col-12">
                       <label for="brandCover"> 封面</label>
-                      <div class="q-mt-sm">
+                      <div
+                        class="q-mt-sm"
+                        style="width:540px"
+                      >
                         <q-uploader-file v-model="form.categoryCover" />
                       </div>
                     </div>
-                    <div class="col-12 col-md-4 col-lg-4">
+                    <div class="col-12">
                       <label for="brandLogo"> 缩略图 </label>
-                      <div class="q-mt-sm">
+                      <div
+                        class="q-mt-sm"
+                        style="width:300px"
+                      >
                         <q-uploader-file v-model="form.thumbnail" />
                       </div>
                     </div>
@@ -186,6 +192,8 @@ export default {
       loading: false,
       treeData: [],
       selected: null,
+      // thumbnail: [],
+      // categoryCover: [],
       form: {
         id: null,
         content: ''
@@ -229,6 +237,12 @@ export default {
         if (code === '200' && data.goodsCategory) {
           this.form = data.goodsCategory
           this.optTitle = data.goodsCategory.categoryName
+          // if (this.form.thumbnail) {
+          //   this.thumbnail[0] = this.form.thumbnail
+          // }
+          // if (this.form.categoryCover) {
+          //   this.categoryCover[0] = this.form.categoryCover
+          // }
         }
       }).catch(error => {
         console.error(error)

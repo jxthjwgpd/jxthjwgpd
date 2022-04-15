@@ -601,7 +601,7 @@
                     <div class="col-12">
                       <label for="volume"> 商品图片</label>
                       <div class="q-mt-sm">
-                        <q-uploader-file2
+                        <q-uploader-file
                           v-model="form.imagesUrl"
                           :maxFiles="9"
                           :multiple="true"
@@ -613,7 +613,7 @@
                     <div class="col-12">
                       <label for="volume"> 视频</label>
                       <div class="q-mt-sm">
-                        <q-uploader-file2
+                        <q-uploader-file
                           v-model="form.imagesUrl1"
                           file-type="video"
                         />
