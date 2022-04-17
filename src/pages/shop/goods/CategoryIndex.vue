@@ -107,7 +107,7 @@
                         <q-uploader-file v-model="form.categoryCover" />
                       </div>
                     </div>
-                    <div class="col-12">
+                    <!-- <div class="col-12">
                       <label for="brandLogo"> 缩略图 </label>
                       <div
                         class="q-mt-sm"
@@ -115,7 +115,7 @@
                       >
                         <q-uploader-file v-model="form.thumbnail" />
                       </div>
-                    </div>
+                    </div> -->
                     <div class="col-12">
                       <label for="summary"> 简介 </label>
                       <q-input

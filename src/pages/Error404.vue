@@ -2,7 +2,7 @@
   <div class="fixed-center text-center">
     <p>
       <img
-        src="~assets/fail.svg"
+        src="statics/fail.svg"
         style="width:30vw;max-width:150px;"
       >
     </p>

@@ -14,7 +14,7 @@
           v-if="!$q.screen.gt.xs"
         /> -->
       <q-avatar class="q-logo">
-        <img src="~assets/logo.svg" />
+        <img src="statics/logo.svg" />
       </q-avatar>
       <q-toolbar-title
         shrink

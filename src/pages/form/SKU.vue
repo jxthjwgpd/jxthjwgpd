@@ -85,6 +85,7 @@
                             type="text"
                             style="border:0; background:initial;width:80%"
                             v-model="iem.label"
+                            @input="onInputLabel(iem, item.specType)"
                           />
                         </q-chip>
                         <q-chip
@@ -246,7 +247,7 @@ export default {
     }
   },
   mounted () {
-    if (this.specData) {
+    if (this.specData.length === 0) {
       this.onAddRow()
     }
   },
@@ -271,6 +272,11 @@ export default {
         this.specData[index].itemValues.push({ value: '', label: '' })
       } else {
         this.specData[index].itemValues.push({ value: '', label: '' })
+      }
+    },
+    onInputLabel (item, specType) {
+      if (specType === 0) {
+        item.value = item.label
       }
     },
     onSubmit (evt) {
