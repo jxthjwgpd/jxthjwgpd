@@ -427,7 +427,7 @@ export default {
   mounted () {
     this.onRefresh()
 
-    this.__loadIconSet('material-icons')
+    this.__loadIconSet('icons')
 
     this.__updatePagination()
   },
@@ -663,7 +663,7 @@ export default {
           }
         } else {
           try {
-            const iconsSet = require('assets/icon-set/' + iconSet + '.js').default
+            const iconsSet = require('assets/' + iconSet + '.js').default
             this.iconsList = iconsSet.icons
           } catch (e) {
             // eslint-disable-next-line no-console
