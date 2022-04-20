@@ -31,7 +31,7 @@ const gettingComponent = [
     id: 'image',
     name: '上传图片',
     icon: 'image',
-    path: '/component/form1'
+    path: '/component/form/upload'
   },
   {
     id: 'sku',

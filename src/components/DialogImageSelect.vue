@@ -1,9 +1,12 @@
 <template>
   <div>
-    <q-dialog v-model="fixed">
+    <q-dialog
+      ref="dialog"
+      persistent
+    >
       <q-card
         class="my-dialog"
-        :style="`min-width:800px;`"
+        :style="`min-width:860px;`"
       >
         <q-toolbar>
           <q-toolbar-title>选择图片</q-toolbar-title>
@@ -16,13 +19,37 @@
           />
         </q-toolbar>
         <q-separator />
-        <div
-          class="row"
-          style="height: 42vh;"
-        >
-        </div>
-        <q-separator />
+        <q-card-section class="scroll q-mt-none">
+          <div class="row q-col-gutter-md">
+            <div class="col-12 col-md-3">
+              <q-card
+                flat
+                bordered
+              >
+                <q-list
+                  class="scroll"
+                  style="height: 460px;"
+                >
 
+                </q-list>
+              </q-card>
+            </div>
+            <div class="col-12 col-sm-9">
+              <q-card
+                flat
+                bordered
+              >
+                <q-list
+                  class="scroll"
+                  style="height: 460px;"
+                >
+
+                </q-list>
+              </q-card>
+            </div>
+          </div>
+        </q-card-section>
+        <q-separator />
         <q-card-actions
           align="right"
           class="q-dialog-footer"
@@ -30,13 +57,9 @@
           <q-btn
             :label="$q.lang.label.ok"
             color="primary"
-            type="submit"
-            v-close-popup
+            @click="onOk"
           />
-          <q-btn
-            :label="$q.lang.label.clear"
-            v-close-popup
-          />
+          <q-btn :label="$q.lang.label.clear" />
           <q-btn
             :label="$q.lang.label.cancel"
             v-close-popup
@@ -58,8 +81,19 @@ export default {
   name: 'DialogImageSelect',
   data () {
     return {
-      fixed: true,
       loading: false
+    }
+  },
+  methods: {
+    show () {
+      this.$refs.dialog.show()
+    },
+    hide () {
+      this.$refs.dialog.hide()
+    },
+    onOk (value) {
+      this.$emit('ok', value)
+      this.hide()
     }
   }
 }

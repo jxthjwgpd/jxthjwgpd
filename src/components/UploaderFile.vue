@@ -319,7 +319,11 @@ export default {
       this.fileUrlUploaders.forEach(fileUrl => {
         temp.push(fileUrl)
       })
-      this.$emit('input', temp)
+      if (this.maxFiles === 1) {
+        this.$emit('input', temp[0])
+      } else {
+        this.$emit('input', temp)
+      }
       this.fileUrls = temp
       this.$refs.uploaderDialogRef.hide()
     },

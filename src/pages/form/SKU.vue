@@ -77,10 +77,14 @@
                               <q-color v-model="iem.value" />
                             </q-popup-proxy>
                           </q-avatar>
-                          <q-icon
+                          <!-- iem.value -->
+                          <q-avatar
                             v-if="item.specType===2"
-                            :name="iem.value||'image'"
-                          />
+                            size="22px"
+                            @click="showDialogImageSelect(iem.value)"
+                          >
+                            <img src="https://cdn.quasar.dev/app-icons/icon-128x128.png" />
+                          </q-avatar>
                           <input
                             type="text"
                             style="border:0; background:initial;width:80%"
@@ -225,9 +229,9 @@
             </div>
           </div>
         </div>
+        {{specValueData}}
       </div>
     </div>
-    {{specValueData}}
   </q-page>
 </template>
 
@@ -278,6 +282,9 @@ export default {
       if (specType === 0) {
         item.value = item.label
       }
+    },
+    showDialogImageSelect (value) {
+
     },
     onSubmit (evt) {
 

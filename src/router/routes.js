@@ -41,7 +41,8 @@ const routes = [
               { path: 'basic-form', meta: { sidebar: true, auth: true }, component: () => import('pages/form/BasicForm.vue') },
               { path: 'step-form', meta: { sidebar: true, auth: true }, component: () => import('pages/form/StepForm.vue') },
               { path: 'advanced-form', meta: { sidebar: true, auth: true }, component: () => import('pages/ComeSoon.vue') },
-              { path: 'sku', meta: { sidebar: true, auth: false }, component: () => import('pages/form/SKU.vue') }
+              { path: 'sku', meta: { sidebar: true, auth: false }, component: () => import('pages/form/SKU.vue') },
+              { path: 'upload', meta: { sidebar: true, auth: false }, component: () => import('pages/form/Upload.vue') }
             ]
           },
           {
@@ -90,7 +91,8 @@ const routes = [
           { path: 'form', meta: { sidebar: true, auth: true }, component: () => import('pages/shop/goods/GoodsForm.vue') },
           { path: 'form/:id', meta: { sidebar: true, auth: true }, component: () => import('pages/shop/goods/GoodsForm.vue') },
           { path: 'list', meta: { sidebar: true, auth: true }, component: () => import('pages/ComeSoon.vue') },
-          { path: 'list/:type', meta: { sidebar: true, auth: true }, component: () => import('pages/ComeSoon.vue') }
+          { path: 'list/:type', meta: { sidebar: true, auth: true }, component: () => import('pages/ComeSoon.vue') },
+          { path: 'album', meta: { sidebar: true, auth: true }, component: () => import('pages/shop/goods/AlbumList.vue') }
         ]
       },
       {

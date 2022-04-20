@@ -112,9 +112,9 @@
                           </td>
                           <td>
                             {{item.attrValues}}
-                            {{item.attrType===0?item.attrValues=null:null}}
+                            {{item.attrType==='0'?item.attrValues=null:null}}
                             <q-popup-edit
-                              v-if="item.attrType!==0"
+                              v-if="item.attrType!=='0'"
                               buttons
                               v-model="item.attrValues"
                             >
@@ -200,12 +200,12 @@ export default {
         id: this.$route.params.id
       },
       attrTypeOptions: [
-        { label: '手动输入', value: 0 },
-        { label: '单选', value: 1 },
-        { label: '复选', value: 2 }
+        { label: '手动输入', value: '0' },
+        { label: '单选', value: '1' },
+        { label: '复选', value: '2' }
       ],
       attrData: [],
-      attr: { id: null, attrName: null, typeId: this.$route.params.id, attrType: 0, attrValues: null, sort: '0' }
+      attr: { id: null, attrName: null, typeId: this.$route.params.id, attrType: '0', attrValues: null, sort: '0' }
     }
   },
   mounted () {
