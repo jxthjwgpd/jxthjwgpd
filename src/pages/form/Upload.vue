@@ -9,18 +9,18 @@
 </template>
 
 <script>
-import DialogImageSelect from '../../components/DialogImageSelect.vue'
+import AlbumSelected from '../shop/goods/AlbumSelected.vue'
 export default {
   name: 'Upload',
   methods: {
     alert () {
       this.$q.dialog({
-        component: DialogImageSelect,
-        parent: this
-      }).onOk(() => {
+        component: AlbumSelected,
+        parent: this,
+        size: 9
+      }).onOk(e => {
         console.log('OK')
-      }).onCancel(() => {
-        console.log('Cancel')
+        console.log(e)
       })
     }
   }

@@ -26,8 +26,10 @@
               </span>
             </div>
           </template>
-          <template v-slot:body="props">
-            <q-img :src="baseUrl+props.row.brandCover" />
+          <template v-slot:item="props">
+            <div class="col-xs-6 col-sm-3 col-md-1">
+              <q-img :src="baseUrl+props.row.brandCover" />
+            </div>
           </template>
         </q-table>
       </div>
