@@ -83,6 +83,7 @@
                       style="font-size:10px"
                       class="text-primary "
                       href="javascript:;"
+                      @click="selected = album.id"
                     >
                       <q-icon
                         name="folder_open"
@@ -119,11 +120,14 @@
 
                   </div>
                 </div>
-                <!-- <q-pagination
-                  v-model="pagination.page"
-                  :max="pagination.rowsNumber"
-                >
-                </q-pagination> -->
+                <div class="absolute-bottom row justify-center">
+                  <q-pagination
+                    v-model="pagination.current"
+                    :max="pagination.pages"
+                    :input="true"
+                  >
+                  </q-pagination>
+                </div>
               </div>
             </q-card>
           </div>
@@ -254,7 +258,6 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
-    {{fileValue}}
   </q-dialog>
 </template>
 
@@ -271,9 +274,8 @@ export default {
       albumData: [],
       albumFileData: [],
       pagination: {
-        page: 1,
-        rowsPerPage: 20,
-        rowsNumber: 20
+        current: 1,
+        pages: 1
       },
       fileValue: [],
       createDialog: false,
@@ -294,13 +296,16 @@ export default {
   watch: {
     selected () {
       if (this.selected) {
+        this.onRequestGoodsAlbums()
         this.onRequestGoodsAlbumFiles()
       }
     },
     albumFileData () {
       this.albumFileData.forEach(a => {
         this.fileValue.forEach(b => {
-          a.done = a.fileId === b.fileId
+          if (a.fileId === b.fileId) {
+            a.done = true
+          }
         })
       })
     }
@@ -328,7 +333,7 @@ export default {
         this.loading = false
       }, 200)
     },
-    async onRequestGoodsAlbumFiles () {
+    async onRequestGoodsAlbums () {
       this.loading = true
       await axios.get('/admin/goods/albums', { params: { pid: this.selected } }).then(response => {
         const { code, data } = response.data
@@ -338,12 +343,17 @@ export default {
       }).catch(error => {
         console.error(error)
       })
-      await axios.get('/admin/goods/album-files', { params: { albumId: this.selected } }).then(response => {
+      setTimeout(() => {
+        this.loading = false
+      }, 200)
+    },
+    async onRequestGoodsAlbumFiles () {
+      this.loading = true
+      await axios.get('/admin/goods/album-files', { params: { albumId: this.selected, current: this.pagination.current || 1, size: 30 } }).then(response => {
         const { code, data } = response.data
         if (code === '200' && data) {
-          this.pagination.page = data.current
-          this.pagination.rowsNumber = data.total
-          this.pagination.rowsPerPage = data.size
+          this.pagination.current = data.current
+          this.pagination.pages = data.pages
 
           this.albumFileData = data.records
         }
@@ -356,15 +366,10 @@ export default {
     },
     onFileSelect (album) {
       let fileValueSet = new Set(this.fileValue)
-      if (fileValueSet.has(album)) {
+      if (album.done) {
         fileValueSet.delete(album)
         album.done = false
       } else {
-        // }
-        // if (fileValueSet.has(album)) {
-        //   fileValueSet.delete(album)
-        //   album.done = false
-        // } else {
         if (this.fileValue.length >= this.size) {
           console.warn('超过数量=>' + this.size)
           return

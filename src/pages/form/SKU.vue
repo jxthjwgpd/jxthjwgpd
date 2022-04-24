@@ -23,99 +23,110 @@
           <div class="col-12">
             <div class="q-mt-sm">
               {{specData}}
-              <q-markup-table>
-                <thead>
-                  <tr>
-                    <th class="text-left wd-200">规格名称</th>
-                    <th class="text-center wd-200">类型</th>
-                    <th class="text-left">属性选项</th>
-                    <th
-                      class="text-left wd-80"
-                      v-if="specData.length>1"
-                    >操作</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    v-for="(item,index) in specData"
-                    :key="index"
-                  >
-                    <td>
-                      <q-input
-                        outlined
-                        dense
-                        no-error-icon
-                        v-model.trim="item.specName"
-                        placeholder="请输入属性名称"
-                        class="wd-150"
-                      />
-                    </td>
-                    <td>
-                      <q-btn-toggle
-                        v-model="item.specType"
-                        toggle-color="primary"
-                        flat
-                        :options="specTypeOptions"
-                        @click="onSpectype(index, item.specType)"
-                      />
-                    </td>
-                    <td>
-                      <!-- <div v-if="item.specType===0"> -->
-                      <div style="width: 120px">
-                        <q-chip
-                          square
-                          removable
-                          v-for="(iem,ii) in item.itemValues"
-                          :key="ii"
-                          @remove="item.itemValues.splice(ii, 1)"
-                        >
-                          <q-avatar
-                            :style="`background:${iem.value||'#000'}`"
-                            v-if="item.specType===1"
-                          >
-                            <q-popup-proxy>
-                              <q-color v-model="iem.value" />
-                            </q-popup-proxy>
-                          </q-avatar>
-                          <!-- iem.value -->
-                          <q-avatar
-                            v-if="item.specType===2"
-                            size="22px"
-                            @click="showDialogImageSelect(iem.value)"
-                          >
-                            <img src="https://cdn.quasar.dev/app-icons/icon-128x128.png" />
-                          </q-avatar>
-                          <input
-                            type="text"
-                            style="border:0; background:initial;width:80%"
-                            v-model="iem.label"
-                            @input="onInputLabel(iem, item.specType)"
-                          />
-                        </q-chip>
-                        <q-chip
-                          square
-                          color="primary"
-                          text-color="white"
-                          clickable
-                          @click="onAddItem(index, item.specType)"
-                        >
-                          新增
-                        </q-chip>
-                      </div>
-                    </td>
-                    <td
-                      class="action"
-                      v-if="specData.length>1"
+              <q-form class="my-form gutter">
+                <q-markup-table class=" q-pb-md">
+                  <thead>
+                    <tr>
+                      <th class="text-left wd-200">规格名称</th>
+                      <th class="text-center wd-200">类型</th>
+                      <th class="text-left">属性选项</th>
+                      <th
+                        class="text-left wd-80"
+                        v-if="specData.length>1"
+                      >操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      v-for="(item,index) in specData"
+                      :key="index"
                     >
-                      <a
-                        class="text-primary"
-                        href="javascript:;"
-                        @click="specData.splice(index, 1)"
-                      >删除</a>
-                    </td>
-                  </tr>
-                </tbody>
-              </q-markup-table>
+                      <td>
+                        <q-input
+                          outlined
+                          dense
+                          no-error-icon
+                          v-model.trim="item.specName"
+                          placeholder="请输入属性名称"
+                          class="wd-150"
+                          :rules="[ val => val && val.length > 0 || '请设置属性名称']"
+                        />
+                      </td>
+                      <td>
+                        <q-btn-toggle
+                          v-model="item.specType"
+                          toggle-color="primary"
+                          flat
+                          :options="specTypeOptions"
+                          @click="onSpectype(index, item.specType)"
+                        />
+                      </td>
+                      <td>
+                        <!-- <div v-if="item.specType===0"> -->
+                        <div style="width: 120px">
+                          <q-chip
+                            square
+                            removable
+                            v-for="(iem,ii) in item.itemValues"
+                            :key="ii"
+                            @remove="item.itemValues.splice(ii, 1)"
+                          >
+                            <q-avatar
+                              :style="`background:${iem.value||'#000'}`"
+                              v-if="item.specType===1"
+                            >
+                              <q-popup-proxy>
+                                <q-color v-model="iem.value" />
+                              </q-popup-proxy>
+                            </q-avatar>
+                            <!-- iem.value -->
+                            <q-avatar
+                              v-if="item.specType===2"
+                              size="22px"
+                              @click="showDialogImageSelect(iem)"
+                            >
+
+                              <img
+                                src="https://cdn.quasar.dev/app-icons/icon-128x128.png"
+                                v-if="!iem.value"
+                              />
+                              <img
+                                :src="baseUrl + iem.value"
+                                v-else
+                              />
+                            </q-avatar>
+                            <input
+                              type="text"
+                              style="border:0; background:initial;width:80%"
+                              v-model="iem.label"
+                              @input="onInputLabel(iem, item.specType)"
+                            />
+                          </q-chip>
+                          <q-chip
+                            square
+                            color="primary"
+                            text-color="white"
+                            clickable
+                            @click="onAddItem(index, item.specType)"
+                          >
+                            新增
+                          </q-chip>
+                        </div>
+                      </td>
+                      <td
+                        class="action"
+                        v-if="specData.length>1"
+                      >
+                        <a
+                          class="text-primary"
+                          href="javascript:;"
+                          @click="specData.splice(index, 1)"
+                        >删除</a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </q-markup-table>
+              </q-form>
               <q-btn
                 label="新增一行"
                 color="primary"
@@ -236,10 +247,13 @@
 </template>
 
 <script>
+import axios from 'axios'
+import AlbumSelected from '../shop/goods/AlbumSelected.vue'
 export default {
   name: 'BasicForm',
   data () {
     return {
+      baseUrl: axios.defaults.baseURL,
       loading: false,
       specTypeOptions: [
         { label: '文本', value: 0 },
@@ -269,7 +283,6 @@ export default {
       this.specData.push({ id: null, specName: null, specId: this.$route.params.id, specType: 0, itemValues: [], sort: '0' })
     },
     onAddItem (index, specType) {
-      // item.itemValues.push({ value: item.itemValues.length, label:'' })
       if (specType === 1) {
         this.specData[index].itemValues.push({ value: '#000000', label: '黑色' })
       } else if (specType === 2) {
@@ -283,8 +296,16 @@ export default {
         item.value = item.label
       }
     },
-    showDialogImageSelect (value) {
-
+    showDialogImageSelect (item) {
+      this.$q.dialog({
+        component: AlbumSelected,
+        parent: this,
+        size: 1
+      }).onOk(e => {
+        if (e && e[0]) {
+          item.value = e[0].fileUrl
+        }
+      })
     },
     onSubmit (evt) {
 
