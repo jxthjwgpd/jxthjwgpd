@@ -18,15 +18,51 @@
 
         <div
           class="col-3"
-          v-for="item in data"
+          v-for="(item, index) in data"
           :key="item.id"
         >
           <q-img
             :src="baseUrl + item.fileUrl"
             :ratio="4/3"
           >
-            <div class="absolute-top text-center image-header">
+            <div class="absolute-top row flex-center no-wrap image-header">
               {{item.fileName}}
+              <q-space />
+              <q-btn
+                round
+                flat
+                dense
+                icon="close"
+                @click="data.splice(index, 1)"
+              />
+              <q-btn
+                round
+                flat
+                dense
+                icon="more_vert"
+              >
+                <q-popup-proxy>
+                  <q-list
+                    bordered
+                    separator
+                  >
+                    <q-item
+                      clickable
+                      dense
+                      @click="next(index)"
+                    >
+                      <q-item-section>向右</q-item-section>
+                    </q-item>
+                    <q-item
+                      clickable
+                      dense
+                      @click="prev(index)"
+                    >
+                      <q-item-section>向左</q-item-section>
+                    </q-item>
+                  </q-list>
+                </q-popup-proxy>
+              </q-btn>
             </div>
           </q-img>
         </div>
@@ -66,11 +102,24 @@ export default {
         console.log('OK')
         this.data = e
       })
+    },
+    prev (index) {
+      if (index !== 0 && this.data.length > 1) {
+        this.swapItems(this.data, index, index - 1)
+      }
+    },
+    next (index) {
+      if (index < (this.data.length - 1)) {
+        this.swapItems(this.data, index, index + 1)
+      }
+    },
+    swapItems (arr, index1, index2) {
+      arr[index1] = arr.splice(index2, 1, arr[index1])[0]
+      return arr
     }
   }
 }
 </script>
-
 <style lang="sass" scoped>
 .image-header
   background: linear-gradient(180deg,rgba(0,0,0,0.7) 20%,transparent)

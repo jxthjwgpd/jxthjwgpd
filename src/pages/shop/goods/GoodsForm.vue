@@ -601,11 +601,43 @@
                     <div class="col-12">
                       <label for="volume"> 商品图片</label>
                       <div class="q-mt-sm">
-                        <q-uploader-file
-                          v-model="form.imagesUrl"
-                          :maxFiles="9"
-                          :multiple="true"
-                        />
+                        <div class="q-col-gutter-md row items-start">
+                          <div
+                            class="col-3"
+                            v-for="(item, index) in imageData"
+                            :key="item.id"
+                          >
+                            <q-img
+                              :src="baseUrl + item.fileUrl"
+                              :ratio="4/3"
+                            >
+                              <div class="absolute-top row flex-center no-wrap image-header">
+                                {{item.fileName}}
+                                <q-space />
+                                <q-btn
+                                  round
+                                  flat
+                                  dense
+                                  icon="close"
+                                  @click="imageData.splice(index, 1)"
+                                />
+                              </div>
+                            </q-img>
+                          </div>
+                        </div>
+                        <div class="q-mt-md">
+                          <q-btn
+                            label="上传图片"
+                            color="primary"
+                            @click="uploadImage"
+                          />
+                          <q-btn
+                            label="选择图片"
+                            color="primary"
+                            class="q-ml-xs"
+                            @click="selectImage"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -613,10 +645,17 @@
                     <div class="col-12">
                       <label for="volume"> 视频</label>
                       <div class="q-mt-sm">
-                        <q-uploader-file
-                          v-model="form.imagesUrl1"
-                          file-type="video"
+                        <q-img
+                          src="https://placeimg.com/500/300/nature"
+                          :ratio="16/9"
+                          style="width: 420px"
                         />
+                        <div class="q-mt-sm">
+                          <q-btn
+                            label="上传视频"
+                            color="primary"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1105,17 +1144,20 @@
 
 <script>
 import axios from 'axios'
+import AlbumSelected from './AlbumSelected.vue'
+import DialogUploader from '../../../components/DialogUploader.vue'
 export default {
   name: 'GoodsForm',
   data () {
     return {
       baseUrl: axios.defaults.baseURL,
       loading: false,
-      step: 4,
+      step: 3,
       tab: 'mobile',
       brandOptions: [],
       typeOptions: [],
       goodsTypeData: [],
+      imageData: [],
       form: {
         atrs: [],
         imagesUrl: ['/userfiles/fileupload/202009/2.jpg'],
@@ -1183,6 +1225,25 @@ export default {
         this.goodsTypeData = []
       }
     },
+    uploadImage () {
+      this.$q.dialog({
+        component: DialogUploader,
+        parent: this
+      }).onOk(e => {
+        console.log('OK')
+        this.imageData = this.imageData.concat(e)
+      })
+    },
+    selectImage () {
+      this.$q.dialog({
+        component: AlbumSelected,
+        parent: this,
+        size: 9
+      }).onOk(e => {
+        console.log('OK')
+        this.imageData = this.imageData.concat(e)
+      })
+    },
     onAddRow () {
       const _spec = { ...this.spec }
       this.specData.push(_spec)
@@ -1234,7 +1295,7 @@ export default {
   }
 }
 </script>
-
 <style lang="sass" scoped>
-
+.image-header
+  background: linear-gradient(180deg,rgba(0,0,0,0.7) 20%,transparent)
 </style>
