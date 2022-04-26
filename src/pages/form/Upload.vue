@@ -89,7 +89,6 @@ export default {
         component: DialogUploader,
         parent: this
       }).onOk(e => {
-        console.log('OK')
         this.data = e
       })
     },
@@ -99,7 +98,6 @@ export default {
         parent: this,
         size: 9
       }).onOk(e => {
-        console.log('OK')
         this.data = e
       })
     },

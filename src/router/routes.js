@@ -90,7 +90,7 @@ const routes = [
           { path: 'attribute/form/:id', meta: { sidebar: true, auth: true }, component: () => import('pages/shop/goods/AttributeForm.vue') },
           { path: 'form', meta: { sidebar: true, auth: true }, component: () => import('pages/shop/goods/GoodsForm.vue') },
           { path: 'form/:id', meta: { sidebar: true, auth: true }, component: () => import('pages/shop/goods/GoodsForm.vue') },
-          { path: 'list', meta: { sidebar: true, auth: true }, component: () => import('pages/ComeSoon.vue') },
+          { path: 'list', meta: { sidebar: true, auth: true }, component: () => import('pages/shop/goods/GoodsList.vue') },
           { path: 'list/:type', meta: { sidebar: true, auth: true }, component: () => import('pages/ComeSoon.vue') },
           { path: 'album', meta: { sidebar: true, auth: true }, component: () => import('pages/shop/goods/AlbumList.vue') }
         ]

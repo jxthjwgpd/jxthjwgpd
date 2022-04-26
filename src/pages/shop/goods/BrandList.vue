@@ -150,7 +150,7 @@ export default {
       const { page, rowsPerPage, sortBy, descending } = props.pagination
       const filter = props.filter
       this.loading = true
-      await axios.get('/admin/goods/brands', { params: { current: page, size: rowsPerPage, username: filter } }).then(response => {
+      await axios.get('/admin/goods/brands', { params: { current: page, size: rowsPerPage, brandName: filter } }).then(response => {
         const { code, data } = response.data
         if (code === '200' && data) {
           this.pagination.page = data.current
