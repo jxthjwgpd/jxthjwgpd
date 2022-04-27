@@ -59,15 +59,19 @@
                 >{{ props.row.goodsName }}</router-link>
               </q-td>
               <q-td
-                key="brandInitial"
+                key="categoryId"
                 :props="props"
-              >{{ props.row.brandInitial|| '-' }}</q-td>
+              >{{ props.row.categoryId|| '-' }}</q-td>
               <q-td
-                key="summary"
+                key="marketPrice"
                 :props="props"
-              >{{ props.row.summary }} </q-td>
+              >{{ props.row.marketPrice|| '-' }}</q-td>
               <q-td
-                key="brandRecommend"
+                key="storeCount"
+                :props="props"
+              >{{ props.row.storeCount }} </q-td>
+              <q-td
+                key="salesSum"
                 :props="props"
               >
                 <q-yes-or-no :value="props.row.brandRecommend" />
@@ -121,9 +125,10 @@ export default {
       },
       columns: [
         { name: 'goodsName', label: '商品名称', align: 'left', field: 'goodsName', sortable: true, style: 'width: 150px' },
-        { name: 'brandInitial', label: '首字母', align: 'left', field: 'brandInitial', style: 'width: 80px' },
-        { name: 'summary', label: '摘要', align: 'left', field: 'summary', style: 'width: 200px' },
-        { name: 'brandRecommend', label: '推荐', align: 'left', field: 'brandRecommend', sortable: true, style: 'width: 80px' },
+        { name: 'categoryId', label: '商品类型', align: 'left', field: 'categoryId', style: 'width: 80px' },
+        { name: 'marketPrice', label: '商品市价', align: 'left', field: 'marketPrice', style: 'width: 80px' },
+        { name: 'storeCount', label: '商品库存', align: 'left', field: 'storeCount', style: 'width: 200px' },
+        { name: 'salesSum', label: '商品销量', align: 'left', field: 'salesSum', sortable: true, style: 'width: 80px' },
         { name: 'status', label: '状态', align: 'left', field: 'status', sortable: true, style: 'width: 100px' },
         { name: 'created', label: '创建时间', align: 'center', field: 'created', style: 'width: 180px' },
         { name: 'action', label: '操作', field: 'action', align: 'center', style: 'width: 100px' }

@@ -11,7 +11,7 @@
             label="商品"
             to="/goods"
           />
-          <q-breadcrumbs-el label="发布商品" />
+          <q-breadcrumbs-el label="商品管理" />
         </q-breadcrumbs>
       </div>
     </div>
