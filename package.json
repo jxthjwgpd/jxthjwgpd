@@ -12,6 +12,9 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
+    "@antv/data-set": "^0.11.7",
+    "@antv/g2": "^4.0.15",
+    "@antv/g2plot": "^2.0.1",
     "@quasar/extras": "^1.9.3",
     "axios": "^0.18.1",
     "quasar": "^1.12.13",

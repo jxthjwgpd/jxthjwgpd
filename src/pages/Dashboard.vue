@@ -186,6 +186,17 @@
             class="q-mt-md"
           >
             <q-card-section>
+              <div
+                id="demoChart1"
+                style="height: 300px; widht:100%"
+              ></div>
+            </q-card-section>
+          </q-card>
+          <q-card
+            flat
+            class="q-mt-md"
+          >
+            <q-card-section>
               <div class="row no-wrap items-center">
                 <div class="col text-subtitle2 ellipsis">
                   严选推荐
@@ -549,6 +560,8 @@
 </template>
 
 <script>
+import { Line } from '@antv/g2plot'
+import DataSet from '@antv/data-set'
 export default {
   data () {
     return {
@@ -567,6 +580,101 @@ export default {
     progressLabel1 () {
       return (this.progress1 * 100).toFixed(2) + '%'
     }
+  },
+  mounted () {
+    fetch('https://gw.alipayobjects.com/os/bmw-prod/49a2fe69-ae03-4799-88e2-55c096a54d45.json')
+      .then((res) => res.json())
+      .then((originalData) => {
+        const color = ['#1976D2', '#26A69A', '#21BA45', '#F2C037', '#9C27B0', '#1D1D1D']
+        const colorMap = {
+          code: color[0],
+          code_去年同期: color[1],
+          code_上月同期: color[2],
+          code_上周同期: color[3]
+        }
+        const markerMap = {
+          code: 'circle',
+          code_去年同期: 'circle',
+          code_上月同期: 'square',
+          code_上周同期: 'triangle'
+        }
+        const dv = new DataSet().createView().source(originalData)
+        dv.transform({
+          type: 'fold',
+          fields: ['code', 'code_去年同期', 'code_上月同期', 'code_上周同期'], // 展开字段集
+          key: 'type', // key字段
+          value: 'value' // value字段
+        })
+        const line = new Line('demoChart1', {
+          data: dv.rows,
+          padding: 'auto',
+          xField: 'date',
+          yField: 'value',
+          seriesField: 'type',
+          color,
+          meta: {
+            value: {
+              formatter: (v) => `${(v / 10000).toFixed(2)} 万`
+            },
+            type: {
+              formatter: (type) => {
+                return type === 'code' ? '基准指标' : type.slice(5)
+              }
+            }
+          },
+          xAxis: {
+            label: {
+              autoRotate: false
+            }
+          },
+          yAxis: {
+            tickCount: 5,
+            label: {
+              formatter: (v, item) => `${(Number(item.id) / 10000).toFixed(0)} 万`
+            }
+          },
+          tooltip: {
+            showMarkers: false
+          },
+          point: {
+            style: ({ date, value, type }) => {
+              const dataIndex = dv.rows.findIndex((r) => r.date === date)
+              // every 30 dataPoints show a point, strategy depends by yourself
+              if (dataIndex % 30 === 0) {
+                return {
+                  r: 2,
+                  stroke: colorMap[type],
+                  fill: type !== 'code' ? colorMap[type] : '#fff'
+                }
+              }
+              return {
+                fill: 'transparent',
+                stroke: 'transparent',
+                lineWidth: 0
+              }
+            },
+            shape: ({ date, value, type }) => {
+              return markerMap[type]
+            }
+          },
+          lineStyle: ({ date, value, type }) => {
+            if (type === 'code') {
+              return {
+                lineWidth: 2
+              }
+            }
+            return {
+              lineWidth: 1
+            }
+          },
+          interactions: [
+            {
+              type: 'element-active'
+            }
+          ]
+        })
+        line.render()
+      })
   },
   watch: {
     '$q.screen.gt.sm' (val) {
