@@ -188,7 +188,7 @@
             <q-card-section>
               <div
                 id="demoChart2"
-                style="widht:100%"
+                style="widht:100%; height:300px"
               ></div>
             </q-card-section>
           </q-card>
@@ -199,7 +199,7 @@
             <q-card-section>
               <div
                 id="demoChart1"
-                style="height: 300px; widht:100%"
+                style="widht:100%; height:300px"
               ></div>
             </q-card-section>
           </q-card>
@@ -617,32 +617,32 @@ export default {
             attrs
           })
 
-          if (cfg.data.lastWeek) {
-            const linePath = [
-              ['M', points[2].x, points[2].y],
-              ['L', points[3].x, points[3].y]
-            ]
-            // 最后一周的多边形添加右侧边框
-            group.addShape('path', {
-              attrs: {
-                path: this.parsePath(linePath),
-                lineWidth: 4,
-                stroke: '#404040'
-              }
-            })
-            if (cfg.data.lastDay) {
-              group.addShape('path', {
-                attrs: {
-                  path: this.parsePath([
-                    ['M', points[1].x, points[1].y],
-                    ['L', points[2].x, points[2].y]
-                  ]),
-                  lineWidth: 4,
-                  stroke: '#404040'
-                }
-              })
-            }
-          }
+          // if (cfg.data.lastWeek) {
+          //   const linePath = [
+          //     ['M', points[2].x, points[2].y],
+          //     ['L', points[3].x, points[3].y]
+          //   ]
+          //   // 最后一周的多边形添加右侧边框
+          //   group.addShape('path', {
+          //     attrs: {
+          //       path: this.parsePath(linePath),
+          //       lineWidth: 4,
+          //       stroke: '#404040'
+          //     }
+          //   })
+          //   if (cfg.data.lastDay) {
+          //     group.addShape('path', {
+          //       attrs: {
+          //         path: this.parsePath([
+          //           ['M', points[1].x, points[1].y],
+          //           ['L', points[2].x, points[2].y]
+          //         ]),
+          //         lineWidth: 4,
+          //         stroke: '#404040'
+          //       }
+          //     })
+          //   }
+          // }
 
           return group
         }
@@ -654,9 +654,7 @@ export default {
       .then(data => {
         const chart = new Chart({
           container: 'demoChart2',
-          autoFit: true,
-          height: 300,
-          padding: [150, 30, 150, 70]
+          autoFit: true
         })
         chart.data(data)
         chart.scale({
@@ -721,6 +719,7 @@ export default {
 
         chart.render()
       })
+
     fetch('https://gw.alipayobjects.com/os/bmw-prod/49a2fe69-ae03-4799-88e2-55c096a54d45.json')
       .then((res) => res.json())
       .then((originalData) => {
