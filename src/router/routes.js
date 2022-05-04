@@ -60,7 +60,7 @@ const routes = [
         path: 'system',
         component: () => import('layouts/BlankLayout.vue'),
         children: [
-          { path: '', redirect: { path: 'overview' } },
+          { path: '', redirect: { path: 'users' } },
           { path: 'overview', meta: { sidebar: true, auth: true }, component: () => import('pages/system/Overview.vue') },
           { path: 'users', meta: { sidebar: true, auth: true }, component: () => import('pages/system/UserList.vue') },
           { path: 'users/form', meta: { sidebar: true, auth: true }, component: () => import('pages/system/UserForm.vue') },
@@ -80,7 +80,7 @@ const routes = [
         path: 'goods',
         component: () => import('layouts/BlankLayout.vue'),
         children: [
-          { path: '', redirect: { path: 'brand' } },
+          { path: '', redirect: { path: 'list' } },
           { path: 'brand', meta: { sidebar: true, auth: true }, component: () => import('pages/shop/goods/BrandList.vue') },
           { path: 'brand/form', meta: { sidebar: true, auth: true }, component: () => import('pages/shop/goods/BrandForm.vue') },
           { path: 'brand/form/:id', meta: { sidebar: true, auth: true }, component: () => import('pages/shop/goods/BrandForm.vue') },
