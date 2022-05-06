@@ -47,8 +47,29 @@
             </div>
           </template>
 
+          <template v-slot:header="props">
+            <q-tr :props="props">
+              <q-th auto-width />
+              <q-th
+                v-for="col in props.cols"
+                :key="col.name"
+                :props="props"
+              >
+                {{ col.label }}
+              </q-th>
+            </q-tr>
+          </template>
+
           <template v-slot:body="props">
             <q-tr :props="props">
+              <q-td auto-width>
+                <q-icon
+                  color="primary"
+                  size="18px"
+                  @click="props.expand = !props.expand"
+                  :name="props.expand ? 'arrow_drop_down' : 'arrow_right'"
+                />
+              </q-td>
               <q-td
                 key="goodsName"
                 :props="props"
@@ -100,6 +121,130 @@
                   href="javascript:;"
                   v-del:refresh="{id:props.row.id, url:'/admin/goods/brand-delete'}"
                 >删除</a>
+              </q-td>
+            </q-tr>
+            <q-tr
+              v-show="props.expand"
+              :props="props"
+            >
+              <q-td colspan="100%">
+                <!-- <div class="text-left">{{ props.row }}</div> -->
+                <div class="q-pa-md">
+                  <div class="row q-col-gutter-md">
+                    <div class="col-12 col-sm-6 col-md-4">
+                      <q-desc-item title="登录名">
+                        <q-chip
+                          color="deep-orange"
+                          text-color="white"
+                          icon="fingerprint"
+                        >
+                          {{ props.row.goodsName }}
+                        </q-chip>
+                      </q-desc-item>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4">
+                      <q-desc-item title="账号昵称">
+                        {{ props.row.nickname||'-' }}
+                        <q-icon
+                          class="q-ml-xs"
+                          name="edit"
+                          color="primary"
+                        >
+                          <q-popup-edit
+                            v-model="props.row.nickname"
+                            title="修改账号昵称"
+                            @show="field='nickname'"
+                            @save="onFieldValue"
+                            buttons
+                          >
+                            <div style="width:350px;">
+                              <q-input
+                                outlined
+                                dense
+                                no-error-icon
+                                v-model="props.row.nickname"
+                              />
+                            </div>
+                          </q-popup-edit>
+                        </q-icon>
+                      </q-desc-item>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4">
+                      <q-desc-item title="账号ID">
+                        {{ props.row.id }}
+                      </q-desc-item>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4">
+                      <q-desc-item title="邮箱">
+                        {{ props.row.email||'-' }}
+                        <q-icon
+                          class="q-ml-xs"
+                          name="edit"
+                          color="primary"
+                        >
+                          <q-popup-edit
+                            v-model="props.row.email"
+                            title="修改邮箱"
+                            @show="field='email'"
+                            @save="onFieldValue"
+                            buttons
+                          >
+                            <div style="width:350px;">
+                              <q-input
+                                outlined
+                                dense
+                                no-error-icon
+                                v-model="props.row.email"
+                              />
+                            </div>
+                          </q-popup-edit>
+                        </q-icon>
+                      </q-desc-item>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4">
+                      <q-desc-item title="手机号码">
+                        {{ props.row.mobile||'-' }}
+                        <q-icon
+                          class="q-ml-xs"
+                          name="edit"
+                          color="primary"
+                        >
+                          <q-popup-edit
+                            v-model="props.row.mobile"
+                            title="修改手机号码"
+                            @show="field='mobile'"
+                            @save="onFieldValue"
+                            buttons
+                          >
+                            <div style="width:350px;">
+                              <q-input
+                                outlined
+                                dense
+                                no-error-icon
+                                v-model="props.row.mobile"
+                              />
+                            </div>
+                          </q-popup-edit>
+                        </q-icon>
+                      </q-desc-item>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4">
+                      <q-desc-item title="用户来源">
+                        {{ props.row.createSource||'-' }}
+                      </q-desc-item>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4">
+                      <q-desc-item title="注册时间">
+                        {{ props.row.created }}
+                      </q-desc-item>
+                    </div>
+                    <div class="col-12">
+                      <q-desc-item title="备注">
+                        {{ props.row.remark||'-' }}
+                      </q-desc-item>
+                    </div>
+                  </div>
+                </div>
               </q-td>
             </q-tr>
           </template>
@@ -172,6 +317,9 @@ export default {
       setTimeout(() => {
         this.loading = false
       }, 200)
+    },
+    onFieldValue () {
+
     }
   }
 }
