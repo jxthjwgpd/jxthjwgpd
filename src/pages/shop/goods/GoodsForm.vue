@@ -272,13 +272,36 @@ export default {
       loading: false,
       imageData: [],
       form: {
+        id: this.$route.params.id,
         goodsContent: ''
       }
     }
   },
   mounted () {
+    if (this.form.id) {
+      this.onRequest()
+    }
   },
   methods: {
+    async onRequest () {
+      this.loading = true
+      await axios.get('/admin/goods/detail', { params: { id: this.form.id } }).then(response => {
+        const { code, data } = response.data
+        if (code === '200' && data) {
+          this.form = data.goods
+          if (data.goodsImages) {
+            data.goodsImages.forEach(e => {
+              this.imageData.push({ fileUrl: e.src })
+            })
+          }
+        }
+      }).catch(error => {
+        console.error(error)
+      })
+      setTimeout(() => {
+        this.loading = false
+      }, 200)
+    },
     uploadImage () {
       this.$q.dialog({
         component: DialogUploader,
@@ -328,9 +351,14 @@ export default {
     },
     async onSubmit (evt) {
       this.loading = true
-      await axios.post(`/admin/goods`, this.form).then(response => {
-        const { code, message, data } = response.data
-        if (code === '200' && data) {
+      this.form.goodsImages = []
+      this.imageData.forEach(e => {
+        this.form.goodsImages.push(e.fileUrl)
+      })
+      console.log(this.form)
+      await axios.post(`/admin/goods${this.form.id ? '/update' : ''}`, this.form).then(response => {
+        const { code, message } = response.data
+        if (code === '200') {
           this.$q.notify({
             type: 'positive',
             message: '保存成功.'
