@@ -196,7 +196,8 @@ export default {
         { name: 'created', label: '创建时间', align: 'center', field: 'created', style: 'width: 180px' },
         { name: 'action', label: '操作', field: 'action', align: 'center', style: 'width: 100px' }
       ],
-      data: []
+      data: [],
+      field: null
     }
   },
   mounted () {
