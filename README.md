@@ -10,7 +10,7 @@ A Quasar Framework app
 <img src='https://ruyangit.gitee.io/2020/tangdao/spa/arct/5.png' width="100%" />
 <img src='https://ruyangit.gitee.io/2020/tangdao/spa/arct/6.png' width="100%" />
 
-**[前端预览](http://121.37.180.48:12001/#/user/login)**
+**[前端升级了-预览](http://121.4.215.23:30000/tangdao/admin/#/overview)**
 
 **[后端项目](https://gitee.com/ruyangit/tangdao)**
 
